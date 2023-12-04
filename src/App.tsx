@@ -1,6 +1,6 @@
 import "./App.css";
-import A from "./components/a";
-import B from "./components/b";
+import A from "./common/components/a";
+import B from "./common/components/b";
 import { useFlat } from "./service";
 
 function App() {

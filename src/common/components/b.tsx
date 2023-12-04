@@ -1,4 +1,4 @@
-import { useFlat } from "../service";
+import { useFlat } from "../../service";
 
 const B = () => {
 	const { appInfo } = useFlat("appStore");

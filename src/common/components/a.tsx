@@ -1,4 +1,4 @@
-import { useFlat } from "../service";
+import { useFlat } from "../../service";
 
 const A = () => {
 	const { info } = useFlat("authStore");
