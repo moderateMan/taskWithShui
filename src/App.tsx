@@ -1,45 +1,14 @@
-import "./App.css";
-import A from "./common/components/a";
-import B from "./common/components/b";
-import { useFlat } from "./service";
+import { RouterProvider } from "react-router";
+import router from "./router";
+import { DotLoading } from "antd-mobile";
 
 function App() {
-	const { setAppInfo, } = useFlat("appStore");
-	const { setInfo ,testAct} = useFlat("authStore");
-	return (
-		<div className="App">
-			<header className="App-header">
-				<div>
-					<A></A>
-					<button
-						onClick={() => {
-							setAppInfo(Date.now().toString());
-						}}
-					>
-						btn1
-					</button>
-				</div>
-				<div>
-					<B></B>
-					<button
-						onClick={() => {
-							setInfo(Date.now().toString());
-						}}
-					>
-						btn2
-					</button>
-				</div>
-				<a
-					className="App-link"
-					href="https://github.com/DLand-Team"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					闲D岛🏝️
-				</a>
-			</header>
-		</div>
-	);
+  return (
+    <RouterProvider
+      router={router}
+      fallbackElement={<DotLoading color="primary" />}
+    />
+  );
 }
 
 export default App;

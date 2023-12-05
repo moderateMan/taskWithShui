@@ -1,0 +1,15 @@
+$tabbar-height: 48px;
+
+.main {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  .content {
+    height: calc(100vh - $tabbar-height);
+  }
+
+  .tabbar {
+    height: $tabbar-height;
+  }
+}
