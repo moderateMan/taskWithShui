@@ -1,12 +1,13 @@
 import { TabBar } from "antd-mobile";
-import { Outlet, parsePath, useLocation, useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import styles from "./index.module.scss";
+import { useEffect } from "react";
+import cls from "classnames";
 
 export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { pathname } = location;
-
 
   const setRouteActive = (value: string) => {
     navigate(value);
@@ -15,24 +16,42 @@ export default function MainLayout() {
   const tabs = [
     {
       key: "/learnScientific",
-      title: "学科研",
+      title: (active: boolean) => (
+        <span className={cls(styles.link, active && styles.active)}>
+          学科研
+        </span>
+      ),
     },
     {
       key: "/readDocument",
-      title: "读文献",
+      title: (active: boolean) => (
+        <span className={cls(styles.link, active && styles.active)}>
+          读文献
+        </span>
+      ),
     },
     {
       key: "/workScientific",
-      title: "做科研",
+      title: (active: boolean) => (
+        <span className={cls(styles.link, active && styles.active)}>
+          做科研
+        </span>
+      ),
     },
     {
       key: "/personalCenter",
-      title: "我的",
-      icon: (active: boolean) => (
-        <span style={{ color: active ? "blue" : "red" }}>asdfsfs</span>
+      title: (active: boolean) => (
+        <span className={cls(styles.link, active && styles.active)}>我的</span>
       ),
     },
   ];
+
+  useEffect(() => {
+    if (pathname === "/") {
+      navigate(tabs[0].key, { replace: true });
+    }
+  }, [pathname]);
+
   return (
     <main className={styles.main}>
       <div className={styles.content}>
@@ -44,7 +63,7 @@ export default function MainLayout() {
           onChange={(value) => setRouteActive(value)}
         >
           {tabs.map((item) => (
-            <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
+            <TabBar.Item key={item.key} title={item.title} />
           ))}
         </TabBar>
       </div>

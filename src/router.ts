@@ -1,17 +1,17 @@
 import { DotLoading } from "antd-mobile";
 import MainLayout from "./layout/main";
 import {createBrowserRouter} from 'react-router-dom'
+import LearnScientific from "./pages/learnScientific";
 
 const router = createBrowserRouter([
   {
     id: "root",
-    path: "/",
+    path: "",
     Component: MainLayout,
     children: [
       {
-        index: true,
         path: "learnScientific",
-        Component: DotLoading,
+        Component: LearnScientific,
       },
       {
         path: "readDocument",
@@ -26,6 +26,14 @@ const router = createBrowserRouter([
         Component: DotLoading,
       },
     ],
+  },
+  {
+    path: "/me",
+    element: "5555",
+  },
+  {
+    path: "*",
+    element: "66666",
   },
 ]);
 

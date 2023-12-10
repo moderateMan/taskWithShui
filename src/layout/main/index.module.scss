@@ -11,5 +11,16 @@ $tabbar-height: 48px;
 
   .tabbar {
     height: $tabbar-height;
+    background-color: var(--adm-color-background);
+    position: relative;
+    z-index: 999;
+    .link {
+      font-size: 10px;
+      line-height: 12px;
+      color: rgba(0, 0, 0, 0.9);
+      &.active {
+        color: #3166f5;
+      }
+    }
   }
 }
