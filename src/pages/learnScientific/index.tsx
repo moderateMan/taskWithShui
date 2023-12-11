@@ -1,7 +1,7 @@
-import { SearchBar, Tabs } from "antd-mobile";
+import { Tabs } from "antd-mobile";
 import styles from "./index.module.scss";
-import Icon from "../../common/components/icons";
-import List from "./components/list";
+import SearchBar from "../../common/components/searchBar";
+import ScientificList from "../../common/components/scientificList";
 
 const tabItems = [
   {
@@ -18,11 +18,7 @@ export default function LearnScientific() {
   return (
     <div className={styles["learn-scientific"]}>
       <div className={styles["search-bar-wrapper"]}>
-        <SearchBar
-          icon={<Icon name="search" color="#4c5666" />}
-          placeholder="搜索你想查看的文章"
-          className={styles["search-bar"]}
-        />
+        <SearchBar />
       </div>
       <div className={styles["tabs-wrapper"]}>
         <Tabs className={styles["tabs"]} stretch={false}>
@@ -33,7 +29,7 @@ export default function LearnScientific() {
               key={item.key}
               destroyOnClose
             >
-              <List />
+              <ScientificList />
             </Tabs.Tab>
           ))}
         </Tabs>

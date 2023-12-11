@@ -10,7 +10,7 @@ export default function MainLayout() {
   const { pathname } = location;
 
   const setRouteActive = (value: string) => {
-    navigate(value);
+    navigate(value, { replace: true });
   };
 
   const tabs = [

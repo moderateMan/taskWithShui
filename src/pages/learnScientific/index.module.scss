@@ -2,12 +2,6 @@
   height: 100%;
   .search-bar-wrapper {
     padding: 10px 20px;
-    .search-bar {
-      --height: 40px;
-      --background: #f1f2f6;
-      --border-radius: 8px;
-      --placeholder-color: #bcc2cc;
-    }
   }
   .tabs-wrapper {
     height: calc(100% - 50px);
