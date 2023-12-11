@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router";
 import styles from "./index.module.scss";
 import { useEffect } from "react";
 import cls from "classnames";
+import { AppOutline, ContentOutline, UnorderedListOutline, UserOutline } from "antd-mobile-icons";
 
 export default function MainLayout() {
   const location = useLocation();
@@ -21,6 +22,9 @@ export default function MainLayout() {
           学科研
         </span>
       ),
+      icon: (active: boolean) => (
+        <AppOutline className={cls(styles.link, active && styles.active)} />
+      ),
     },
     {
       key: "/readDocument",
@@ -28,6 +32,9 @@ export default function MainLayout() {
         <span className={cls(styles.link, active && styles.active)}>
           读文献
         </span>
+      ),
+      icon: (active: boolean) => (
+        <ContentOutline className={cls(styles.link, active && styles.active)} />
       ),
     },
     {
@@ -37,11 +44,19 @@ export default function MainLayout() {
           做科研
         </span>
       ),
+      icon: (active: boolean) => (
+        <UnorderedListOutline
+          className={cls(styles.link, active && styles.active)}
+        />
+      ),
     },
     {
       key: "/personalCenter",
       title: (active: boolean) => (
         <span className={cls(styles.link, active && styles.active)}>我的</span>
+      ),
+      icon: (active: boolean) => (
+        <UserOutline className={cls(styles.link, active && styles.active)} />
       ),
     },
   ];
@@ -63,7 +78,7 @@ export default function MainLayout() {
           onChange={(value) => setRouteActive(value)}
         >
           {tabs.map((item) => (
-            <TabBar.Item key={item.key} title={item.title} />
+            <TabBar.Item key={item.key} title={item.title} icon={item.icon} />
           ))}
         </TabBar>
       </div>

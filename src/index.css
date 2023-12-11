@@ -1,4 +1,14 @@
+@font-face {
+  font-family: "PingFang SC";
+  src: url("./assets/PingFang SC.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   margin: 0;
   padding: 0;
+  --adm-font-family: -apple-system, "PingFang SC", blinkmacsystemfont,
+    "Helvetica Neue", helvetica, segoe ui, arial, roboto, "miui",
+    "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
 }
