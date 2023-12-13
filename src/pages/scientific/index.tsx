@@ -2,9 +2,10 @@ import { useParams } from "react-router";
 import styles from "./index.module.scss";
 import { HeartFill, HeartOutline, SendOutline } from "antd-mobile-icons";
 import { pdfjs, Document, Page } from "react-pdf";
+import { useState } from "react";
+import { Space, SpinLoading } from "antd-mobile";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
-import { useState } from "react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -55,6 +56,16 @@ export default function Scientific() {
           onLoadSuccess={(doc) => {
             setNumPages(doc.numPages);
           }}
+          loading={
+            <Space
+              direction="vertical"
+              align="center"
+              className={styles["loading"]}
+            >
+              <SpinLoading />
+              <span>加载中...</span>
+            </Space>
+          }
         >
           {Array.from(new Array(numPages), (_, idx) => (
             <Page
