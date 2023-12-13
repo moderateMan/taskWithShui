@@ -1,9 +1,26 @@
 import { useParams } from "react-router";
 import styles from "./index.module.scss";
 import { HeartFill, HeartOutline, SendOutline } from "antd-mobile-icons";
+import { pdfjs, Document, Page } from "react-pdf";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/esm/Page/TextLayer.css";
+import { useState } from "react";
 
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.js",
+  import.meta.url
+).toString();
+
+const url = new URL("../../assets/test.pdf", import.meta.url).toString();
+
+const options = {
+  cMapUrl: "/cmaps/",
+  standardFontDataUrl: "/standard_fonts/",
+};
 export default function Scientific() {
   const params = useParams();
+
+  const [numPages, setNumPages] = useState<number>();
   const actions = [
     {
       title: "分享",
@@ -31,10 +48,22 @@ export default function Scientific() {
         </div>
       </div>
       <div className={styles["content"]}>
-        <iframe
-          src="http://127.0.0.1:8888/test.pdf"
+        <Document
+          file={url}
           className={styles["pdf"]}
-        ></iframe>
+          options={options}
+          onLoadSuccess={(doc) => {
+            setNumPages(doc.numPages);
+          }}
+        >
+          {Array.from(new Array(numPages), (_, idx) => (
+            <Page
+              key={`page_${idx + 1}`}
+              pageNumber={idx + 1}
+              width={window.innerWidth}
+            />
+          ))}
+        </Document>
       </div>
       <div className={styles["footer"]}>
         {actions.map((i) => (

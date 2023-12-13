@@ -1,4 +1,4 @@
-import { TabBar } from "antd-mobile";
+import { SafeArea, TabBar } from "antd-mobile";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import styles from "./index.module.scss";
 import { useEffect } from "react";
