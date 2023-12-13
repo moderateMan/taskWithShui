@@ -1,4 +1,4 @@
-.scientific-list {
+.pay-list {
   .item {
     & + .item {
       border-top: 1px solid #f1f2f6;
@@ -34,19 +34,16 @@
         justify-content: space-between;
         align-items: center;
         font-weight: 500;
-        .price {
-          font-size: 12px;
-          font-weight: 500;
-          color: #f46b4f;
-          line-height: 14px;
-          &.free {
-            color: #bcc2cc;
-          }
-        }
+        font-size: 14px;
+        line-height: 16px;
         .time {
-          font-size: 12px;
           color: #bcc2cc;
-          line-height: 14px;
+        }
+        .review {
+          font-size: 14px;
+          line-height: 16px;
+          padding: 4px 8px;
+          --border-radius: 4px;
         }
       }
     }

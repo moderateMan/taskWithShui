@@ -29,7 +29,7 @@ export default function LearnScientific() {
               key={item.key}
               destroyOnClose
             >
-              <ScientificList />
+              <ScientificList price={item.key === "pay" ? 20 : 0} />
             </Tabs.Tab>
           ))}
         </Tabs>

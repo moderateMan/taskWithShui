@@ -1,18 +1,21 @@
 import { Avatar } from "antd-mobile";
 import { RightOutline } from "antd-mobile-icons";
 import styles from "./index.module.scss";
-const menu = [
-  {
-    key: "myCollect",
-    title: "我的收藏",
-  },
-  {
-    key: "payHistory",
-    title: "购买记录",
-  },
-];
+import { useNavigate } from "react-router";
+import { getAbsolutePath, routes } from "../../router";
 
 export default function PersonalCenter() {
+  const navigate = useNavigate();
+  const menu = [
+    {
+      key: getAbsolutePath(routes.myCollection.pathname),
+      title: routes.myCollection.title,
+    },
+    {
+      key: getAbsolutePath(routes.payHistory.pathname),
+      title: routes.payHistory.title,
+    },
+  ];
   return (
     <div className={styles["personal-center"]}>
       <div className={styles["header"]}>
@@ -23,13 +26,20 @@ export default function PersonalCenter() {
           />
           <span className={styles["name"]}>张启明</span>
         </div>
-        <div className={styles["right"]}>
+        <div
+          className={styles["right"]}
+          onClick={() => navigate(getAbsolutePath(routes.editProfile.pathname))}
+        >
           <span>编辑</span>
           <RightOutline />
         </div>
       </div>
-      {menu.map((i, idx) => (
-        <div key={idx} className={styles["menu"]}>
+      {menu.map((i) => (
+        <div
+          key={i.key}
+          className={styles["menu"]}
+          onClick={() => navigate(i.key)}
+        >
           <span>{i.title}</span>
           <RightOutline />
         </div>

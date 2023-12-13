@@ -3,7 +3,13 @@ import { Outlet, useLocation, useNavigate } from "react-router";
 import styles from "./index.module.scss";
 import { useEffect } from "react";
 import cls from "classnames";
-import { AppOutline, ContentOutline, UnorderedListOutline, UserOutline } from "antd-mobile-icons";
+import {
+  AppOutline,
+  ContentOutline,
+  UnorderedListOutline,
+  UserOutline,
+} from "antd-mobile-icons";
+import { getAbsolutePath, routes, rootPrefix } from "../../router";
 
 export default function MainLayout() {
   const location = useLocation();
@@ -16,10 +22,10 @@ export default function MainLayout() {
 
   const tabs = [
     {
-      key: "/learnScientific",
+      key: getAbsolutePath(routes.learnScientific.pathname),
       title: (active: boolean) => (
         <span className={cls(styles.link, active && styles.active)}>
-          学科研
+          {routes.learnScientific.title}
         </span>
       ),
       icon: (active: boolean) => (
@@ -27,10 +33,10 @@ export default function MainLayout() {
       ),
     },
     {
-      key: "/readDocument",
+      key: getAbsolutePath(routes.readScientific.pathname),
       title: (active: boolean) => (
         <span className={cls(styles.link, active && styles.active)}>
-          读文献
+          {routes.readScientific.title}
         </span>
       ),
       icon: (active: boolean) => (
@@ -38,10 +44,10 @@ export default function MainLayout() {
       ),
     },
     {
-      key: "/workScientific",
+      key: getAbsolutePath(routes.workScientific.pathname),
       title: (active: boolean) => (
         <span className={cls(styles.link, active && styles.active)}>
-          做科研
+          {routes.workScientific.title}
         </span>
       ),
       icon: (active: boolean) => (
@@ -51,9 +57,11 @@ export default function MainLayout() {
       ),
     },
     {
-      key: "/personalCenter",
+      key: getAbsolutePath(routes.personalCenter.pathname),
       title: (active: boolean) => (
-        <span className={cls(styles.link, active && styles.active)}>我的</span>
+        <span className={cls(styles.link, active && styles.active)}>
+          {routes.personalCenter.title}
+        </span>
       ),
       icon: (active: boolean) => (
         <UserOutline className={cls(styles.link, active && styles.active)} />
@@ -62,7 +70,7 @@ export default function MainLayout() {
   ];
 
   useEffect(() => {
-    if (pathname === "/") {
+    if (pathname === rootPrefix) {
       navigate(tabs[0].key, { replace: true });
     }
   }, [pathname]);
