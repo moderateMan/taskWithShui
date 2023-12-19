@@ -11,11 +11,20 @@ declare module "@arco-design/color" {
     color: string,
     options?: {
       index?: number;
-      list?: boolean;
+      list: true;
       dark?: boolean;
       format?: "hex" | "rgb" | "hsl";
     }
-  ): number;
+  ): string[];
+  export function generate(
+    color: string,
+    options?: {
+      index?: number;
+      list?: false;
+      dark?: boolean;
+      format?: "hex" | "rgb" | "hsl";
+    }
+  ): string;
   export function getPresetColors(): {
     red: ColorType;
     orangered: ColorType;
@@ -33,3 +42,5 @@ declare module "@arco-design/color" {
     gray: ColorType;
   };
 }
+
+declare const WeixinJSBridge = {};

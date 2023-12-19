@@ -2,24 +2,45 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSliceCustom } from "redux-eazy";
 import names from "../../../service/stores/names";
+import {
+  Course,
+  CourseType,
+  ListRequestParams,
+  getList,
+} from "../../../common/apis";
+
+const PAGE_SIZE = 10;
 
 /* Types */
 export interface SliceState {
-  appInfo: string;
+  list: Course[];
+  type: CourseType;
+  search?: string;
 }
 
 const initialState = (): SliceState => {
   return {
-    appInfo: "test",
+    list: [],
+    type: CourseType.PAID_COURSE,
+    search: "",
   };
 };
 
 const slice = createSliceCustom({
-  name: names.mainStore,
+  name: names.learnScientificStore,
   stateInit: initialState,
   reducers: {
-    setAppInfo(state, action: PayloadAction<string>) {
-      state.appInfo = action.payload;
+    setType(state, action: PayloadAction<CourseType>) {
+      state.type = action.payload;
+    },
+    setList(state, action: PayloadAction<Course[]>) {
+      state.list = action.payload;
+    },
+    setSearch(state, action: PayloadAction<string | undefined>) {
+      state.search = action.payload;
+    },
+    reset(state) {
+      state = initialState();
     },
   },
 

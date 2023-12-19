@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import styles from "./index.module.scss";
 import { HeartFill, HeartOutline, SendOutline } from "antd-mobile-icons";
 import { pdfjs, Document, Page } from "react-pdf";
@@ -20,6 +20,8 @@ const options = {
 };
 export default function Scientific() {
   const params = useParams();
+  const location = useLocation();
+  const isFree = !!(new URLSearchParams(location.search).get('free'))
 
   const [numPages, setNumPages] = useState<number>();
   const actions = [
@@ -43,10 +45,12 @@ export default function Scientific() {
         <h3 className={styles["title"]}>
           浅析未来的5至10年不同领域的CAR-T技术的研究进展及应用趋势
         </h3>
-        <div className={styles["desc"]}>
-          <span className={styles["label"]}>文献价格：</span>
-          <span className={styles["price"]}>20元</span>
-        </div>
+        {!isFree && (
+          <div className={styles["desc"]}>
+            <span className={styles["label"]}>文献价格：</span>
+            <span className={styles["price"]}>20元</span>
+          </div>
+        )}
       </div>
       <div className={styles["content"]}>
         <Document

@@ -8,6 +8,7 @@ import {
 } from "antd-mobile-icons";
 import { Avatar, Button, Footer, Rate } from "antd-mobile";
 import cls from "classnames";
+import WxShare, { share } from "../../common/components/wxShare";
 
 export default function Pay() {
   const params = useParams();
@@ -15,6 +16,7 @@ export default function Pay() {
     {
       title: "分享",
       icon: <SendOutline className={styles["icon"]} color="#000000" />,
+      onClick: share,
     },
     {
       title: "收藏",
@@ -24,6 +26,7 @@ export default function Pay() {
         ) : (
           <HeartFill className={styles["icon"]} color="#f04859" />
         ),
+      onClick: () => {},
     },
   ];
   return (
@@ -55,15 +58,15 @@ export default function Pay() {
         <hr className={styles["hr"]} />
         <h3 className={cls(styles["sub"], styles["title"])}>评价</h3>
         <div className={styles["list"]}>
-          {[1, 2, 3, 4].map((i) => (
-            <div className={styles["review"]}>
+          {[1, 2, 3, 4].map((i, idx) => (
+            <div className={styles["review"]} key={idx}>
               <div className={styles["profile"]}>
                 <div className={styles["left"]}>
                   <Avatar
                     src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
                     className={styles["avatar"]}
                   />
-                  <div className={styles['info']}>
+                  <div className={styles["info"]}>
                     <span className={styles["name"]}>高先生</span>
                     <span className={styles["time"]}>2023-06-08</span>
                   </div>
@@ -89,7 +92,7 @@ export default function Pay() {
       </div>
       <div className={styles["footer"]}>
         {actions.map((i) => (
-          <div key={i.title} className={styles["action"]}>
+          <div key={i.title} className={styles["action"]} onClick={i.onClick}>
             {i.icon}
             {i.title}
           </div>

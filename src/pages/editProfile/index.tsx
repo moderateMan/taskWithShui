@@ -12,15 +12,11 @@ export default function EditProfile() {
           className={styles["avatar"]}
         />
       </div>
-      <Form
-        layout="horizontal"
-        className={styles["form"]}
-        initialValues={{ name: "张启明", phone: "188****3248" }}
-      >
-        <Form.Item label="微信名" name="name">
+      <Form layout="horizontal" className={styles["form"]} initialValues={{}}>
+        <Form.Item label="微信名" name="nickname">
           <Input readOnly placeholder="请输入微信名" />
         </Form.Item>
-        <Form.Item label="电话" name="phone">
+        <Form.Item label="电话" name="mobile">
           <Input readOnly placeholder="请输入电话" />
         </Form.Item>
         <Form.Item label="省市区" name="area">
@@ -29,7 +25,7 @@ export default function EditProfile() {
         <Form.Item label="医院" name="hospital">
           <Input placeholder="请输入医院名称" />
         </Form.Item>
-        <Form.Item label="科室" name="dept">
+        <Form.Item label="科室" name="department">
           <Input placeholder="请输入科室名称" />
         </Form.Item>
         <Form.Item label="邮箱" name="email">

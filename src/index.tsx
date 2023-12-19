@@ -4,6 +4,9 @@ import SuperProvider from "./service/providers";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
+import VConsole from "vconsole";
+const vConsole = new VConsole();
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

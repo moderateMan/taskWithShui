@@ -2,24 +2,29 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSliceCustom } from "redux-eazy";
 import names from "../../../service/stores/names";
+import { Course } from "../../../common/apis";
 
 /* Types */
 export interface SliceState {
-  appInfo: string;
+  data: Course[];
+  search?: string;
 }
 
 const initialState = (): SliceState => {
   return {
-    appInfo: "test",
+    data: [],
   };
 };
 
 const slice = createSliceCustom({
-  name: names.mainStore,
+  name: names.readScientificStore,
   stateInit: initialState,
   reducers: {
-    setAppInfo(state, action: PayloadAction<string>) {
-      state.appInfo = action.payload;
+    setSearch(state, action: PayloadAction<string | undefined>) {
+      state.search = action.payload;
+    },
+    setData(state, action: PayloadAction<Course[]>) {
+      state.data = action.payload;
     },
   },
 

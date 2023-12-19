@@ -2,24 +2,25 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSliceCustom } from "redux-eazy";
 import names from "../../../service/stores/names";
+import { Paper } from "../../../common/apis";
 
 /* Types */
 export interface SliceState {
-  appInfo: string;
+  data: Paper[];
 }
 
 const initialState = (): SliceState => {
   return {
-    appInfo: "test",
+    data: [],
   };
 };
 
 const slice = createSliceCustom({
-  name: names.mainStore,
+  name: names.workScientificStore,
   stateInit: initialState,
   reducers: {
-    setAppInfo(state, action: PayloadAction<string>) {
-      state.appInfo = action.payload;
+    setData(state, action: PayloadAction<Paper[]>) {
+      state.data = action.payload;
     },
   },
 
