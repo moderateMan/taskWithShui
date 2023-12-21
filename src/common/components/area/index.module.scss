@@ -1,0 +1,11 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 10px;
+  .arrow{
+    color:#DDE2F0;
+    font-size: 12px;
+    transition: all 0.3s ease;
+  }
+}

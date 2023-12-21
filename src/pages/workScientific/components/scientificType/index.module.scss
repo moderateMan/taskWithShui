@@ -1,0 +1,45 @@
+.type {
+  border-radius: 4px;
+  overflow: hidden;
+  text-align: center;
+  font-size: 12px;
+  & + .type {
+    margin-top: 16px;
+  }
+  .title {
+    border-top-width: 4px;
+    border-top-style: solid;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 12px 0;
+  }
+  .desc {
+    padding: 12px 0;
+    border-bottom: 1px dotted #bcc2cc;
+    margin: 0;
+    width: calc(100% - 24px);
+    position: relative;
+    left: 12px;
+    line-height: 16px;
+  }
+  .remark {
+    color: #4c5666;
+    width: calc(100% - 48px);
+    position: relative;
+    left: 24px;
+    line-height: 18px;
+  }
+  .price {
+    color: #030504;
+  }
+  .number {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .button {
+    background-color: #2556b8;
+    padding: 10px 66px;
+    color: #ffffff;
+    border: none;
+  }
+}
