@@ -87,7 +87,7 @@ export default function Header({ headerOnDark }: Props) {
           </Stack>
 
           <Stack spacing={2} direction="row" alignItems="center" justifyContent="flex-end">
-            <Stack spacing={5} direction="row" alignItems="center">
+            <Stack spacing={2} direction="row" alignItems="center" justifyContent="flex-end">
               {/* <Searchbar/> */}
               {/* <SettingsButton/> */}
               {mdUp && <MenuBtn />}

@@ -28,7 +28,7 @@ const initialState = (): SliceState => {
       name: undefined,
       category: undefined,
     },
-    marketDealType: undefined,
+    marketDealType: DealType.ALL,
   };
 };
 

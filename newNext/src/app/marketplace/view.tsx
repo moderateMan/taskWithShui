@@ -16,9 +16,9 @@ export default function TravelToursView() {
 
   return (
     <>
-      <Container maxWidth="xl">
+      <Container>
         <DealFilters
-          maxWidth={'xl'}
+          maxWidth={'lg'}
           sx={{
             mt: 5,
             mb: { xs: 2, md: 3 },

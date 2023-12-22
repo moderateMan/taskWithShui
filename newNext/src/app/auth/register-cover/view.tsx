@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form';
 import FormProvider, { RHFTextField } from 'src/commonOld/components/hook-form';
 import Iconify from 'src/commonOld/components/iconify';
 import Logo from 'src/commonOld/components/logo';
-import MySwitch from 'src/commonOld/components/switch-user-type';
+// import MySwitch from 'src/commonOld/components/switch-user-type';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
 import { RouterLink } from 'src/routes/components';
 import { paths } from 'src/routes/paths';
@@ -184,15 +184,18 @@ const RenderFormUser = () => {
             Register
           </LoadingButton>
 
-          <Typography variant="caption" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+          <Typography
+            variant="caption"
+            align="left"
+            sx={{ color: 'text.secondary', ml: -1 }}
+          >
             <Checkbox
               value={agreed}
               onChange={() => {
                 setAgreed(!agreed);
               }}
             />
-            {`I agree to  `}
-
+            {`I agree to `}
             <ScrollDialog />
           </Typography>
         </Stack>
@@ -247,7 +250,11 @@ const RenderFormUser = () => {
             Register
           </LoadingButton>
 
-          <Typography variant="caption" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+          <Typography
+            variant="caption"
+            align="left"
+            sx={{ color: 'text.secondary', ml: -1 }}
+          >
             <Checkbox
               value={agreed}
               onChange={() => {
@@ -276,14 +283,15 @@ export default function RegisterCoverView() {
         textAlign: { xs: 'center', md: 'left' },
       }}
     >
-      <Typography variant="h3" paragraph>
-        Get Started as{' '}
+      <Typography variant="h3" sx={{ color: 'common.black' }} paragraph>
+        Get Started
+        {/* Get Started as{' '}
         <MySwitch
           onChange={(e) => {
             setIsPartner(!isPartner);
           }}
           checked={isPartner}
-        />
+        /> */}
       </Typography>
 
       <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -295,7 +303,8 @@ export default function RegisterCoverView() {
     </Stack>
   );
 
-  const renderSocials = !isPartner && (
+  // const renderSocials = !isPartner && (
+  const renderSocials = (
     <Stack direction="row" spacing={2}>
       <Button fullWidth size="large" color="inherit" variant="outlined">
         <Iconify icon="logos:google-icon" width={24} />
@@ -313,15 +322,15 @@ export default function RegisterCoverView() {
 
       {renderHead}
 
-      {/* {renderSocials} */}
+      {renderSocials}
 
-      {/* {!isPartner && (
-        <Divider sx={{ py: 3 }}>
-          <Typography variant="body2" sx={{ color: 'text.disabled' }}>
-            OR
-          </Typography>
-        </Divider>
-      )} */}
+      {/* {!isPartner && ( */}
+      <Divider sx={{ py: 3 }}>
+        <Typography variant="body2" sx={{ color: 'text.disabled' }}>
+          OR
+        </Typography>
+      </Divider>
+      {/* )} */}
       <RenderFormUser />
     </>
   );

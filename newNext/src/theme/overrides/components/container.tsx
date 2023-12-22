@@ -6,7 +6,7 @@ export function container(theme: Theme) {
   return {
     MuiContainer: {
       defaultProps: {
-        maxWidth: 'xl',
+        maxWidth: 'lg',
       },
     },
   };

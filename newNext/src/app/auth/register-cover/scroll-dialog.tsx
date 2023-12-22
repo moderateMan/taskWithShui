@@ -38,11 +38,11 @@ export default function ScrollDialog() {
 
   return (
     <>
-      <Link onClick={handleClickOpen('paper')} color="text.primary" href="#" underline="always">
-        Terms & Conditions
+      <Link onClick={handleClickOpen('paper')} color="text.primary" href="#">
+        Terms of Service
       </Link>
       {` and `}
-      <Link onClick={handleClickOpen('paper')} color="text.primary" href="#" underline="always">
+      <Link onClick={handleClickOpen('paper')} color="text.primary" href="#">
         Privacy Policy.
       </Link>
 

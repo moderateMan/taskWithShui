@@ -1,6 +1,6 @@
 'use client';
 
-import AuthCoverLayout from "src/common/layouts/authLayout";
+import AuthCoverLayout_v2 from "src/common/layouts/authLayout_v2";
 
 // ----------------------------------------------------------------------
 
@@ -10,14 +10,11 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <AuthCoverLayout
-      title={`Manage The Job \n More Effectively`}
-      images={[
-        '/assets/images/travel/travel_post_01.jpg',
-        '/assets/images/travel/travel_post_03.jpg',
-      ]}
+    <AuthCoverLayout_v2
+      title={`Where Opportunities\nMeet Growth `}
+      image={'/assets/images/travel/travel_post_01.jpg'}
     >
       {children}
-    </AuthCoverLayout>
+    </AuthCoverLayout_v2>
   );
 }

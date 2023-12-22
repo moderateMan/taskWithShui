@@ -76,20 +76,21 @@ export default function LoginCoverView() {
         textAlign: { xs: 'center', md: 'left' },
       }}
     >
-      <Typography variant="h3" paragraph>
-        Login as{' '}
+      <Typography variant="h3" sx={{ color: 'common.black' }} paragraph>
+        Login
+        {/* Login as{' '}
         <MySwitch
           onChange={() => {
             setIsPartner(!isPartner);
           }}
           checked={isPartner}
-        />
+        /> */}
       </Typography>
 
       <Typography variant="body2" sx={{ color: 'text.secondary' }}>
         {`Don’t have an account? `}
         <Link component={RouterLink} href={paths.registerCover} variant="subtitle2" color="primary">
-          register
+          Get Started
         </Link>
       </Typography>
     </Stack>
@@ -136,7 +137,7 @@ export default function LoginCoverView() {
           }}
         />
 
-        <Link
+        {/* <Link
           component={RouterLink}
           href={paths.verify}
           variant="body2"
@@ -144,14 +145,15 @@ export default function LoginCoverView() {
           color="text.secondary"
         >
           Verify Email
-        </Link>
+        </Link> */}
 
         <Link
           component={RouterLink}
           href={paths.forgotPassword}
           variant="body2"
           underline="always"
-          color="text.secondary"
+          // color="text.secondary"
+          color="primary"
         >
           Forgot password?
         </Link>

@@ -11,31 +11,37 @@ const testData = [
     icon: '/assets/icons/allDeal.svg',
     title: 'All',
     description: 'Secure funds to fuel your growth.',
+    key: DealType.ALL,
   },
   {
     icon: '/assets/icons/vector.svg',
     title: 'Capital Raising',
     description: 'Secure funds to fuel your growth.',
+    key: DealType.CAPITAL_RAISING,
   },
   {
     icon: '/assets/icons/equity.svg',
     title: 'Equity',
     description: 'Discover investment prospects and partnerships.',
+    key: DealType.EQUITY,
   },
   {
     icon: '/assets/icons/ic_users_group.svg',
     title: 'Partnerships',
     description: 'Find strategic allies for your business.',
+    key: DealType.PARTNERSHIPS,
   },
   {
     icon: '/assets/icons/icon.svg',
     title: 'Startup Pitch',
     description: 'Pitch your groundbreaking ideas.',
+    key: DealType.STARTUP_PITCH,
   },
   {
     icon: '/assets/icons/ic_shopping_cart.svg',
     title: 'Business for Sale',
     description: 'Promote your venture.',
+    key: DealType.SELL_A_BUSINESS,
   },
 ];
 
@@ -65,7 +71,7 @@ export default function DealTabSelector({ sx, ...other }: StackProps) {
             onClick={() => {
               switch (item.title) {
                 case 'All':
-                  setMarketDealType(undefined);
+                  setMarketDealType(DealType.ALL);
                   break;
                 case 'Capital Raising':
                   setMarketDealType(DealType.CAPITAL_RAISING);
@@ -92,7 +98,12 @@ export default function DealTabSelector({ sx, ...other }: StackProps) {
             }}
             key={index}
           >
-            <DealTabSelectorItem key={index} name={item.title} pic_url={item.icon} />
+            <DealTabSelectorItem
+              key={item.key}
+              active={item.key === marketDealType}
+              name={item.title}
+              pic_url={item.icon}
+            />
           </div>
         );
       })}

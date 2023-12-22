@@ -11,14 +11,23 @@ type StyledNavItemProps = Omit<NavItemProps, 'item'>;
 export const StyledNavItem = styled(ListItemButton, {
   shouldForwardProp: (prop) => prop !== 'active' && prop !== 'open' && prop !== 'subItem',
 })<StyledNavItemProps>(({ active, open, subItem, theme }) => {
-  const dotActiveStyle = {
+  const underlineStyle = {
     content: '""',
-    borderRadius: '50%',
     position: 'absolute',
-    width: 6,
-    height: 6,
-    left: -12,
+    width: 0,
+    height: 2,
+    left: 0,
+    bottom: -2,
+    backgroundColor: 'black',
+  };
+  const underlineActiveStyle = {
+    ...underlineStyle,
     backgroundColor: theme.palette.primary.main,
+    width: '100%',
+  };
+  const underlineAnimationStyle = {
+    transition: 'width 0.3s ease',
+    width: '100%',
   };
 
   return {
@@ -30,10 +39,11 @@ export const StyledNavItem = styled(ListItemButton, {
     transition: theme.transitions.create('opacity', {
       duration: theme.transitions.duration.shorter,
     }),
+    '&::before': underlineStyle,
     '&:hover': {
       opacity: 0.8,
       backgroundColor: 'transparent',
-      '&::before': dotActiveStyle,
+      '&::before': underlineAnimationStyle,
     },
     // Sub item
     ...(subItem && {
@@ -44,7 +54,7 @@ export const StyledNavItem = styled(ListItemButton, {
     ...(active && {
       color: theme.palette.text.primary,
       fontWeight: theme.typography.fontWeightBold,
-      '&::before': dotActiveStyle,
+      '&::before': underlineActiveStyle,
     }),
     // Active sub item
     ...(active &&
@@ -52,14 +62,14 @@ export const StyledNavItem = styled(ListItemButton, {
         color: theme.palette.text.primary,
         fontWeight: theme.typography.fontWeightSemiBold,
         '&::before': {
-          ...dotActiveStyle,
+          ...underlineActiveStyle,
           color: theme.palette.primary.main,
         },
       }),
     // Open
     ...(open && {
       opacity: 0.48,
-      '&::before': dotActiveStyle,
+      '&::before': underlineActiveStyle,
     }),
   };
 });

@@ -15,6 +15,7 @@ export enum DealStatus {
 }
 
 export enum DealType {
+  ALL = 'all',
   CAPITAL_RAISING = 'capital_raising',
   EQUITY = 'equity',
   STARTUP_PITCH = 'startup_pitch',

@@ -41,7 +41,21 @@ export default function BasicMenu() {
   );
 
   return (
-    <div>
+    <>
+      <Badge badgeContent={count_new} color="primary">
+        <Iconify
+          icon="carbon:notification-filled"
+          sx={{
+            mr: 1,
+            ':hover': {
+              cursor: 'pointer',
+            },
+          }}
+          onClick={() => {
+            router.push(paths.account.notification);
+          }}
+        />
+      </Badge>
       <Button
         onMouseEnter={handleOpenMenuEx}
         onMouseLeave={menuOpen.onFalse}
@@ -70,20 +84,6 @@ export default function BasicMenu() {
       >
         {userInfo ? 'My account' : 'Login'}
       </Button>
-      <Badge badgeContent={count_new} color="primary">
-        <Iconify
-          icon="carbon:notification-filled"
-          sx={{
-            ml: 1,
-            ':hover': {
-              cursor: 'pointer',
-            },
-          }}
-          onClick={() => {
-            router.push(paths.account.notification);
-          }}
-        />
-      </Badge>
       {userInfo && menuOpen.value && (
         <Portal>
           <Fade in={menuOpen.value}>
@@ -101,6 +101,6 @@ export default function BasicMenu() {
           </Fade>
         </Portal>
       )}
-    </div>
+    </>
   );
 }

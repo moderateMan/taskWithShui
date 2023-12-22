@@ -1,6 +1,6 @@
 'use client';
 
-import AuthCoverLayout from "src/common/layouts/authLayout";
+import AuthCoverLayout_v2 from 'src/common/layouts/authLayout_v2';
 
 // ----------------------------------------------------------------------
 
@@ -10,14 +10,8 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <AuthCoverLayout
-      title="Hi, Welcome Back"
-      images={[
-        '/assets/images/travel/travel_post_01.jpg',
-        '/assets/images/travel/travel_post_03.jpg',
-      ]}
-    >
+    <AuthCoverLayout_v2 title="Hi, Welcome Back" image={'/assets/images/travel/travel_post_03.jpg'}>
       {children}
-    </AuthCoverLayout>
+    </AuthCoverLayout_v2>
   );
 }

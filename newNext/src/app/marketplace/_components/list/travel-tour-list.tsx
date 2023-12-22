@@ -27,9 +27,9 @@ export default function MarketDealList() {
           rowGap: { xs: 4, md: 5 },
           gridTemplateColumns: {
             xs: 'repeat(1, 1fr)',
-            sm: 'repeat(4, 1fr)',
+            sm: 'repeat(3, 1fr)',
             md: 'repeat(4, 1fr)',
-            xl: 'repeat(5, 1fr)',
+            lg: 'repeat(5, 1fr)',
           },
         }}
       >

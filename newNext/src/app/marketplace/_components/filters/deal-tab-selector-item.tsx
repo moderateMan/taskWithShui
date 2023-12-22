@@ -1,5 +1,5 @@
 import Stack from '@mui/material/Stack';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, TypographyProps } from '@mui/material';
 import { useFlatInject } from 'src/service';
 import { secondaryFont } from 'src/theme/typography';
 import { useResponsive } from 'mui-eazy';
@@ -7,6 +7,7 @@ import { useResponsive } from 'mui-eazy';
 // ----------------------------------------------------------------------
 
 export interface IDealTabSelectorItemProps {
+  active?: boolean;
   name: string;
   pic_url: string;
 }
@@ -18,9 +19,27 @@ export default function DealTabSelectorItem(props: IDealTabSelectorItemProps) {
   const { seachParams, marketDealType, setSeachParams } = useFlatInject('marketStore');
   const mdUp = useResponsive('up', 'md');
 
+  const underlineActiveStyle = {
+    content: '""',
+    position: 'absolute',
+    width: 0,
+    height: 2,
+    left: 0,
+    bottom: -2,
+    backgroundColor: '#256CCB',
+    ...(props.active && {
+      width: '100%',
+      backgroundColor: '#14417D',
+    }),
+  };
+  const underlineAnimationStyle = {
+    transition: 'width 0.3s ease',
+    width: '100%',
+  };
+
   return (
     <Stack
-      spacing={2.5}
+      spacing={1}
       alignItems={'center'}
       direction={'column'}
       sx={{
@@ -29,16 +48,21 @@ export default function DealTabSelectorItem(props: IDealTabSelectorItemProps) {
         whiteSpace: 'nowrap',
         justifyContent: 'flex-start',
         // backgroundColor: 'grey.100',
+        position: 'relative',
+        '&:before': underlineActiveStyle,
+        '&:hover': {
+          '&::before': underlineAnimationStyle,
+        },
       }}
     >
-      <Box component={'img'} src={props.pic_url} height={'20px'} />
+      <Box component={'img'} src={props.pic_url} height={'28px'} />
       <Typography
         fontFamily={secondaryFont.style.fontFamily}
         fontSize={'14px'}
         fontStyle={'normal'}
         fontWeight={600}
         lineHeight={'22px'}
-        color={'#14417D'}
+        color={props.active ? '#14417D' : '#256CCB'}
         textAlign={'center'}
       >
         {props.name}
