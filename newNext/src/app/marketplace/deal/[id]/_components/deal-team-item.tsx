@@ -43,57 +43,58 @@ export default function DealTeamItem({ member, sx = {} }: Props) {
 
   return (
     <Card sx={sx}>
-      <Stack spacing={0.5} sx={{ textAlign: 'center', pt: 3, pb: 1.5 }}>
-        <Stack spacing={2} justifyContent={'center'}>
-          <Typography
-            sx={{
-              color: '#14417D',
-              fontSize: '18px',
-              fontStyle: 'normal',
-              fontWeight: 600,
-              lineHeight: '28px',
-            }}
-          >
-            {name}
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={{
-              color: '#232323',
-              fontSize: '14px',
-              fontStyle: 'normal',
-              fontWeight: 400,
-              lineHeight: '22px',
-            }}
-          >
-            {title}
+      <Stack sx={{ height: 1 }}>
+        <Stack spacing={0.5} sx={{ textAlign: 'center', pt: 3, pb: 1.5 }}>
+          <Stack spacing={1} justifyContent={'center'}>
+            <Typography
+              sx={{
+                color: '#141414',
+                fontSize: '18px',
+                fontStyle: 'normal',
+                fontWeight: 600,
+                lineHeight: '28px',
+              }}
+            >
+              {name}
+            </Typography>
+            <Typography
+              sx={{
+                color: '#696969',
+                fontSize: '14px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: '22px',
+              }}
+            >
+              {title}
+            </Typography>
+          </Stack>
+
+          <Typography variant="body2" sx={{ color: 'text.disabled' }}>
+            {description}
           </Typography>
         </Stack>
 
-        <Typography variant="body2" sx={{ color: 'text.disabled' }}>
-          {description}
-        </Typography>
+        <Box sx={{ position: 'relative', flex: 1 }}>
+          {/* <Shape /> */}
+
+          <StyledOverlay>
+            <Stack
+              direction="row"
+              justifyContent="center"
+              sx={{ width: 1, zIndex: 9, bottom: 24, position: 'absolute' }}
+            >
+              {_socials.map((social) => (
+                <IconButton key={social.value} color="primary">
+                  <Iconify icon={social.icon} />
+                </IconButton>
+              ))}
+            </Stack>
+          </StyledOverlay>
+
+          <Image src={image} alt={name} ratio="1/1" height={1} />
+        </Box>
       </Stack>
-
-      <Box sx={{ position: 'relative' }}>
-        <Shape />
-
-        <StyledOverlay>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            sx={{ width: 1, zIndex: 9, bottom: 24, position: 'absolute' }}
-          >
-            {_socials.map((social) => (
-              <IconButton key={social.value} color="primary">
-                <Iconify icon={social.icon} />
-              </IconButton>
-            ))}
-          </Stack>
-        </StyledOverlay>
-
-        <Image src={image} alt={name} ratio="1/1" />
-      </Box>
     </Card>
   );
 }

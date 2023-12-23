@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { IconButton } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
 import { Iconify } from 'mui-eazy';
 
 import {
@@ -28,7 +28,7 @@ export default function ShareMenu() {
 
   return (
     <div>
-      <IconButton
+      {/* <IconButton
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
@@ -36,7 +36,14 @@ export default function ShareMenu() {
         onClick={handleClick}
       >
         <Iconify icon="carbon:share" />
-      </IconButton>
+      </IconButton> */}
+      <Button
+        onClick={handleClick}
+        sx={{ fontSize: '16px', lineHeight: '22px', fontWeight: 400 }}
+        startIcon={<Iconify icon="carbon:share" />}
+      >
+        Share
+      </Button>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

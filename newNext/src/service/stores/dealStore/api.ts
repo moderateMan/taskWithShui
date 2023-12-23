@@ -14,7 +14,7 @@ import { FileUploadApiRespone } from 'src/service/model/appStoreModel';
 
 // 市场列表
 function dealMarketplaceListApi(params: QueryDealForMarketplace) {
-  return http.request<{ content: DealEntity[]; counter: number }>({
+  return http.request<{ content: DealEntity[]; count: number }>({
     url: '/api/deal/query/marketplace',
     method: 'POST',
     data: { ...params },

@@ -12,22 +12,26 @@ import { RouterLink } from 'src/routes/components';
 import { paths } from 'src/routes/paths';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 import { DealEntity, DealType } from 'src/types/deal';
+import { testData } from '../filters/deal-tab-selector';
+import SvgColor from 'src/commonOld/components/svg-color';
 
 // ----------------------------------------------------------------------
 
 export const returnTypeBasedOnDealType = (dealType: DealType) => {
-  switch (dealType) {
-    case DealType.CAPITAL_RAISING:
-      return 'Capital Raising';
-    case DealType.EQUITY:
-      return 'Equity';
-    case DealType.PARTNERSHIPS:
-      return 'Partnerships';
-    case DealType.SELL_A_BUSINESS:
-      return 'Sell a Business';
-    case DealType.STARTUP_PITCH:
-      return 'Startup Pitch';
-  }
+  const item = testData.find((i) => i.key === dealType);
+  if (!item) return;
+  return (
+    <>
+      <SvgColor
+        src={item.icon}
+        sx={{
+          width: '14px',
+          height: '14px',
+        }}
+      />
+      {item.title}
+    </>
+  );
 };
 
 // ----------------------------------------------------------------------
@@ -72,32 +76,25 @@ function DealItemLanding({ deal }: Props) {
               px: 1,
               borderRadius: 0.75,
               typography: 'subtitle2',
-              bgcolor: '#14417D',
-              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : '#14417D'),
+              bgcolor: 'text.primary',
+              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'text.primary'),
+              fontSize: '12px',
+              fontStyle: 'normal',
+              fontWeight: 500,
+              lineHeight: '20px',
             }}
           >
-            <Box
-              fontFamily={primaryFont.style.fontFamily}
-              sx={{
-                backgroundColor: '#14417D',
-                color: 'white.100',
-                mr: 0.5,
-                fontSize: '12px',
-                fontStyle: 'normal',
-                fontWeight: 700,
-                lineHeight: '20px',
-              }}
-            >
-              {returnTypeBasedOnDealType(deal.type)}
-            </Box>
+            {returnTypeBasedOnDealType(deal.type)}
           </Stack>
 
           <Checkbox
-            color="error"
-            checked={false}
+            color="default"
+            defaultChecked={deal.liked}
             onChange={(e) => {}}
-            icon={<Iconify icon="carbon:favorite" />}
-            checkedIcon={<Iconify icon="carbon:favorite-filled" />}
+            // icon={<Iconify icon="carbon:favorite" />}
+            // checkedIcon={<Iconify icon="carbon:favorite-filled" />}
+            icon={<Iconify icon="iconoir:bookmark" />}
+            checkedIcon={<Iconify icon="iconoir:bookmark-solid" />}
             sx={{ color: 'common.white' }}
           />
         </Stack>
@@ -111,7 +108,7 @@ function DealItemLanding({ deal }: Props) {
             spacing={'8px'}
             sx={{ padding: '16px 20px 24px 20px' }}
           >
-            <Stack direction={'row'} alignItems={'center'} gap={'8px'} alignSelf={'stretch'}>
+            <Stack direction={'row'} gap={'8px'} alignSelf={'stretch'}>
               {deal.logo ? (
                 <Avatar
                   sx={{
@@ -141,7 +138,7 @@ function DealItemLanding({ deal }: Props) {
                 fontWeight={600}
                 lineHeight={'28px'}
                 color={'#0C3024'}
-                noWrap={true}
+                // noWrap={true}
               >
                 {deal.title}
               </Typography>
@@ -167,30 +164,22 @@ function DealItemLanding({ deal }: Props) {
             direction="row"
             alignItems={'center'}
             justifyContent={'center'}
+            fontFamily={primaryFont.style.fontFamily}
             sx={{
               px: 1,
               borderRadius: 0.75,
               typography: 'subtitle2',
-              bgcolor: 'grey.300',
-              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : '#14417D'),
+              bgcolor: 'grey.200',
+              color: (theme) => (theme.palette.mode === 'light' ? 'text.primary' : 'common.white'),
+              fontSize: '12px',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              lineHeight: '20px',
             }}
           >
-            <Box
-              fontFamily={primaryFont.style.fontFamily}
-              sx={{
-                backgroundColor: 'grey.300',
-                color: '#0C3024',
-                mr: 0.5,
-                fontSize: '12px',
-                fontStyle: 'normal',
-                fontWeight: 700,
-                lineHeight: '20px',
-              }}
-            >
-              {deal.parent_category_name ? deal.parent_category_name : 'N/A'}
-            </Box>
+            {deal.prime_category_name}
           </Stack>
-          <Iconify icon="carbon:share" />
+          <Iconify icon="carbon:share" color="common.black" />
         </Stack>
       </Card>
     </Link>

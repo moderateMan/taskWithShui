@@ -117,6 +117,7 @@ export default function DealDetailView() {
                 price={amount ? amount : undefined}
                 desc={sub_title}
                 expireTime={expire_at}
+                type={dealDetail.type}
               />
             )}
           </Grid>
@@ -201,6 +202,80 @@ export default function DealDetailView() {
                 ''
               );
             })}
+            {team && (
+              <Grid item xs={12} md={12}>
+                <Team members={team} title={dealDetail?.title}></Team>
+              </Grid>
+            )}
+            {Array.isArray(faq) && faq.length && (
+              <Grid item xs={12} md={12}>
+                <Stack
+                  spacing={4}
+                  sx={{
+                    py: { xs: 5, md: 2 },
+                  }}
+                >
+                  <Stack spacing={2}>
+                    <Typography
+                      variant="h4"
+                      fontFamily={secondaryFont.style.fontFamily}
+                      sx={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        lineHeight: '24px',
+                        color: '#14417D',
+                      }}
+                    >
+                      {'FAQ'}
+                    </Typography>
+
+                    {Array.isArray(faq) &&
+                      faq?.map((item, index) => {
+                        return (
+                          <Box
+                            key={index}
+                            sx={{
+                              marginBottom: '32px',
+                            }}
+                          >
+                            <Stack spacing={4}>
+                              <Typography
+                                sx={{
+                                  color: '#232323',
+                                  fontFamily: 'Inter',
+                                  fontSize: '18px',
+                                  fontStyle: 'normal',
+                                  lineHeight: '27px',
+                                  fontWeight: 600,
+                                }}
+                              >
+                                {item.question}
+                              </Typography>
+                              <Typography
+                                fontFamily={primaryFont.style.fontFamily}
+                                sx={{
+                                  color: 'var(--text-primary, #14417D)',
+                                  fontStyle: 'normal',
+                                  fontWeight: 400,
+                                  lineHeight: '24px',
+                                  fontSize: '16px',
+                                }}
+                              >
+                                {item.answer}
+                              </Typography>
+                            </Stack>
+                          </Box>
+                        );
+                      })}
+                  </Stack>
+                  <Divider
+                    sx={{
+                      marginBottom: '60px',
+                    }}
+                  />
+                </Stack>
+              </Grid>
+            )}
           </Grid>
           {mdUp && (
             <Grid item xs={4}>
@@ -208,71 +283,6 @@ export default function DealDetailView() {
             </Grid>
           )}
         </Grid>
-        {team && <Team members={team}></Team>}
-        {Array.isArray(faq) && faq.length && (
-          <Grid item xs={12} md={12}>
-            <Stack
-              spacing={4}
-              sx={{
-                py: { xs: 5, md: 2 },
-              }}
-            >
-              <Stack spacing={2}>
-                <Typography
-                  variant="h4"
-                  fontFamily={secondaryFont.style.fontFamily}
-                  sx={{
-                    fontStyle: 'normal',
-                    fontWeight: 700,
-                    lineHeight: '24px',
-                    color: '#14417D',
-                  }}
-                >
-                  {'FAQ'}
-                </Typography>
-
-                {Array.isArray(faq) &&
-                  faq?.map((item, index) => {
-                    return (
-                      <Box
-                        key={index}
-                        sx={{
-                          marginBottom: '32px',
-                        }}
-                      >
-                        <Stack spacing={4}>
-                          <Typography
-                            sx={{
-                              color: '#232323',
-                              fontFamily: 'Inter',
-                              fontSize: '18px',
-                              fontStyle: 'normal',
-                              lineHeight: '27px',
-                              fontWeight: 600,
-                            }}
-                          >
-                            {item.question}
-                          </Typography>
-                          <Typography
-                            fontFamily={primaryFont.style.fontFamily}
-                            sx={{
-                              color: 'var(--text-primary, #14417D)',
-                              fontStyle: 'normal',
-                              fontWeight: 400,
-                              lineHeight: '24px',
-                              fontSize: '16px',
-                            }}
-                          >
-                            {item.answer}
-                          </Typography>
-                        </Stack>
-                      </Box>
-                    );
-                  })}
-              </Stack>
-            </Stack>
-          </Grid>
-        )}
         {!pathName.includes('preview') && <Comment></Comment>}
         {loading.value && <SplashScreen />}
       </Container>

@@ -1,26 +1,35 @@
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { IDealTeamMember } from 'src/types/deal';
 import ElearningTeamItem from './deal-team-item';
+import { Divider, Stack } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   members: IDealTeamMember[];
+  title?: string;
 };
 
-export default function DealTeamAbout({ members }: Props) {
+export default function DealTeamAbout({ members, title }: Props) {
   return (
-    <Container sx={{ py: { xs: 8, md: 15 } }}>
+    <Stack
+      spacing={4}
+      sx={{
+        py: { xs: 5, md: 2 },
+      }}
+    >
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
-          textAlign: 'center',
-          mb: { xs: 8, md: 10 },
+          color: '#14417D',
+          fontFamily: 'Inter',
+          fontSize: '20px',
+          fontStyle: 'normal',
+          fontWeight: '600',
         }}
       >
-        {members?.length > 0 ? 'Team' : 'No Team'}
+        {members?.length > 0 ? `${title} Team` : 'No Team'}
       </Typography>
       {members?.length < 5 ? (
         <Box
@@ -28,7 +37,7 @@ export default function DealTeamAbout({ members }: Props) {
             columnGap: 3,
             display: 'flex',
             rowGap: { xs: 4, md: 5 },
-            justifyContent: 'center',
+            // justifyContent: 'center',
           }}
         >
           {members.map((member, index) => (
@@ -67,6 +76,11 @@ export default function DealTeamAbout({ members }: Props) {
           ))}
         </Box>
       )}
-    </Container>
+      <Divider
+        sx={{
+          marginBottom: '60px',
+        }}
+      />
+    </Stack>
   );
 }

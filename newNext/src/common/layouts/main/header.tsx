@@ -95,7 +95,7 @@ export default function Header({ headerOnDark }: Props) {
                 <Link href={paths.account.postDeal}>
                   <Button
                     variant="contained"
-                    startIcon={<Iconify icon={'humbleicons:rocket'} />}
+                    startIcon={<Iconify icon={'carbon:rocket'} color="#FFD600" />}
                     sx={{
                       '&:hover': {
                         cursor: 'pointer',

@@ -7,6 +7,7 @@ import * as React from 'react';
 import { TextFieldTooltip } from 'src/common/components/tooltip';
 import notify from 'src/common/utils/notify';
 import Iconify from 'src/commonOld/components/iconify';
+import SvgColor from 'src/commonOld/components/svg-color';
 import { useResponsive } from 'src/commonOld/hooks/use-responsive';
 import { useFlatInject } from 'src/service';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
@@ -67,8 +68,18 @@ export default function DealConnectionMaker({ name, deal_id }: { name: string; d
           width: '100%',
           mt: 5,
         }}
+        startIcon={
+          <SvgColor
+            src="/assets/icons/ic_users_group.svg"
+            color="#FFD600"
+            sx={{
+              height: '22px',
+              width: '22px',
+            }}
+          />
+        }
       >
-        {connected ? `Already Connected` : `Connect with the Owner of ${name}`}
+        {connected ? `Already Connected` : `Connect with ${name}`}
       </Button>
       <Modal
         open={open}

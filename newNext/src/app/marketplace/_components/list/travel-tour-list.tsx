@@ -23,9 +23,7 @@ export default function MarketDealList() {
   }, []);
 
   useEffect(() => {
-    if (!isLoaded.value) {
-      isLoaded.onTrue();
-    }
+    isLoaded.onTrue();
   }, [dealMarketList]);
 
   const renderListWrapper = (children: ReactNode) => (
@@ -37,9 +35,10 @@ export default function MarketDealList() {
         rowGap: { xs: 4, md: 5 },
         gridTemplateColumns: {
           xs: 'repeat(1, 1fr)',
-          sm: 'repeat(3, 1fr)',
-          md: 'repeat(4, 1fr)',
-          lg: 'repeat(5, 1fr)',
+          sm: 'repeat(2, 1fr)',
+          md: 'repeat(3, 1fr)',
+          lg: 'repeat(4, 1fr)',
+          xl: 'repeat(5, 1fr)',
         },
       }}
     >
@@ -61,13 +60,14 @@ export default function MarketDealList() {
           <>
             {renderListWrapper(
               dealMarketList.map((deal, index) => {
-                if (!marketDealType) {
                   return <DealItemMarket key={index} deal={deal} />;
-                } else {
-                  if (deal.type === marketDealType) {
-                    return <DealItemMarket key={index} deal={deal} />;
-                  }
-                }
+                // if (!marketDealType) {
+                //   return <DealItemMarket key={index} deal={deal} />;
+                // } else {
+                //   if (deal.type === marketDealType) {
+                //     return <DealItemMarket key={index} deal={deal} />;
+                //   }
+                // }
               })
             )}
 

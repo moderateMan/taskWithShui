@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useResponsive } from 'mui-eazy';
+import { Iconify, useResponsive } from 'mui-eazy';
 import { useFlatInject } from 'src/service';
 import { secondaryFont } from 'src/theme/typography';
 
@@ -57,6 +57,7 @@ export default function ReviewToolbar({ sort, onChangeSort, onOpenForm }: Props)
             sx={{
               minWidth: '150px',
             }}
+            endIcon={<Iconify icon="iconoir:nav-arrow-down" />}
             onClick={() => {
               if (dealDetail && dealDetail.id) {
                 findByDealIDAct({
@@ -65,7 +66,7 @@ export default function ReviewToolbar({ sort, onChangeSort, onOpenForm }: Props)
               }
             }}
           >
-            Refresh
+            Most recent
           </Button>
           <Button
             variant="contained"
@@ -73,8 +74,9 @@ export default function ReviewToolbar({ sort, onChangeSort, onOpenForm }: Props)
               minWidth: '150px',
             }}
             onClick={onOpenForm}
+            color="primary"
           >
-            Write a Comment
+            Write a Review
           </Button>
         </Stack>
       </Stack>

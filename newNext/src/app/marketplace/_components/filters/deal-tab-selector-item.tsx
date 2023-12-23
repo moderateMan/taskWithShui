@@ -3,13 +3,17 @@ import { Box, Typography, TypographyProps } from '@mui/material';
 import { useFlatInject } from 'src/service';
 import { secondaryFont } from 'src/theme/typography';
 import { useResponsive } from 'mui-eazy';
+import Iconify from 'src/commonOld/components/iconify';
+import { Icon } from '@iconify/react';
+import { ReactNode } from 'react';
+import SvgColor from 'src/commonOld/components/svg-color';
 
 // ----------------------------------------------------------------------
 
 export interface IDealTabSelectorItemProps {
   active?: boolean;
   name: string;
-  pic_url: string;
+  icon: string;
 }
 
 // ----------------------------------------------------------------------
@@ -49,20 +53,27 @@ export default function DealTabSelectorItem(props: IDealTabSelectorItemProps) {
         justifyContent: 'flex-start',
         // backgroundColor: 'grey.100',
         position: 'relative',
+        color: props.active ? '#14417D' : '#256CCB',
         '&:before': underlineActiveStyle,
         '&:hover': {
           '&::before': underlineAnimationStyle,
         },
       }}
     >
-      <Box component={'img'} src={props.pic_url} height={'28px'} />
+      {/* <Box component={'img'} src={props.pic_url} height={'28px'} /> */}
+      <SvgColor
+        src={props.icon}
+        sx={{
+          width: '28px',
+          height: '28px',
+        }}
+      />
       <Typography
         fontFamily={secondaryFont.style.fontFamily}
         fontSize={'14px'}
         fontStyle={'normal'}
         fontWeight={600}
         lineHeight={'22px'}
-        color={props.active ? '#14417D' : '#256CCB'}
         textAlign={'center'}
       >
         {props.name}

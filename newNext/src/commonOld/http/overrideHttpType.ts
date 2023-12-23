@@ -2,7 +2,7 @@ import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 export type ResponseBodyType<D> = {
   data: D;
-  code: string;
+  code: string | number;
   message: null | string;
 };
 

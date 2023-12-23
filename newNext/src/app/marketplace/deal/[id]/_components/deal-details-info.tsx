@@ -1,4 +1,4 @@
-import { Avatar, Checkbox, Grid } from '@mui/material';
+import { Avatar, Button, Checkbox, Grid } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -14,6 +14,8 @@ import { customFormat } from 'src/commonOld/utils/format-time';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 import DealConnectionMaker from './deal-details-connection-maker';
 import ShareMenu from './deal-details-share';
+import { returnTypeBasedOnDealType } from 'src/common/components/deal-landing-item';
+import { DealType } from 'src/types/deal';
 
 // ----------------------------------------------------------------------
 
@@ -42,6 +44,7 @@ type Props = {
   tags: string[] | undefined;
   deal_id: number;
   liked: boolean;
+  type: DealType;
 };
 
 export default function DealDetailsInfo({
@@ -53,6 +56,7 @@ export default function DealDetailsInfo({
   tags,
   deal_id,
   liked,
+  type,
 }: Props) {
   const mdUp = useResponsive('up', 'md');
 
@@ -89,6 +93,26 @@ export default function DealDetailsInfo({
       )}
 
       <Stack spacing={1} sx={{ mb: 2 }}>
+        <Stack
+          spacing={0.5}
+          direction="row"
+          alignItems={'center'}
+          fontFamily={primaryFont.style.fontFamily}
+          width="fit-content"
+          sx={{
+            px: 1,
+            borderRadius: 0.75,
+            typography: 'subtitle2',
+            bgcolor: '#256CCB14',
+            color: (theme) => (theme.palette.mode === 'light' ? 'text.primary' : 'common.white'),
+            fontSize: '12px',
+            fontStyle: 'normal',
+            lineHeight: '20px',
+            fontWeight: 400,
+          }}
+        >
+          {returnTypeBasedOnDealType(type)}
+        </Stack>
         <Stack direction={'row'}>
           {logo ? (
             <Image
@@ -123,10 +147,13 @@ export default function DealDetailsInfo({
 
       {price && (
         <Stack spacing={2}>
-          <ProductPrice price={price} sx={{ fontSize: '48px', fontWeight: 700 }} />
+          <ProductPrice
+            price={price}
+            sx={{ fontSize: '48px', fontWeight: 700, color: '#14417D' }}
+          />
           <Typography
             variant="caption"
-            sx={{ color: '#59745D', fontSize: '18px', fontWeight: '600' }}
+            sx={{ color: '#696969', fontSize: '18px', fontWeight: '600' }}
           >
             Ask price
           </Typography>
@@ -154,12 +181,7 @@ export default function DealDetailsInfo({
           >
             {expireTime ? customFormat(dayjs(expireTime)) : ''}
           </Typography>
-          <Typography
-            sx={{
-              color: '#272727',
-            }}
-            variant="subtitle2"
-          >
+          <Typography variant="subtitle2" color="#696969" fontWeight={400}>
             Deal posted
           </Typography>
         </Grid>
@@ -175,12 +197,7 @@ export default function DealDetailsInfo({
           >
             {expireTime ? `${dayjs(expireTime).diff(dayjs(), 'day')} days` : ''}
           </Typography>
-          <Typography
-            sx={{
-              color: '#272727',
-            }}
-            variant="subtitle2"
-          >
+          <Typography color="#696969" fontWeight={400} variant="subtitle2">
             Left to invest
           </Typography>
         </Grid>
@@ -194,7 +211,7 @@ export default function DealDetailsInfo({
 
       <Stack spacing={3} direction="row" justifyContent={{ xs: 'center', md: 'unset' }}>
         <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
-          <Checkbox
+          {/* <Checkbox
             onClick={() => {
               likeDealAct({
                 id: deal_id,
@@ -202,10 +219,10 @@ export default function DealDetailsInfo({
             }}
             checked={liked}
             onChange={(e) => {}}
-            icon={<Iconify icon="ph:bookmark-duotone" />}
+            icon={<Iconify icon="iconoir:bookmark" />}
             checkedIcon={
               <Iconify
-                icon="ph:bookmark-fill"
+                icon="iconoir:bookmark-solid"
                 onClick={() => {
                   likeDealAct({
                     id: deal_id,
@@ -213,8 +230,26 @@ export default function DealDetailsInfo({
                 }}
               />
             }
-            sx={{ color: 'primary' }}
+            sx={{ color: 'text.primary' }}
           />
+          <Typography>Wishlist</Typography> */}
+          <Button
+            onClick={() => {
+              likeDealAct({
+                id: deal_id,
+              });
+            }}
+            sx={{ fontSize: '16px', lineHeight: '22px', fontWeight: 400 }}
+            startIcon={
+              liked ? (
+                <Iconify icon="iconoir:bookmark-solid" />
+              ) : (
+                <Iconify icon="iconoir:bookmark" />
+              )
+            }
+          >
+            Wishlist
+          </Button>
         </Stack>
 
         <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>

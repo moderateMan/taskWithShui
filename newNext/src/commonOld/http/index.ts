@@ -36,7 +36,7 @@ _http.interceptors.response.use(
       notify.error(data.message || err.message || 'net error');
     }
     if (status == 401) {
-      alert("http error 401!!!")
+      alert('http error 401!!!');
       storageHelper.clear();
       window.location.href = paths.loginCover;
     }

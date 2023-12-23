@@ -99,6 +99,7 @@ export default function DealDetailView() {
                 price={amount ? amount : undefined}
                 desc={sub_title}
                 expireTime={expire_at}
+                type={dealDetail.type}
               />
             )}
           </Grid>
@@ -180,12 +181,16 @@ export default function DealDetailView() {
                 ''
               );
             })}
+            {team && (
+              <Grid item xs={12} md={12}>
+                <Team members={team} title={dealDetail?.title}></Team>
+              </Grid>
+            )}
           </Grid>
           <Grid item xs={4}>
             <DeailSection deal={dealDetail!} />
           </Grid>
         </Grid>
-        {team && <Team members={team}></Team>}
         {loading.value && <SplashScreen />}
       </Container>
     </>

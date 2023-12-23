@@ -1,3 +1,4 @@
+import { Rating } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -168,6 +169,7 @@ export default function ReviewItem({
             />
           )}
         </Stack>
+        <Rating defaultValue={5} readOnly />
       </Stack>
 
       <Divider sx={{ ml: 'auto', width: WIDTH }} />

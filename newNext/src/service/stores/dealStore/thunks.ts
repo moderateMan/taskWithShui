@@ -17,10 +17,11 @@ import { QueryDealByIdApiRequest } from './model';
 const thunks = createThunks(names.dealStore, {
   marketplaceDealQueryAct: async (searchParams: QueryDealForMarketplace) => {
     const {
-      data: { content, counter },
+      data: { content, count },
     } = await httpApi.dealMarketplaceListApi(searchParams);
+    console.log(content,count,666)
     dp('dealStore', 'setDealMarketList', content);
-    dp('dealStore', 'setMarketListCounter', counter);
+    dp('dealStore', 'setMarketListCounter', count);
   },
 
   landingPageDealQueryAct: async (searchParams: QueryDealForMarketplace) => {

@@ -20,7 +20,9 @@ const thunks = createThunks(names.ecommerceStore, {
   likeDealAct: async (params: TargetDeal) => {
     const {
       data: { content },
+      code
     } = await httpApi.likeDealApi(params);
+    return code === 1
   },
   fetchDealWishlistAct: async (params: { ids: number[] }) => {
     const {

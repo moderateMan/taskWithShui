@@ -6,7 +6,7 @@ import { useResponsive } from 'mui-eazy';
 
 // ----------------------------------------------------------------------
 
-const testData = [
+export const testData = [
   {
     icon: '/assets/icons/allDeal.svg',
     title: 'All',
@@ -102,7 +102,7 @@ export default function DealTabSelector({ sx, ...other }: StackProps) {
               key={item.key}
               active={item.key === marketDealType}
               name={item.title}
-              pic_url={item.icon}
+              icon={item.icon}
             />
           </div>
         );

@@ -8,6 +8,7 @@ import { paths } from 'src/routes/paths';
 import { useFlatInject } from 'src/service';
 import Nav from './nav';
 import { Iconify } from 'mui-eazy';
+import NProgress from 'nprogress';
 export const StyledMenu = styled(Paper)(({ theme }) => ({
   top: 62,
   width: '120',
@@ -42,20 +43,21 @@ export default function BasicMenu() {
 
   return (
     <>
-      <Badge badgeContent={count_new} color="primary">
-        <Iconify
-          icon="carbon:notification-filled"
-          sx={{
-            mr: 1,
-            ':hover': {
+      {userInfo && (
+        <Badge badgeContent={count_new} color="primary">
+          <Iconify
+            icon="fa-regular:bell"
+            sx={{
               cursor: 'pointer',
-            },
-          }}
-          onClick={() => {
-            router.push(paths.account.notification);
-          }}
-        />
-      </Badge>
+            }}
+            onClick={() => {
+              NProgress.start();
+              router.push(paths.account.notification);
+            }}
+            color={count_new ? 'text.primary' : '#141414'}
+          />
+        </Badge>
+      )}
       <Button
         onMouseEnter={handleOpenMenuEx}
         onMouseLeave={menuOpen.onFalse}
@@ -72,17 +74,9 @@ export default function BasicMenu() {
           height: 40,
           color: '#141414',
         }}
-        startIcon={
-          <Avatar
-            sx={{
-              fontSize: 32,
-              backgroundColor: 'white',
-              color: '#14417D',
-            }}
-          />
-        }
+        startIcon={userInfo && <Iconify icon="tabler:user" />}
       >
-        {userInfo ? 'My account' : 'Login'}
+        {userInfo ? 'My account' : 'Sign up / Login'}
       </Button>
       {userInfo && menuOpen.value && (
         <Portal>

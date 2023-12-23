@@ -48,7 +48,7 @@ const NewFooter = (props: { mdUp: boolean }) => {
   };
 
   return (
-    <Container sx={{...containerMargin, color: '#2E2E2E'}}>
+    <Container sx={{ ...containerMargin, color: '#2E2E2E' }}>
       <Stack direction={props.mdUp ? 'row' : 'column-reverse'} gap={props.mdUp ? '220px' : '48px'}>
         <Stack width={'368px'}>
           <Typography sx={titleStyle}>scaling</Typography>
@@ -57,15 +57,15 @@ const NewFooter = (props: { mdUp: boolean }) => {
             you build apps faster and better.
           </Typography>
           <Stack direction={'row'} gap={'16px'}>
-            <Button sx={{ width: '146px' }} variant="outlined">
-              Sign up/ Login
-            </Button>
             <Button
               sx={{ width: '146px' }}
               variant="contained"
-              startIcon={<Iconify icon={'carbon:rocket'} />}
+              startIcon={<Iconify icon={'carbon:rocket'} color="#FFD600" />}
             >
               Post a deal
+            </Button>
+            <Button sx={{ width: '146px' }}>
+              Sign up/ Login
             </Button>
           </Stack>
         </Stack>
