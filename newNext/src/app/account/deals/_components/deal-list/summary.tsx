@@ -8,7 +8,7 @@ import Stack, { StackProps } from '@mui/material/Stack';
 import InputAdornment from '@mui/material/InputAdornment';
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
-import { fCurrency, fPercent } from 'mui-eazy';
+import { fCurrency, fPercent } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 

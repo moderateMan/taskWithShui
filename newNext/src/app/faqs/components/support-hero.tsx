@@ -7,7 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { bgGradient } from 'src/theme/css';
 
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 

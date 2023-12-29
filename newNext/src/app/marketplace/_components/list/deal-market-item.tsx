@@ -11,7 +11,7 @@ import { RouterLink } from 'src/routes/components';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 import { DealEntity } from 'src/types/deal';
 import { returnTypeBasedOnDealType } from './deal-landing-item';
-import { Iconify, useResponsive } from 'mui-eazy';
+import { Iconify, useResponsive } from 'src/muiEazy';
 import { useFlatInject } from 'src/service';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
 import NProgress from 'nprogress';

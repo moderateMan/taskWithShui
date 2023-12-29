@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import { useEffect } from 'react';
 import DealMarketItem from 'src/app/marketplace/_components/list/deal-market-item';
 import Scrollbar from 'src/commonOld/components/scrollbar';

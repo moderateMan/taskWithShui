@@ -3,7 +3,7 @@ import Link from '@mui/material/Link';
 import { RouterLink } from 'src/routes/components';
 import { NavItemProps } from '../types';
 import { StyledNavItem } from './styles';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 

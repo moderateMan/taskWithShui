@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import { CSSProperties, useMemo } from 'react';
 
 // ----------------------------------------------------------------------

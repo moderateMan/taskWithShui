@@ -5,7 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import { memo } from 'react';
 import Image from 'src/common/components/image';
 import { RouterLink } from 'src/routes/components';

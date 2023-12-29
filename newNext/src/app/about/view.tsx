@@ -2,7 +2,7 @@
 
 import { Button, Typography } from '@mui/material';
 import { Container, Stack, Box } from '@mui/system';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import { useEffect, useMemo } from 'react';
 import { alpha, useTheme } from '@mui/material/styles';
 import { bgGradient } from 'src/theme/css';

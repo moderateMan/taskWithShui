@@ -10,6 +10,7 @@ import { DealStatistics } from './model';
 
 /* Types */
 export interface SliceState {
+  targetType: DealType;
   dealMarketList: DealEntity[];
   dealMarketListCounter: number | undefined;
 
@@ -40,6 +41,7 @@ export interface SliceState {
 
 const initialState = (): SliceState => {
   return {
+    targetType: DealType.CAPITAL_RAISING,
     loading: false,
     dealMarketList: [],
     dealMarketListCounter: undefined,
@@ -69,6 +71,10 @@ const categorySlice = createSliceCustom({
   name: names.dealStore,
   stateInit: initialState,
   reducers: {
+    setDealType(state, action: PayloadAction<DealType>) {
+      const { payload } = action;
+      state.targetType = payload;
+    },
     // 设置交易产品列表
     setDealMarketList: (state, action: PayloadAction<DealEntity[]>) => {
       const { payload } = action;

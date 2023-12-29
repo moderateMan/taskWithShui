@@ -1,7 +1,7 @@
 // @mui
 import { styled, alpha } from '@mui/material/styles';
 import { MenuPopoverArrowValue } from './types';
-import { bgBlur } from 'mui-eazy';
+import { bgBlur } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 

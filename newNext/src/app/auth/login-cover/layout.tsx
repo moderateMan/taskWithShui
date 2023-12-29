@@ -10,7 +10,7 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <AuthCoverLayout_v2 title="Hi, Welcome Back" image={'/assets/images/travel/travel_post_03.jpg'}>
+    <AuthCoverLayout_v2 title={`Hi, Welcome Back `} image={'/assets/images/login/2.png'}>
       {children}
     </AuthCoverLayout_v2>
   );

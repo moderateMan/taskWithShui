@@ -322,14 +322,14 @@ export default function RegisterCoverView() {
 
       {renderHead}
 
-      {renderSocials}
+      {/* {renderSocials} */}
 
       {/* {!isPartner && ( */}
-      <Divider sx={{ py: 3 }}>
+      {/* <Divider sx={{ py: 3 }}>
         <Typography variant="body2" sx={{ color: 'text.disabled' }}>
           OR
         </Typography>
-      </Divider>
+      </Divider> */}
       {/* )} */}
       <RenderFormUser />
     </>

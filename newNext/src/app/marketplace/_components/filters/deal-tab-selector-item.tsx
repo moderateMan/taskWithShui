@@ -2,7 +2,7 @@ import Stack from '@mui/material/Stack';
 import { Box, Typography, TypographyProps } from '@mui/material';
 import { useFlatInject } from 'src/service';
 import { secondaryFont } from 'src/theme/typography';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import Iconify from 'src/commonOld/components/iconify';
 import { Icon } from '@iconify/react';
 import { ReactNode } from 'react';

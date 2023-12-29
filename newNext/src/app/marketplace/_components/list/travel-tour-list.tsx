@@ -4,9 +4,9 @@ import DealItemMarket from './deal-market-item';
 import TravelTourItemSkeleton from './travel-tour-item-skeleton';
 import { ReactNode, useEffect } from 'react';
 import { useFlatInject } from 'src/service';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
-import isEmpty from 'lodash.isempty';
+import { isEmpty } from 'lodash-es';
 import Empty from '../empty';
 import { Button } from '@mui/material';
 
@@ -38,7 +38,7 @@ export default function MarketDealList() {
           sm: 'repeat(2, 1fr)',
           md: 'repeat(3, 1fr)',
           lg: 'repeat(4, 1fr)',
-          xl: 'repeat(5, 1fr)',
+          xl: 'repeat(4, 1fr)',
         },
       }}
     >
@@ -60,7 +60,7 @@ export default function MarketDealList() {
           <>
             {renderListWrapper(
               dealMarketList.map((deal, index) => {
-                  return <DealItemMarket key={index} deal={deal} />;
+                return <DealItemMarket key={index} deal={deal} />;
                 // if (!marketDealType) {
                 //   return <DealItemMarket key={index} deal={deal} />;
                 // } else {

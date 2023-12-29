@@ -1,7 +1,7 @@
 import { IconButton } from '@mui/material';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import { ReactNode } from 'react';
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (

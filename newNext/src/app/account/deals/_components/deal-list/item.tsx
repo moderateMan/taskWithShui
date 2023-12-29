@@ -2,7 +2,7 @@ import { Divider, MenuItem } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Iconify, Image } from 'mui-eazy';
+import { Iconify, Image } from 'src/muiEazy';
 import { DealEntity, DealStatus } from 'src/types/deal';
 import CustomPopover, { usePopover } from '../custom-popover';
 import dayjs from 'dayjs';

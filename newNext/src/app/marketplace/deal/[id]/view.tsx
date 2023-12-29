@@ -2,7 +2,7 @@
 
 import { Box, Divider, Grid, Stack, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import CustomBreadcrumbs from 'src/commonOld/components/custom-breadcrumbs';
@@ -22,12 +22,14 @@ import Team from './_components/deal-team-about';
 
 export default function DealDetailView() {
   const loading = useBoolean(true);
-  const { fetchDealDetailAct, setCurrentDealId, dealDetail } = useFlatInject('ecommerceStore');
+  const { setDealDetail, fetchDealDetailAct, setCurrentDealId, dealDetail } =
+    useFlatInject('ecommerceStore');
   const params = useParams();
   const mdUp = useResponsive('up', 'md');
   const { title = '', amount = 0, sub_title = '', expire_at = '', components } = dealDetail || {};
   const pathName = usePathname();
   useEffect(() => {
+    setDealDetail(null);
     if (params.id) {
       setCurrentDealId(parseInt(params.id));
       fetchDealDetailAct({

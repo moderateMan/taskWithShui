@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import { debounce } from 'lodash-es';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import { memo, useCallback } from 'react';
 import Image from 'src/common/components/image';
 import { fCurrency } from 'src/common/utils/format-number';

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary, { accordionSummaryClasses } from '@mui/material/AccordionSummary';
 
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 

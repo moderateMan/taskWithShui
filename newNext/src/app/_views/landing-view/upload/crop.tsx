@@ -4,7 +4,7 @@ import 'cropperjs/dist/cropper.css';
 import './demo.css';
 function dataURLToBlob(dataurl: string) {
   const type = dataurl.match(/data:(.+);/)?.[1];
-  debugger;
+  ;
   const base64 = dataurl.split(',')[1];
   const binStr = atob(base64);
   const u8a = new Uint8Array(binStr.length);

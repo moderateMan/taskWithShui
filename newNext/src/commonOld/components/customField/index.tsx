@@ -8,7 +8,7 @@ import {
   useFormContext,
   useGetField,
   uuidv4,
-} from 'mui-eazy';
+} from 'src/muiEazy';
 import { useEffect, useMemo, useState } from 'react';
 
 // ----------------------------------------------------------------------

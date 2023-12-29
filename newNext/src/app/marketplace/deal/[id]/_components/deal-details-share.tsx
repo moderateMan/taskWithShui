@@ -1,20 +1,20 @@
-import * as React from 'react';
+import { Button } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { Button, IconButton, Typography } from '@mui/material';
-import { Iconify } from 'mui-eazy';
+import * as React from 'react';
+import { Iconify } from 'src/muiEazy';
 
+import { Stack } from '@mui/system';
 import {
-  FacebookShareButton,
   FacebookIcon,
-  WhatsappIcon,
-  WhatsappShareButton,
+  FacebookShareButton,
   InstagramIcon,
   InstapaperShareButton,
-  LinkedinShareButton,
   LinkedinIcon,
+  LinkedinShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
 } from 'next-share';
-import { Stack } from '@mui/system';
 
 export default function ShareMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

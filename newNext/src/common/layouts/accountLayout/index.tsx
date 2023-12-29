@@ -1,5 +1,5 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
-import { Iconify, useResponsive } from 'mui-eazy';
+import { Iconify, useResponsive } from 'src/muiEazy';
 import { SplashScreen } from 'src/commonOld/components/loading-screen';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
 import MainLayout from '../main';

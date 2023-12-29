@@ -8,7 +8,7 @@ import TextField, { TextFieldProps } from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 import { alpha, styled, useTheme } from '@mui/material/styles';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import { useMemo } from 'react';
 import { bgGradient } from 'src/theme/css';
 

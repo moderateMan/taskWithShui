@@ -109,22 +109,13 @@ export default function DealDetailsInfo({
             fontStyle: 'normal',
             lineHeight: '20px',
             fontWeight: 400,
+            mb: '24px',
           }}
         >
           {returnTypeBasedOnDealType(type)}
         </Stack>
         <Stack direction={'row'}>
-          {logo ? (
-            <Image
-              sx={{
-                marginRight: '12px',
-              }}
-              src={logo}
-              height={'40px'}
-            ></Image>
-          ) : (
-            <Avatar>{}</Avatar>
-          )}
+          {logo ? <img src={logo} height={'40px'} width={'40px'}></img> : <Avatar>{}</Avatar>}
           <Typography
             fontFamily={primaryFont.style.fontStyle}
             sx={{

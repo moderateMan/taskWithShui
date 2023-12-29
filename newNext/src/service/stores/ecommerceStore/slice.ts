@@ -34,7 +34,7 @@ const appSlice = createSliceCustom({
     setLikeList(state, action: PayloadAction<DealEntity[]>) {
       state.likeList = action.payload;
     },
-    setDealDetail(state, action: PayloadAction<DealEntity>) {
+    setDealDetail(state, action: PayloadAction<DealEntity | null>) {
       state.dealDetail = action.payload;
     },
     setCurrentDealId(state, action: PayloadAction<number>) {

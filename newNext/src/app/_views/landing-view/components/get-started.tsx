@@ -1,5 +1,5 @@
 import { Box, Button, Container, Stack, SxProps, Typography } from '@mui/material';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import { useMemo } from 'react';
 
 const ComplexButton = ({

@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 
 export const TextFieldTooltip = (props: { text: string }) => {
   return (

@@ -53,9 +53,9 @@ export default function LoginCoverView() {
 
   const onSubmit = handleSubmit(async (data) => {
     loginAct(data).finally(() => {
-        reset();
-        setLoading(false);
-      });
+      reset();
+      setLoading(false);
+    });
   });
 
   const onGoogleLogin = useGoogleLogin({
@@ -175,18 +175,7 @@ export default function LoginCoverView() {
   return (
     <>
       <Logo />
-
       {renderHead}
-
-      {!isPartner && renderSocials}
-
-      {!isPartner && (
-        <Divider sx={{ py: 3 }}>
-          <Typography variant="body2" sx={{ color: 'text.disabled' }}>
-            OR
-          </Typography>
-        </Divider>
-      )}
       {renderForm}
       {loading && <SplashScreen />}
     </>

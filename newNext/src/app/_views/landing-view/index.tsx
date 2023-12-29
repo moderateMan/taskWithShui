@@ -1,7 +1,7 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import { useEffect } from 'react';
 import { useFlatInject } from 'src/service';
 import { ExploreDeals } from './components/explore-deals';

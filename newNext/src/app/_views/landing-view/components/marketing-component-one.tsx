@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import { useFlatInject } from 'src/service';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 

@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
-import { FieldText, FormProvider } from 'mui-eazy';
+import { FieldText, FormProvider } from 'src/muiEazy';
 import notify from 'src/common/utils/notify';
 import { useFlatInject } from 'src/service';
 

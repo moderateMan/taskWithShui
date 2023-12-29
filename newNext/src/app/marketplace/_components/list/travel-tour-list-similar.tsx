@@ -7,7 +7,7 @@ import { paths } from 'src/routes/paths';
 import { ITourProps } from 'src/types/tour';
 import { RouterLink } from 'src/routes/components';
 import TravelTourItem from './travel-tour-item';
-import { Iconify, useResponsive } from 'mui-eazy';
+import { Iconify, useResponsive } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import Stack, { StackProps } from '@mui/material/Stack';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import { useFlatInject } from 'src/service';
 import DealFilterMain from './deal-filter-main';
 

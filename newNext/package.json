@@ -13,7 +13,8 @@
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "clear-all": "rm -rf node_modules .next out dist build",
     "re-start": "rm -rf node_modules .next out dist build && yarn install && yarn dev",
-    "re-build": "rm -rf node_modules .next out dist build && yarn install && yarn build"
+    "re-build": "rm -rf node_modules .next out dist build && yarn install && yarn build",
+    "re-build-muiEazy": "rm -rf ../mui-eazy/src && node scripts/buildMuiEazy.js"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
@@ -24,7 +25,7 @@
     "@mui/base": "^5.0.0-beta.6",
     "@mui/icons-material": "^5.14.19",
     "@mui/lab": "^5.0.0-alpha.135",
-    "@mui/material": "^5.13.7",
+    "@mui/material": "^5.14.7",
     "@mui/system": "^5.13.7",
     "@mui/x-date-pickers": "^6.9.2",
     "@react-oauth/google": "^0.11.1",
@@ -51,6 +52,8 @@
     "react": "^18.2.0",
     "react-countup": "^6.4.2",
     "react-cropper": "^2.3.3",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-google-autocomplete": "^2.7.3",

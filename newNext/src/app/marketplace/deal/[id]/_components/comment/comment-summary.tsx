@@ -4,7 +4,7 @@ import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import RadioGroup from '@mui/material/RadioGroup';
 import Typography from '@mui/material/Typography';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import { fShortenNumber } from 'src/common/utils/format-number';
 import ReviewProgress from 'src/common/components/review-progress';
 

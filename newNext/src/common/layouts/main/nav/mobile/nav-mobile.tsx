@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import Logo from 'src/commonOld/components/logo';
 import Scrollbar from 'src/commonOld/components/scrollbar';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';

@@ -8,7 +8,7 @@ import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogContentText from '@mui/material/DialogContentText';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
 import { Box, Link } from '@mui/material';
-import { TabView } from 'mui-eazy';
+import { TabView } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 

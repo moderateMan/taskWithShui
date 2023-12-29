@@ -3,7 +3,7 @@ import Card1, { Card1Post } from './card-1';
 import { RouterLink } from 'src/routes/components';
 import { paths } from 'src/routes/paths';
 import { secondaryFont, primaryFont } from 'src/theme/typography';
-import { Iconify, useResponsive } from 'mui-eazy';
+import { Iconify, useResponsive } from 'src/muiEazy';
 
 function Section3({ posts }: { posts: Card1Post[] }) {
   const mdUp = useResponsive('up', 'md');

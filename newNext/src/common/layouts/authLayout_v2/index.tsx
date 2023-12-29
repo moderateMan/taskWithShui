@@ -54,8 +54,9 @@ function AuthCoverLayout_v2({ title, image, children }: AuthCarouselProps) {
               position: 'absolute',
               left: 0,
               top: 0,
+              width: '1',
+              height: '100vh',
               objectFit: 'cover',
-              height: 1,
             }}
           />
           <Typography

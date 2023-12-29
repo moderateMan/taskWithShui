@@ -2,7 +2,7 @@ import Stack, { StackProps } from '@mui/material/Stack';
 import { useFlatInject } from 'src/service';
 import { DealType } from 'src/types/deal';
 import DealTabSelectorItem from './deal-tab-selector-item';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 

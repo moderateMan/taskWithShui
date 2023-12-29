@@ -99,6 +99,7 @@ const DeailSection = ({ deal }: { deal: DealEntity }) => {
               key={index}
               direction={'row'}
               sx={{
+                width: '100%',
                 padding: '12px 22px',
                 cursor: 'pointer',
                 borderRadius: '8px',

@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
-import { Iconify, useOffSetTop, useResponsive } from 'mui-eazy';
+import { Iconify, useOffSetTop, useResponsive } from 'src/muiEazy';
 import HeaderShadow from 'src/common/components/header-shadow';
 import Label from 'src/commonOld/components/label';
 import Logo from 'src/commonOld/components/logo';

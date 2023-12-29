@@ -73,9 +73,11 @@ export default function DealDetailsCarousel({ images }: Props) {
   const lightbox = useLightbox(slides);
 
   const carouselLarge = useCarousel({
-    rtl: false,
-    draggable: false,
-    adaptiveHeight: true,
+    dots: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    rtl: true,
   });
 
   const carouselThumb = useCarousel({

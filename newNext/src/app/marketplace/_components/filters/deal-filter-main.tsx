@@ -1,6 +1,6 @@
 import InputAdornment from '@mui/material/InputAdornment';
 import InputBase from '@mui/material/InputBase';
-import { useResponsive } from 'mui-eazy';
+import { useResponsive } from 'src/muiEazy';
 import Iconify from 'src/commonOld/components/iconify';
 import { useFlatInject } from 'src/service';
 

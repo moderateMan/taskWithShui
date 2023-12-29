@@ -7,7 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material/styles';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import TextMaxLine from 'src/commonOld/components/text-max-line';
 import { useResponsive } from 'src/commonOld/hooks/use-responsive';
 import { RouterLink } from 'src/routes/components';

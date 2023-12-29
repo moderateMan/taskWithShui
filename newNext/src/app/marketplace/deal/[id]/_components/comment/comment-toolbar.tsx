@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Iconify, useResponsive } from 'mui-eazy';
+import { Iconify, useResponsive } from 'src/muiEazy';
 import { useFlatInject } from 'src/service';
 import { secondaryFont } from 'src/theme/typography';
 

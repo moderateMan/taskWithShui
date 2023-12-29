@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 import Stack, { StackProps } from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
-import { Iconify, useResponsive } from 'mui-eazy';
+import { Iconify, useResponsive } from 'src/muiEazy';
 import { useMemo } from 'react';
 import Logo from 'src/commonOld/components/logo';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';

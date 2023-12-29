@@ -7,7 +7,7 @@ import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { useFlatInject } from 'src/service';
 import Nav from './nav';
-import { Iconify } from 'mui-eazy';
+import { Iconify } from 'src/muiEazy';
 import NProgress from 'nprogress';
 export const StyledMenu = styled(Paper)(({ theme }) => ({
   top: 62,
