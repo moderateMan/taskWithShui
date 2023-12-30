@@ -18,6 +18,8 @@ import { FaqFromView } from './components/formViewSections/faqFromView';
 import { MarketFormView } from './components/formViewSections/marketFormView';
 import { MediaFormView } from './components/formViewSections/mediaFormView';
 import { TabView } from './components/tabView';
+import { useBoolean } from 'src/muiEazy';
+import PostDealTipModal from './components/post-deal-tip-modal';
 
 export type FromRefType = UseFormReturn<
   {
@@ -181,6 +183,8 @@ export default function DealFormView() {
       }
     }
   };
+
+  const open = useBoolean(true)
   return (
     <>
       <Typography variant="h5" sx={{ mb: 3 }}>
@@ -259,6 +263,7 @@ export default function DealFormView() {
           Save
         </Button>
       </Stack>
+      {!id && <PostDealTipModal open={open.value} onClose={() => open.onFalse()} />}
     </>
   );
 }

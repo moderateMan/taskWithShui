@@ -15,7 +15,5 @@ export function useActiveLink(path: string, deep = true): ReturnType {
 
   const deepActive = !checkPath && pathname.includes(currentPath);
 
-  console.log(currentPath, pathname, pathname === currentPath, 'wuyou');
-
   return deep ? deepActive : normalActive;
 }
