@@ -8,7 +8,7 @@ export function TabView({ tabs, ...rest }: TabViewProps) {
   // TAB 处理逻辑
   const [tabViewValue, setTabs] = useState<TabViewItem[]>([]);
   const [tab, setTab] = useState('My Information');
-  const handleChangeTab = useCallback((_, newValue: string) => {
+  const handleChangeTab = useCallback((_: any, newValue: string) => {
     setTab(newValue);
   }, []);
 

@@ -1,6 +1,6 @@
 import { FormConfig, getValueByPath } from 'src/muiEazy';
 import { FromWrapper } from '../components/wrapper';
-import * as Yup from 'Yup';
+import * as Yup from 'yup';
 export const getPresetConfig = ({
   defaultValues = {},
   name,

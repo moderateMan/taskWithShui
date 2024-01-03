@@ -77,22 +77,22 @@ export default function DealDetailsCarousel({ images }: Props) {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    rtl: true,
+    initialSlide: 0,
   });
 
   const carouselThumb = useCarousel({
-    rtl: false,
     centerMode: true,
     swipeToSlide: true,
     focusOnSelect: true,
     variableWidth: true,
     centerPadding: '0px',
     slidesToShow: slides.length > 3 ? 3 : slides.length,
+    initialSlide: 0,
   });
 
   useEffect(() => {
+    // carouselThumb.onSetNav();
     carouselLarge.onSetNav();
-    carouselThumb.onSetNav();
   }, [carouselLarge, carouselThumb]);
 
   useEffect(() => {
@@ -175,7 +175,6 @@ export default function DealDetailsCarousel({ images }: Props) {
         }}
       >
         {renderLargeImg}
-
         {renderThumbnails}
       </Box>
 

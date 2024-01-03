@@ -80,7 +80,7 @@ export default function ReviewToolbar({ sort, onChangeSort, onOpenForm }: Props)
             }}
             onClick={onOpenForm}
           >
-            Write a Review
+            Write a Comment
           </Button>
         </Stack>
       </Stack>

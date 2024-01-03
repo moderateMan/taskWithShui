@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { alpha } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-import CustomizedDialogs from '../cropModal';
+import CropModal from '../cropModal';
 import { useDropzone } from 'react-dropzone';
 import { useBoolean } from '../../../../hooks/use-boolean';
 import icon from '../../ic-eva_cloud-upload-fill.svg';
@@ -28,6 +28,7 @@ export function UploadDragMul({
   onRemoveAll,
   uploadAction,
   onOrder,
+  validateFunc,
   disabled,
   multiple = false,
   error,
@@ -39,7 +40,7 @@ export function UploadDragMul({
   isCrop,
   ...other
 }: UploadProps) {
-  // crop 
+  // crop
   // crop 临时本地预览
   const [previewUrl, setPreviewUrl] = useState('');
   // cropModal
@@ -208,7 +209,7 @@ export function UploadDragMul({
           <CircularProgress color="inherit" />
         </Box>
       )}
-      <CustomizedDialogs
+      <CropModal
         name={fileName}
         onComplete={async (file) => {
           showLoading.onTrue();
@@ -222,7 +223,8 @@ export function UploadDragMul({
         src={previewUrl}
         open={isCropModalOpen}
         setOpen={handleOpenChange}
-      ></CustomizedDialogs>
+        validateFunc={validateFunc}
+      ></CropModal>
       {helperText && helperText}
       {renderMultiPreview}
     </Box>

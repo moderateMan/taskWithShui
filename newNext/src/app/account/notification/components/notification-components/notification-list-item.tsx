@@ -30,7 +30,7 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
     >
       <Stack direction={'column'} spacing={1}>
         <Typography
-          width={isMobile ? '100%' : '250px'}
+          width={isMobile ? '100%' : '180px'}
           fontFamily={secondaryFont.style.fontFamily}
           color={'#14417D'}
           fontSize={'14px'}
@@ -45,7 +45,7 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
           fontWeight={400}
           fontStyle={'normal'}
           lineHeight={'22px'}
-          width={isMobile ? '100%' : '650px'}
+          width={isMobile ? '100%' : '450px'}
           fontFamily={secondaryFont.style.fontFamily}
         >
           {props?.content}

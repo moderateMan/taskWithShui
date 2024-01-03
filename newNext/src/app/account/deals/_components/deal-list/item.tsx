@@ -29,6 +29,9 @@ export default function EcommerceCartItem({
 }: Props) {
   const popover = usePopover();
   const {} = useFlatInject('dealStore');
+
+  console.log('itemData', itemData);
+
   return (
     <Stack
       direction="row"
@@ -52,25 +55,27 @@ export default function EcommerceCartItem({
         />
 
         <Stack spacing={0.5} sx={{ p: 2 }}>
-          <Typography variant="subtitle2">{itemData.title}</Typography>
+          <Typography variant="subtitle2" textOverflow={'clip'} width={160}>
+            {itemData.title}
+          </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             {itemData.sub_title}
           </Typography>
         </Stack>
       </Stack>
 
-      <Stack sx={{ width: 120 }}>
+      <Stack sx={{ width: 90 }}>
         <Typography variant="subtitle2">
           {itemData.expire_at ? dayjs(itemData.expire_at).format('DD/MM/YYYY') : 'N/A'}
         </Typography>
       </Stack>
-      <Stack sx={{ width: 120 }}>
+      <Stack sx={{ width: 90 }}>
         <Typography variant="subtitle2">{statistic?.view}</Typography>
       </Stack>
-      <Stack sx={{ width: 120 }}>
+      <Stack sx={{ width: 90 }}>
         <Typography variant="subtitle2">{statistic?.click}</Typography>
       </Stack>
-      <Stack sx={{ width: 120 }}>
+      <Stack sx={{ width: 75 }}>
         <Typography variant="subtitle2">{statistic?.liked}</Typography>
       </Stack>
 
@@ -110,7 +115,7 @@ export default function EcommerceCartItem({
         <Divider sx={{ borderStyle: 'dashed' }} />
         <MenuItem onClick={() => {}} sx={{ color: 'error.main' }}>
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
+          Archive
         </MenuItem>
       </CustomPopover>
       {wishlist && (
@@ -129,6 +134,15 @@ const DealStatusPatch = (dealStatus: DealStatus) => {
         <Stack sx={{ width: 120, typography: 'subtitle2' }}>
           <Typography variant="subtitle2" color={'green'}>
             Active
+          </Typography>
+        </Stack>
+      );
+      break;
+    case DealStatus.DRAFTING:
+      return (
+        <Stack sx={{ width: 120, typography: 'subtitle2' }}>
+          <Typography variant="subtitle2" color={'textGrey'}>
+            Drafting
           </Typography>
         </Stack>
       );

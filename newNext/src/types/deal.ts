@@ -2,6 +2,7 @@ import { IBaseModel } from 'src/service/model/base';
 
 export enum DealStatus {
   PENDING = 'pending',
+  DRAFTING = 'drafting',
   REJECTED = 'rejected',
   // status of business logic
   ACTIVE = 'active',

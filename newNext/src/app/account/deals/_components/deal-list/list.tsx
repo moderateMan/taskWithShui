@@ -37,12 +37,12 @@ export default function DealList({
           }}
         >
           <Stack flexGrow={1}>Item</Stack>
-          <Stack sx={{ width: 120 }}>Expires</Stack>
-          <Stack sx={{ width: 120 }}>Views</Stack>
-          <Stack sx={{ width: 120 }}>CTRs</Stack>
-          <Stack sx={{ width: 120 }}>Likes</Stack>
-          <Stack sx={{ width: 120 }}>Status</Stack>
-          <Stack sx={{ width: 36 }} />
+          <Stack sx={{ width: 90}}>Expires</Stack>
+          <Stack sx={{ width: 90 }}>Views</Stack>
+          <Stack sx={{ width: 90}}>CTRs</Stack>
+          <Stack sx={{ width: 90}}>Likes</Stack>
+          <Stack sx={{ width: 90 }}>Status</Stack>
+          <Stack sx={{ width: 60 }} />
           {wishlist && <Stack sx={{ width: 36 }} />}
         </Stack>
 

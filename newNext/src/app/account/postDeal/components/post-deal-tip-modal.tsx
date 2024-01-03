@@ -9,11 +9,10 @@ import {
   StepLabel,
   Stepper,
   Typography,
-  styled,
-  StepConnector,
-  stepConnectorClasses,
   TypographyProps,
 } from '@mui/material';
+import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
+import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import { Iconify } from 'src/muiEazy/components/iconify';
 
@@ -39,7 +38,7 @@ const steps = [
         button below.
       </Typography>
     ),
-    cover: '/assets/images/account/create_your_deal.svg',
+    cover: '/assets/images/account/ipad_howto_01 1.png',
   },
   {
     title: 'Preview your deal',
@@ -51,7 +50,7 @@ const steps = [
         as you go so you won’t lose your work.
       </Typography>
     ),
-    cover: '/assets/images/account/preview_your_deal.svg',
+    cover: '/assets/images/account/ipad_howto_02 1.png',
   },
   {
     title: 'Submit for approval',
@@ -62,7 +61,7 @@ const steps = [
         button.
       </Typography>
     ),
-    cover: '/assets/images/account/submit_for_approval.svg',
+    cover: '/assets/images/account/ipad_howto_03 1.png',
   },
   {
     title: 'Submitted',
@@ -73,7 +72,7 @@ const steps = [
         will need to change or improve on and resubmit.
       </Typography>
     ),
-    cover: '/assets/images/account/submitted.svg',
+    cover: '/assets/images/account/ipad_howto_04 1.png',
   },
   {
     title: 'Approved',
@@ -83,7 +82,7 @@ const steps = [
         letting you know that it is active and in Scaling.
       </Typography>
     ),
-    cover: '/assets/images/account/approved.svg',
+    cover: '/assets/images/account/ipad_howto_05 1.png',
   },
 ];
 

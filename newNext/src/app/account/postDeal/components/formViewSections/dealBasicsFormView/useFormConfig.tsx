@@ -76,6 +76,7 @@ export const useFormConfig = ({
         label: 'Highlights',
         type: 'multiple',
         fieldConfig: {
+          addLabel: 'Add highlight',
           //TODO 设置highlights的placeholder
           label: 'highlights',
         },
@@ -152,12 +153,22 @@ export const useFormConfig = ({
       },
       pics: {
         type: 'upload',
-        label: 'Images',
+        label: 'Upload logo (optional)',
         name: 'components.pics',
         defaultValue: defaultValues?.['components']?.['pics'] || [],
         fieldConfig: {
           isCrop: true,
           multiple: true,
+          validateFunc: (file) => {
+            let flag = true;
+            let info = '';
+            if (file.size < 0.7 * 1024 * 1024) {
+              flag = false;
+              info =
+                'The file size is too small (worry that the file is too small and the quality is not good)';
+            }
+            return [flag, info];
+          },
           uploadAction: async (file: File) => {
             const {
               payload: { fileUrl },

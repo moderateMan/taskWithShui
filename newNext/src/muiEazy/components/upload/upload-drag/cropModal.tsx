@@ -6,8 +6,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
-import Crop from './crop';
 import { Iconify } from '../../iconify';
+import Crop from './crop';
+import { useState } from 'react';
+import { Alert } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -18,24 +20,29 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedDialogs({
+export default function CropModal({
   open,
-  setOpen,
   name,
   src,
+  validateFunc,
   onComplete,
+  setOpen,
 }: {
   open: boolean;
-  setOpen: (value: boolean) => void;
-  onComplete: (file: File) => void;
   src: string;
   name: string;
+  setOpen: (value: boolean) => void;
+  onComplete: (file: File) => void;
+  validateFunc?: (file: File) => [boolean, string];
 }) {
   const handleClose = () => {
+    setErrFlag(false);
+    setErrInfo('');
     setOpen(false);
   };
-  const ref = React.useRef(() => {});
-
+  const ref = React.useRef<() => [boolean, string]>();
+  const [errFlag, setErrFlag] = useState(false);
+  const [errorInfo, setErrInfo] = useState('');
   return (
     <React.Fragment>
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
@@ -55,14 +62,38 @@ export default function CustomizedDialogs({
           <Iconify icon="mingcute:close-line" width={16} />
         </IconButton>
         <DialogContent dividers>
-          <Crop name={name} src={src} callRef={ref} onComplete={onComplete}></Crop>
+          {errFlag && (
+            <Alert severity="warning" sx={{ mb: 3 }}>
+              {errorInfo}
+            </Alert>
+          )}
+          <Crop
+            name={name}
+            src={src}
+            callRef={ref}
+            onComplete={onComplete}
+            validateFunc={(file) => {
+              const [flag = true, info = 'error'] = validateFunc?.(file) || [];
+              debugger;
+              if (!flag) {
+                setErrFlag(true);
+                setErrInfo(info);
+              }
+              return [flag, info];
+            }}
+          ></Crop>
         </DialogContent>
         <DialogActions>
           <Button
             autoFocus
             onClick={() => {
-              ref.current?.();
-              handleClose();
+              const [flag = true, info = ''] = ref.current?.() || [];
+              setErrFlag(!flag);
+              if (flag) {
+                handleClose();
+              } else {
+                setErrInfo(info);
+              }
             }}
           >
             Ok

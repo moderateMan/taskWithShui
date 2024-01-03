@@ -41,7 +41,7 @@ export default function customField(props: Props) {
       let fields: any;
       let comp;
       if (type == 'one') {
-        fields = getField([itemName, formConfig], itemName + '.' + index);
+        fields = getField(itemName, formConfig);
         comp = (
           <Stack
             sx={{
@@ -60,7 +60,6 @@ export default function customField(props: Props) {
                   return notify.warn('at least one!');
                 }
                 let temp = [...arr];
-                ;
                 const targetId = arr.findIndex((item) => {
                   return item.id === id;
                 });
@@ -95,7 +94,7 @@ export default function customField(props: Props) {
               }}
               direction="row"
             >
-              {getField([key, value], (value as any).name)}
+              {getField(key, value)}
             </Stack>
           );
         });

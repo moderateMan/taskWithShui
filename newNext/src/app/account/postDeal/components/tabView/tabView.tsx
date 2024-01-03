@@ -1,11 +1,9 @@
 import { SxProps, Tab, Tabs } from '@mui/material';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { Iconify, uuidv4 } from 'src/muiEazy';
 import { TabViewItem, TabViewPanelProps, TabViewProps } from './types';
 export function TabView({ tabs, tabId, handleTabChange, errorResult, ...rest }: TabViewProps) {
-  ;
   // TAB 处理逻辑
   const [tabViewValue, setTabs] = useState<TabViewItem[]>([]);
   const handleChangeTab = useCallback((_: any, newValue: string) => {
@@ -43,7 +41,7 @@ export function TabView({ tabs, tabId, handleTabChange, errorResult, ...rest }: 
               )) || (
                 <Box
                   sx={{
-                    width: 20,
+                    width: 0,
                   }}
                 ></Box>
               )

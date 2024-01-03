@@ -97,7 +97,7 @@ export default function LoginCoverView() {
   );
 
   const renderSocials = (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={2} my={4}>
       <Button
         onClick={() => {
           // 弃用302转跳的方式登陆，还是用2次请求的方式
@@ -176,6 +176,7 @@ export default function LoginCoverView() {
     <>
       <Logo />
       {renderHead}
+      {renderSocials}
       {renderForm}
       {loading && <SplashScreen />}
     </>

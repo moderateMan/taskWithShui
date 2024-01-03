@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, Button, Stack, Typography } from '@mui/material';
+import { Alert, Box, Button, Stack, Typography } from '@mui/material';
 import { merge } from 'lodash-es';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -20,6 +20,7 @@ import { MediaFormView } from './components/formViewSections/mediaFormView';
 import { TabView } from './components/tabView';
 import { useBoolean } from 'src/muiEazy';
 import PostDealTipModal from './components/post-deal-tip-modal';
+import { Modal } from 'src/muiEazy';
 
 export type FromRefType = UseFormReturn<
   {
@@ -184,7 +185,7 @@ export default function DealFormView() {
     }
   };
 
-  const open = useBoolean(true)
+  const open = useBoolean(true);
   return (
     <>
       <Typography variant="h5" sx={{ mb: 3 }}>
@@ -263,6 +264,79 @@ export default function DealFormView() {
           Save
         </Button>
       </Stack>
+      <Modal
+        title={''}
+        actionConfig={[]}
+        content={() => {
+          return (
+            <Box>
+              <Typography
+                sx={{
+                  color: 'var(--Scaling-Blue, #256CCB)',
+                  textAlign: 'center',
+                  fontSize: '32px',
+                  fontStyle: 'normal',
+                  fontWeight: '700',
+                  lineHeight: '48px',
+                  mb: '8px',
+                }}
+                textAlign={'center'}
+              >
+                Congrats!
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'var(--Scaling-Black, #141414)',
+                  textAlign: 'center',
+                  fontSize: '18px',
+                  fontStyle: 'normal',
+                  fontWeight: '700',
+                  lineHeight: '48px',
+                  mb: '8px',
+                }}
+              >
+                Your Deal has been submitted for approval.
+              </Typography>
+              <Typography
+                sx={{
+                  color: 'var(--Scaling-Grey2, #696969)',
+                  fontSize: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: '400',
+                  lineHeight: '24px',
+                  mb: '8px',
+                }}
+              >
+                The Scaling team are now reviewing your deal submission.. If you have any questions
+                please don’t hesitate to reach out.
+              </Typography>
+              <Stack
+                sx={{
+                  mt: '32px',
+                }}
+                justifyContent={'center'}
+                direction={'row'}
+              >
+                <Button
+                  sx={{
+                    margin: '0 12px',
+                  }}
+                  variant="contained"
+                >
+                  Return to Scaling
+                </Button>
+                <Button
+                  sx={{
+                    margin: '0 12px',
+                  }}
+                >
+                  FAQ
+                </Button>
+              </Stack>
+            </Box>
+          );
+        }}
+      />
       {!id && <PostDealTipModal open={open.value} onClose={() => open.onFalse()} />}
     </>
   );

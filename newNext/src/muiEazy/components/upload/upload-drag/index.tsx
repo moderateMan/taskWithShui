@@ -4,8 +4,5 @@ import { UploadDragSingle } from './upload-drag-single';
 // ----------------------------------------------------------------------
 
 export function UploadDrag({ multiple = false, ...rest }: UploadProps) {
-  if(!multiple){
-    // debugger
-  }
   return <>{multiple ? <UploadDragMul {...rest} /> : <UploadDragSingle {...rest} />}</>;
 }

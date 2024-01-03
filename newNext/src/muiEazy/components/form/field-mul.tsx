@@ -1,4 +1,4 @@
-import { IconButton, Stack } from '@mui/material';
+import { Button, IconButton, Stack, Typography } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { FormConfig, FormConfigItem, useGetField } from '../../hooks';
@@ -12,10 +12,11 @@ export type FieldMulProps = {
   mulFromConfig?: FormConfig | FormConfigItem;
   mulType?: 'one' | 'obj';
   placeholder?: string;
+  addLabel?: string;
 };
 
 export default function FieldMul(props: FieldMulProps) {
-  const { name, mulFromConfig, mulType = 'one', placeholder } = props;
+  const { name, mulFromConfig, mulType = 'one', placeholder, addLabel } = props;
   const { setValue, getValues, unregister, register } = useFormContext();
   const { control } = useFormContext();
   let value = getValues(name);
@@ -37,7 +38,6 @@ export default function FieldMul(props: FieldMulProps) {
       let itemName = placeholder || `${name}.${index}`;
       let fields: any;
       if (mulType == 'one') {
-        ;
         fields = mulFromConfig ? getField(itemName, mulFromConfig) : getField(itemName, props);
         comp = (
           <Stack
@@ -51,6 +51,7 @@ export default function FieldMul(props: FieldMulProps) {
             <IconButton
               sx={{
                 width: '51px',
+                height: '51px',
               }}
               onClick={(_) => {
                 if (arr.length <= 1) {
@@ -77,16 +78,6 @@ export default function FieldMul(props: FieldMulProps) {
               }}
             >
               <Iconify icon={'icon-park-outline:delete'} />
-            </IconButton>
-            <IconButton
-              sx={{
-                width: '51px',
-              }}
-              onClick={(_) => {
-                setArr([...arr, { id: uuidv4(), label }]);
-              }}
-            >
-              <Iconify icon={'icon-park-outline:add'} />
             </IconButton>
           </Stack>
         );
@@ -165,10 +156,29 @@ export default function FieldMul(props: FieldMulProps) {
         name={name}
         control={control}
         render={({ fieldState: { error } }) => {
-          ;
           return (
             <>
               {fields}
+              <div>
+                <Button
+                  onClick={(_) => {
+                    setArr([...arr, { id: uuidv4(), label: name }]);
+                  }}
+                  startIcon={
+                    <Iconify
+                      color={'#256CCB'}
+                      width={'32px'}
+                      height={'32px'}
+                      icon={'formkit:add'}
+                    />
+                  }
+                >
+                  <Typography fontSize={'14px'} color={'#256CCB'}>
+                    {addLabel || `add ${name}`}
+                  </Typography>
+                </Button>
+              </div>
+
               {(error?.root?.message || error?.message) && (
                 <div
                   style={{

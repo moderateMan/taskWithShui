@@ -32,7 +32,7 @@ export default function useCarousel(props?: Settings): ReturnType {
     arrows: false,
     dots: !!props?.customPaging,
     rtl,
-    beforeChange: (_, next: number) => setCurrentIndex(next),
+    beforeChange: (_: any, next: number) => setCurrentIndex(next),
     ...props,
     fade: !!(props?.fade && !rtl),
   };

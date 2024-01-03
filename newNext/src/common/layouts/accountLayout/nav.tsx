@@ -35,11 +35,11 @@ const navigations = [
     path: paths.account.postDeal,
     icon: <Iconify icon="mdi:file-chart-check" />,
   },
-  {
-    title: 'Post a Opportunity',
-    path: paths.account.opportunity,
-    icon: <Iconify icon="mdi:file-chart-check" />,
-  },
+  // {
+  //   title: 'Post a Opportunity',
+  //   path: paths.account.opportunity,
+  //   icon: <Iconify icon="mdi:file-chart-check" />,
+  // },
   {
     title: 'Notifications',
     path: paths.account.notification,

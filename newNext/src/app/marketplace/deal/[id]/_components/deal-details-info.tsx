@@ -245,7 +245,7 @@ export default function DealDetailsInfo({
 
         <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
           {/* <Iconify icon="carbon:share" sx={{ mr: 1 }} /> Share */}
-          <ShareMenu />
+          <ShareMenu deal_id={deal_id} />
         </Stack>
       </Stack>
     </>

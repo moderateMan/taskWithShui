@@ -41,7 +41,7 @@ export default function ReviewSummary({ reviewNumber, ratingNumber, onOpenForm }
           startIcon={<Iconify icon="carbon:edit" width={24} />}
           onClick={onOpenForm}
         >
-          Write a Review
+          Write a Comment
         </Button>
       </Stack>
     </Paper>

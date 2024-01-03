@@ -14,3 +14,4 @@ export * from './image';
 export * from './empty';
 export * from './notify';
 export * from './tabView';
+export * from './modal';

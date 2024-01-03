@@ -8,7 +8,6 @@ export { useFlag } from './use-flag';
 // other
 export { useLocalStorage } from './use-local-storage';
 export { useOffSetTop } from './use-off-set-top';
-export { useScrollToTop } from './use-scroll-to-top';
 export { useDebounce } from './use-debounce';
 export { useDoubleClick } from './use-double-click';
 export { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';

@@ -5,23 +5,28 @@ import { dataURLToBlob } from '../../../utils';
 export const Demo = ({
   name,
   src,
-  onComplete,
   callRef,
+  onComplete,
+  validateFunc,
 }: {
   callRef: React.MutableRefObject<any>;
-  onComplete: (file: File) => void;
   src: string;
   name: string;
+  onComplete: (file: File) => void;
+  validateFunc?: (file: File) => [boolean, string];
 }) => {
   const [image] = useState(src);
   const cropperRef = createRef<ReactCropperElement>();
+
   const onCrop = () => {
     if (typeof cropperRef.current?.cropper !== 'undefined') {
       let dataUrl = cropperRef.current?.cropper.getCroppedCanvas().toDataURL();
       let blob = dataURLToBlob(dataUrl);
       const fileName = name || 'hello.txt';
       const file = new File([blob], fileName, { type: blob.type });
-      onComplete(file);
+      const [flag = true, info] = validateFunc?.(file) || [];
+      flag && onComplete(file);
+      return [flag, info];
     }
   };
   useEffect(() => {
@@ -45,6 +50,7 @@ export const Demo = ({
           autoCropArea={1}
           checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
           guides={true}
+          aspectRatio={16 / 9}
         />
       </div>
       <br style={{ clear: 'both' }} />
