@@ -7,8 +7,9 @@ import DialogContent from '@mui/material/DialogContent';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogContentText from '@mui/material/DialogContentText';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
-import { Box, Link } from '@mui/material';
+import { Box, Link, Modal } from '@mui/material';
 import { TabView } from 'src/muiEazy';
+import PdfViewer from 'src/common/components/pdf-viewer';
 
 // ----------------------------------------------------------------------
 
@@ -53,74 +54,39 @@ export default function ScrollDialog() {
         sx={{
           overflow: 'hidden',
           '& .MuiDialog-paper': {
-            width: '100%',
-            maxWidth: '100%',
-            height: '100%',
-            maxHeight: '100%',
+            width: '80%',
+            maxWidth: '80%',
+            height: '80%',
+            maxHeight: '80%',
             margin: 0,
-            borderRadius: 0,
             overflow: 'hidden',
+            borderRadius: '10px',
           },
         }}
       >
         <DialogTitle sx={{ pb: 1 }}>Policy</DialogTitle>
 
-        <DialogContent
-          dividers={scroll === 'paper'}
-          sx={{
-            overflow: 'hidden',
-          }}
-        >
+        <DialogContent dividers={scroll === 'paper'}>
           <TabView
             tabs={[
               {
                 id: '1',
                 label: 'Privacy Policy',
                 node: (
-                  <Box
-                    sx={{
-                      width: '1980px',
-                      height: '1080px',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <embed
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        overflow: 'hidden',
-                      }}
-                      type="application/pdf"
-                      src={
-                        'https://fileservicescaling.s3.ap-southeast-2.amazonaws.com/website_media_pic/FINAL+privacy-policy-Scaling_Version1_0_20231117.docx+(1).pdf'
-                      }
-                    />
-                  </Box>
+                  <PdfViewer
+                    src={'/assets/FINAL+privacy-policy-Scaling_Version1_0_20231117.docx+(1).pdf'}
+                  />
                 ),
               },
               {
                 id: '2',
                 label: 'Terms & Conditions',
                 node: (
-                  <Box
-                    sx={{
-                      width: '1980px',
-                      height: '1080px',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <embed
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        overflow: 'hidden',
-                      }}
-                      type="application/pdf"
-                      src={
-                        'https://fileservicescaling.s3.ap-southeast-2.amazonaws.com/website_media_pic/Scaling+_+Terms+And+Conditions+-+MERGED_BB202311120_e_Version1_0.pdf'
-                      }
-                    />
-                  </Box>
+                  <PdfViewer
+                    src={
+                      'https://fileservicescaling.s3.ap-southeast-2.amazonaws.com/website_media_pic/Scaling+_+Terms+And+Conditions+-+MERGED_BB202311120_e_Version1_0.pdf'
+                    }
+                  />
                 ),
               },
             ]}

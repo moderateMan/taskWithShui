@@ -12,7 +12,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-const url = new URL("../../assets/test.pdf", import.meta.url).toString();
+const url = new URL("../../../newNext/public/assets/FINAL+privacy-policy-Scaling_Version1_0_20231117.docx+(1).pdf", import.meta.url).toString();
 
 const options = {
   cMapUrl: "/cmaps/",
