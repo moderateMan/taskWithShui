@@ -73,20 +73,50 @@ export default function ScrollDialog() {
                 id: '1',
                 label: 'Privacy Policy',
                 node: (
-                  <PdfViewer
-                    src={'/assets/FINAL+privacy-policy-Scaling_Version1_0_20231117.docx+(1).pdf'}
-                  />
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: 'calc(80vh - 286px)',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <embed
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'hidden',
+                      }}
+                      type="application/pdf"
+                      src={
+                        'https://fileservicescaling.s3.ap-southeast-2.amazonaws.com/website_media_pic/FINAL+privacy-policy-Scaling_Version1_0_20231117.docx+(1).pdf'
+                      }
+                    />
+                  </Box>
                 ),
               },
               {
                 id: '2',
                 label: 'Terms & Conditions',
                 node: (
-                  <PdfViewer
-                    src={
-                      'https://fileservicescaling.s3.ap-southeast-2.amazonaws.com/website_media_pic/Scaling+_+Terms+And+Conditions+-+MERGED_BB202311120_e_Version1_0.pdf'
-                    }
-                  />
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: 'calc(80vh - 286px)',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <embed
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'hidden',
+                      }}
+                      type="application/pdf"
+                      src={
+                        'https://fileservicescaling.s3.ap-southeast-2.amazonaws.com/website_media_pic/Scaling+_+Terms+And+Conditions+-+MERGED_BB202311120_e_Version1_0.pdf'
+                      }
+                    />
+                  </Box>
                 ),
               },
             ]}
