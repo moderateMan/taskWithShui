@@ -7,8 +7,9 @@ import DialogContent from '@mui/material/DialogContent';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogContentText from '@mui/material/DialogContentText';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
-import { Box, Link } from '@mui/material';
+import { Box, Link, Modal } from '@mui/material';
 import { TabView } from 'src/muiEazy';
+import PdfViewer from 'src/common/components/pdf-viewer';
 
 // ----------------------------------------------------------------------
 
@@ -53,24 +54,19 @@ export default function ScrollDialog() {
         sx={{
           overflow: 'hidden',
           '& .MuiDialog-paper': {
-            width: '100%',
-            maxWidth: '100%',
-            height: '100%',
-            maxHeight: '100%',
+            width: '80%',
+            maxWidth: '80%',
+            height: '80%',
+            maxHeight: '80%',
             margin: 0,
-            borderRadius: 0,
             overflow: 'hidden',
+            borderRadius: '10px',
           },
         }}
       >
         <DialogTitle sx={{ pb: 1 }}>Policy</DialogTitle>
 
-        <DialogContent
-          dividers={scroll === 'paper'}
-          sx={{
-            overflow: 'hidden',
-          }}
-        >
+        <DialogContent dividers={scroll === 'paper'}>
           <TabView
             tabs={[
               {
@@ -79,8 +75,8 @@ export default function ScrollDialog() {
                 node: (
                   <Box
                     sx={{
-                      width: '1980px',
-                      height: '1080px',
+                      width: '100%',
+                      height: 'calc(80vh - 286px)',
                       overflow: 'hidden',
                     }}
                   >
@@ -104,8 +100,8 @@ export default function ScrollDialog() {
                 node: (
                   <Box
                     sx={{
-                      width: '1980px',
-                      height: '1080px',
+                      width: '100%',
+                      height: 'calc(80vh - 286px)',
                       overflow: 'hidden',
                     }}
                   >

@@ -1,0 +1,14 @@
+.pdf-page {
+  position: relative;
+}
+
+.pdf-page .page-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: transparent;
+}
+
+.pdf-page .page-text *[role='presentation'] {
+  position: absolute;
+}
