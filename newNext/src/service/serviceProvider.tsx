@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 import { usePathname, useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { reduxStore, useFlatInject } from 'src/service';
@@ -41,6 +41,10 @@ const App = (props: React.PropsWithChildren) => {
     token && init();
   }, []);
   useEffect(() => {
+    const shareFlag = pathName.includes('share');
+    if (shareFlag) {
+      return
+    }
     if (token) {
       if (includePath2.includes(pathNameTemp)) {
         router.push(paths.marketplace.root);

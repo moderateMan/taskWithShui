@@ -3,12 +3,11 @@
 import { Alert, Button, Divider, Stack, Typography } from '@mui/material';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
-import { useFields } from 'src/muiEazy';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
-import IconTip from 'src/common/components/icon-tip';
 import notify from 'src/common/utils/notify';
 import storageHelper from 'src/common/utils/storageHelper';
+import { useFields } from 'src/muiEazy';
 import useHashParams from 'src/routes/hooks/use-hash-params';
 import { paths } from 'src/routes/paths';
 import { useFlatInject } from 'src/service';
@@ -26,13 +25,12 @@ import {
   useFormConfig_team,
 } from './form-config';
 import AboutYouSection from './tabFormSections/aboutYouSection';
+import InvestmentSection from './tabFormSections/investmentSection';
 import MarketSection from './tabFormSections/marketSection';
+import SubcategoriesSection from './tabFormSections/subcategoriesSection';
 import YourCompanySection from './tabFormSections/yourCompanySection';
 import { TabView } from './tabView';
 import useFieldsNew from './useFieldsNew';
-import SubcategoriesSection from './tabFormSections/subcategoriesSection';
-import InvestmentSection from './tabFormSections/investmentSection';
-import ReviewSection from './tabFormSections/reviewSection'
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -119,9 +117,6 @@ export default function DealFormView() {
     },
   });
   const baseFormRef = [methods0, methods0_1];
-  methods0.watch((e: any) => {
-    setType(e.type);
-  });
   const ask = useFormConfig_ask({
     type,
     defaultValues: defaultValues,
@@ -226,28 +221,6 @@ export default function DealFormView() {
     ...formRefSection5,
   ];
 
-  const TypographyNode = ({ children }: { children: ReactNode }) => {
-    return (
-      <Typography
-        variant="h4"
-        sx={{
-          mb: 3,
-        }}
-      >
-        {children}
-      </Typography>
-    );
-  };
-  const DividerNode = () => {
-    return (
-      <Divider
-        sx={{
-          mb: 3,
-          mt: 3,
-        }}
-      />
-    );
-  };
   const tabConfig = useMemo(() => {
     return [
       {

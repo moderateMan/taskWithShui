@@ -33,6 +33,7 @@ export interface INotification extends IBaseModel {
   content: string;
   is_read: boolean;
   user_id: number;
+  comment_place: number
 }
 
 export interface INotificationQueryParams { 

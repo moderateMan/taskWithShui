@@ -2,12 +2,12 @@
 
 import { Box, Divider, Grid, Stack, Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-import { useResponsive } from 'src/muiEazy';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import CustomBreadcrumbs from 'src/commonOld/components/custom-breadcrumbs';
 import { SplashScreen } from 'src/commonOld/components/loading-screen';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
+import { useResponsive } from 'src/muiEazy';
 import { useFlatInject } from 'src/service';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 import { IDealGeneralComponent } from 'src/types/deal';
@@ -21,21 +21,17 @@ import Team from './_components/deal-team-about';
 // ----------------------------------------------------------------------
 
 export default function DealDetailView() {
-  const loading = useBoolean(true);
-  const { setDealDetail, fetchDealDetailAct, setCurrentDealId, dealDetail } =
-    useFlatInject('ecommerceStore');
+  const { loading, dealDetail, setDealDetail, setCurrentDealId } = useFlatInject('dealStore')
   const params = useParams();
   const mdUp = useResponsive('up', 'md');
   const { title = '', amount = 0, sub_title = '', expire_at = '', components } = dealDetail || {};
   const pathName = usePathname();
+  const previewFlag = pathName.includes('preview');
+  const shareFlag = pathName.includes('share');
   useEffect(() => {
     setDealDetail(null);
     if (params.id) {
       setCurrentDealId(parseInt(params.id));
-      fetchDealDetailAct({
-        id: parseInt(params.id),
-      });
-      loading.onFalse();
     }
   }, []);
   const { team, highlights, faq } = components || {};
@@ -89,21 +85,28 @@ export default function DealDetailView() {
   }, [dealDetail]);
   return (
     <>
-      <Container>
-        <CustomBreadcrumbs
-          links={[
-            {
-              name: 'Marketplace',
-              href: '/marketplace',
-            },
-            {
-              name: dealDetail?.title || '',
-            },
-          ]}
-          sx={{ my: 5 }}
-        />
+      <Container
+        sx={{
+          marginBottom: shareFlag ? '200px' : '0px',
+          paddingTop: '50px'
+        }}
+      >
+        <Grid sx={{
+          height: '50px',
+        }}><CustomBreadcrumbs
+            links={[
+              {
+                name: 'Marketplace',
+                href: '/marketplace',
+              },
+              {
+                name: dealDetail?.title || '',
+              },
+            ]}
+            sx={{ my: 5 }}
+          /></Grid>
 
-        <Grid container spacing={{ xs: 5, md: 8 }}>
+        <Grid container columnSpacing={{ xs: 5, md: 8 }}>
           <Grid item xs={12} md={6}>
             <DealDetailsCarousel images={components ? components.pics : []} />
           </Grid>
@@ -125,168 +128,170 @@ export default function DealDetailView() {
           </Grid>
         </Grid>
 
-        <Grid
-          container
-          sx={{
-            mt: 10,
-            minHeight: '100vh',
-          }}
-          spacing={8}
-        >
-          <Grid item xs={mdUp ? 8 : 12}>
-            {
-              <Grid item xs={12} md={12}>
-                <Stack
-                  spacing={4}
-                  sx={{
-                    py: { xs: 5, md: 2 },
-                  }}
-                >
-                  <Stack spacing={2}>
-                    <Typography
-                      fontFamily={secondaryFont.style.fontFamily}
-                      sx={{
-                        fontStyle: 'normal',
-                        fontWeight: 700,
-                        fontSize: '24px',
-                        lineHeight: '24px',
-                        color: '#14417D',
-                        marginBottom: '16px',
-                      }}
-                    >
-                      {'Highlights'}
-                    </Typography>
-
-                    {highlights!?.map((item, index) => {
-                      return (
-                        <Box key={index}>
-                          <Typography
-                            fontFamily={primaryFont.style.fontFamily}
-                            sx={{
-                              color: '#232323',
-                              fontStyle: 'normal',
-                              fontWeight: 400,
-                              lineHeight: '16px',
-                              fontSize: '16px',
-                            }}
-                          >
-                            <span
-                              style={{
-                                display: 'inline-block',
-                                backgroundColor: 'black',
-                                width: '5px',
-                                height: '5px',
-                                borderRadius: '5px',
-                                marginRight: '10px',
-                                marginBottom: '3px',
-                              }}
-                            ></span>
-                            {item}
-                          </Typography>
-                        </Box>
-                      );
-                    })}
-                  </Stack>
-                  <Divider
+        {!shareFlag && (
+          <Grid
+            container
+            sx={{
+              mt: 10,
+              minHeight: '100vh',
+            }}
+            spacing={8}
+          >
+            <Grid item xs={mdUp ? 8 : 12}>
+              {
+                <Grid item xs={12} md={12}>
+                  <Stack
+                    spacing={4}
                     sx={{
-                      marginBottom: '60px',
+                      py: { xs: 5, md: 2 },
                     }}
-                  />
-                </Stack>
-              </Grid>
-            }
-            {sectionInfoList.map((item) => {
-              return item.title ? (
-                <Grid key={item.key} item xs={12} md={12}>
-                  <DealSection data={item} />
-                </Grid>
-              ) : (
-                ''
-              );
-            })}
-            {team && (
-              <Grid item xs={12} md={12}>
-                <Team members={team} title={dealDetail?.title}></Team>
-              </Grid>
-            )}
-            {Array.isArray(faq) && faq.length && (
-              <Grid item xs={12} md={12}>
-                <Stack
-                  spacing={4}
-                  sx={{
-                    py: { xs: 5, md: 2 },
-                  }}
-                >
-                  <Stack spacing={2}>
-                    <Typography
-                      variant="h4"
-                      fontFamily={secondaryFont.style.fontFamily}
-                      sx={{
-                        fontStyle: 'normal',
-                        fontWeight: 700,
-                        lineHeight: '24px',
-                        color: '#14417D',
-                      }}
-                    >
-                      {'FAQ'}
-                    </Typography>
+                  >
+                    <Stack spacing={2}>
+                      <Typography
+                        fontFamily={secondaryFont.style.fontFamily}
+                        sx={{
+                          fontStyle: 'normal',
+                          fontWeight: 700,
+                          fontSize: '24px',
+                          lineHeight: '24px',
+                          color: '#14417D',
+                          marginBottom: '16px',
+                        }}
+                      >
+                        {'Highlights'}
+                      </Typography>
 
-                    {Array.isArray(faq) &&
-                      faq?.map((item, index) => {
+                      {highlights!?.map((item, index) => {
                         return (
-                          <Box
-                            key={index}
-                            sx={{
-                              marginBottom: '32px',
-                            }}
-                          >
-                            <Stack spacing={4}>
-                              <Typography
-                                sx={{
-                                  color: '#232323',
-                                  fontFamily: 'Inter',
-                                  fontSize: '18px',
-                                  fontStyle: 'normal',
-                                  lineHeight: '27px',
-                                  fontWeight: 600,
+                          <Box key={index}>
+                            <Typography
+                              fontFamily={primaryFont.style.fontFamily}
+                              sx={{
+                                color: '#232323',
+                                fontStyle: 'normal',
+                                fontWeight: 400,
+                                lineHeight: '16px',
+                                fontSize: '16px',
+                              }}
+                            >
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  backgroundColor: 'black',
+                                  width: '5px',
+                                  height: '5px',
+                                  borderRadius: '5px',
+                                  marginRight: '10px',
+                                  marginBottom: '3px',
                                 }}
-                              >
-                                {item.question}
-                              </Typography>
-                              <Typography
-                                fontFamily={primaryFont.style.fontFamily}
-                                sx={{
-                                  color: 'var(--text-primary, #14417D)',
-                                  fontStyle: 'normal',
-                                  fontWeight: 400,
-                                  lineHeight: '24px',
-                                  fontSize: '16px',
-                                }}
-                              >
-                                {item.answer}
-                              </Typography>
-                            </Stack>
+                              ></span>
+                              {item}
+                            </Typography>
                           </Box>
                         );
                       })}
+                    </Stack>
+                    <Divider
+                      sx={{
+                        marginBottom: '60px',
+                      }}
+                    />
                   </Stack>
-                  <Divider
+                </Grid>
+              }
+              {sectionInfoList.map((item) => {
+                return item.title ? (
+                  <Grid key={item.key} item xs={12} md={12}>
+                    <DealSection data={item} />
+                  </Grid>
+                ) : (
+                  ''
+                );
+              })}
+              {team && (
+                <Grid item xs={12} md={12}>
+                  <Team members={team} title={dealDetail?.title}></Team>
+                </Grid>
+              )}
+              {Array.isArray(faq) && faq.length && (
+                <Grid item xs={12} md={12}>
+                  <Stack
+                    spacing={4}
                     sx={{
-                      marginBottom: '60px',
+                      py: { xs: 5, md: 2 },
                     }}
-                  />
-                </Stack>
+                  >
+                    <Stack spacing={2}>
+                      <Typography
+                        variant="h4"
+                        fontFamily={secondaryFont.style.fontFamily}
+                        sx={{
+                          fontStyle: 'normal',
+                          fontWeight: 700,
+                          lineHeight: '24px',
+                          color: '#14417D',
+                        }}
+                      >
+                        {'FAQ'}
+                      </Typography>
+
+                      {Array.isArray(faq) &&
+                        faq?.map((item, index) => {
+                          return (
+                            <Box
+                              key={index}
+                              sx={{
+                                marginBottom: '32px',
+                              }}
+                            >
+                              <Stack spacing={4}>
+                                <Typography
+                                  sx={{
+                                    color: '#232323',
+                                    fontFamily: 'Inter',
+                                    fontSize: '18px',
+                                    fontStyle: 'normal',
+                                    lineHeight: '27px',
+                                    fontWeight: 600,
+                                  }}
+                                >
+                                  {item.question}
+                                </Typography>
+                                <Typography
+                                  fontFamily={primaryFont.style.fontFamily}
+                                  sx={{
+                                    color: 'var(--text-primary, #14417D)',
+                                    fontStyle: 'normal',
+                                    fontWeight: 400,
+                                    lineHeight: '24px',
+                                    fontSize: '16px',
+                                  }}
+                                >
+                                  {item.answer}
+                                </Typography>
+                              </Stack>
+                            </Box>
+                          );
+                        })}
+                    </Stack>
+                    <Divider
+                      sx={{
+                        marginBottom: '60px',
+                      }}
+                    />
+                  </Stack>
+                </Grid>
+              )}
+            </Grid>
+            {mdUp && (
+              <Grid item xs={4}>
+                <DeailSection deal={dealDetail!} />
               </Grid>
             )}
           </Grid>
-          {mdUp && (
-            <Grid item xs={4}>
-              <DeailSection deal={dealDetail!} />
-            </Grid>
-          )}
-        </Grid>
-        {!pathName.includes('preview') && <Comment></Comment>}
-        {loading.value && <SplashScreen />}
+        )}
+        {!shareFlag && !previewFlag && <Comment></Comment>}
+        {loading && <SplashScreen />}
       </Container>
     </>
   );

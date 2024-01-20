@@ -11,7 +11,7 @@ import { primaryFont, secondaryFont } from 'src/theme/typography';
 
 export default function DealWishList() {
   const { userInfo } = useFlatInject('authStore');
-  const { likeList, wishList, fetchDealWishlistAct } = useFlatInject('ecommerceStore');
+  const { likeList, fetchDealWishlistAct } = useFlatInject('dealStore');
   const mdUp = useResponsive('up', 'md');
 
   useEffect(() => {

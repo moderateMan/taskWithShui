@@ -37,10 +37,10 @@ export default function DealList({
           }}
         >
           <Stack flexGrow={1}>Item</Stack>
-          <Stack sx={{ width: 90}}>Expires</Stack>
+          <Stack sx={{ width: 90 }}>Expires</Stack>
           <Stack sx={{ width: 90 }}>Views</Stack>
-          <Stack sx={{ width: 90}}>CTRs</Stack>
-          <Stack sx={{ width: 90}}>Likes</Stack>
+          <Stack sx={{ width: 90 }}>CTRs</Stack>
+          <Stack sx={{ width: 90 }}>Likes</Stack>
           <Stack sx={{ width: 90 }}>Status</Stack>
           <Stack sx={{ width: 60 }} />
           {wishlist && <Stack sx={{ width: 36 }} />}
@@ -57,17 +57,18 @@ export default function DealList({
           />
         ))}
       </Scrollbar>
-      <Pagination
-        sx={{
-          mt: 3,
-          float: 'right',
-        }}
-        onChange={(_, page) => {
-          setCuePage(page);
-        }}
-        page={curPage}
-        count={Math.floor(list.length / 5)}
-      />
+      <Stack direction='row' justifyContent={'center'}>
+        <Pagination
+          sx={{
+            mt: 3
+          }}
+          onChange={(_, page) => {
+            setCuePage(page);
+          }}
+          page={curPage}
+          count={Math.floor(list.length / 5)}
+        />
+      </Stack>
     </>
   );
 }

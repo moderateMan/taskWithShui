@@ -4,6 +4,7 @@ import { DealType } from 'src/types/deal';
 import { FromWrapper } from '../../wrapper';
 import storageHelper from 'src/common/utils/storageHelper';
 import { useFlatInject } from 'src/service';
+import * as yup from 'yup'
 
 const DealTypeOption = [
   {
@@ -60,6 +61,7 @@ export const useFormConfig = ({
             </FromWrapper>
           );
         },
+        schema: yup.string().max(50),
         fieldConfig: {
           required: true,
           disabled: currentDeal ? true : false,
@@ -89,5 +91,5 @@ export const useFormConfig = ({
         },
       },
     };
-  }, [defaultValues]);
+  }, [defaultValues, currentDeal]);
 };

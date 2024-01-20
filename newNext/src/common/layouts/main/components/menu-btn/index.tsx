@@ -1,14 +1,16 @@
-import { Avatar, Badge, Button, Fade, Paper } from '@mui/material';
+import { Badge, Button, Fade, Paper } from '@mui/material';
 import Portal from '@mui/material/Portal';
 import { styled } from '@mui/material/styles';
+import NProgress from 'nprogress';
 import * as React from 'react';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
+import { Iconify } from 'src/muiEazy';
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { useFlatInject } from 'src/service';
+import { useTalkJSNotification } from 'src/service/talkjsProvider';
+import { MessageNotificationItemList } from './message-notification/message-notification-item';
 import Nav from './nav';
-import { Iconify } from 'src/muiEazy';
-import NProgress from 'nprogress';
 export const StyledMenu = styled(Paper)(({ theme }) => ({
   top: 62,
   width: '120',
@@ -41,8 +43,16 @@ export default function BasicMenu() {
     [menuOpen]
   );
 
+  const { count, messages } = useTalkJSNotification();
+
+  console.log('unread_array', messages);
+  // problem type error
+
   return (
     <>
+      {userInfo && (
+        <MessageNotificationItemList />
+      )}
       {userInfo && (
         <Badge badgeContent={count_new} color="primary">
           <Iconify

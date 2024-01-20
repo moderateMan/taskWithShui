@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react';
 import { Avatar, Box, Button, Stack, Typography } from '@mui/material';
-import dayjs from 'dayjs';
-import { INotification } from 'src/service/model';
+import myDay from 'src/common/myDay';
 import useIsMobile from 'src/common/hooks/useIsMobile';
+import { INotification } from 'src/service/model';
 import { primaryFont } from 'src/theme/typography';
-dayjs.extend(require('dayjs/plugin/relativeTime'));
+
 
 export interface NotificationListItemProps extends INotification {}
 
@@ -50,7 +50,7 @@ export const ConnectionListItem = (props: NotificationListItemProps) => {
           >
             {
               // @ts-ignore
-              'Connected' + ' ' + 'since' + ' ' + dayjs(props.created_at).fromNow()
+              'Connected' + ' ' + 'since' + ' ' + myDay(props.created_at).fromNow()
             }
           </Typography>
         </Stack>

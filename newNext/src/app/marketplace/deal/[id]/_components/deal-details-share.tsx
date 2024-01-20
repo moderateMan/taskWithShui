@@ -18,7 +18,7 @@ import {
 
 export default function ShareMenu({ deal_id }: { deal_id: number }) {
   // construct the shared url
-  const shared_url = `${process.env.NEXT_PUBLIC_DOMAIN_URI}/deal/shared/${deal_id}`;
+  const shared_url = `${process.env.NEXT_PUBLIC_DOMAIN_URI}/marketplace/share/${deal_id}`;
 
   // status of copy to clipboard
   const [copied, setCopied] = React.useState(false);

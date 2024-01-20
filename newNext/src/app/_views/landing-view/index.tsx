@@ -14,13 +14,13 @@ import Section4 from './components/section-4';
 
 // ----------------------------------------------------------------------
 export default function LangdingView() {
-  const { landingPageDealList, landingPageDealQueryAct } = useFlatInject('dealStore');
+  const { landingPageDealList, landingQueryListAct } = useFlatInject('marketStore');
   const mdUp = useResponsive('up', 'md');
 
   console.log(mdUp);
 
   useEffect(() => {
-    landingPageDealQueryAct();
+    landingQueryListAct();
   }, []);
 
   return (

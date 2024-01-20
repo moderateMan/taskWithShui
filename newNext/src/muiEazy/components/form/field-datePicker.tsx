@@ -1,12 +1,12 @@
 import FormHelperText from '@mui/material/FormHelperText';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider as MuiLocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import dayjs, { Dayjs } from 'dayjs';
+import myDay from "src/common/myDay";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Controller, useFormContext } from 'react-hook-form';
 // ----------------------------------------------------------------------
 
-export type FieldDatePickerProps = DatePickerProps<Dayjs> & {
+export type FieldDatePickerProps = DatePickerProps<myDay.Dayjs> & {
   name: string;
   helperText?: React.ReactNode;
 };
@@ -22,7 +22,7 @@ export default function FieldDatePicker({ name, helperText, ...other }: FieldDat
           const { value, ...rest } = field;
           let temp = value;
           if (typeof value == 'string') {
-            temp = dayjs(value);
+            temp = myDay(value);
           }
           return (
             <>

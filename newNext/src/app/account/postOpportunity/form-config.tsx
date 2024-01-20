@@ -333,7 +333,7 @@ export const useFormConfig_team = ({
         defaultValue: defaultValue?.['team'],
         fieldConfig: {
           mulType: 'obj',
-          mulFromConfig: {
+          childFieldConfig: {
             image: {
               label: 'Upload team member image (optional)',
               type: 'upload',
@@ -423,7 +423,7 @@ export const useFormConfig_faq = ({
         defaultValue: defaultValues?.['components']?.['faq'],
         fieldConfig: {
           mulType: 'obj',
-          mulFromConfig: {
+          childFieldConfig: {
             question: {
               label: 'Question (optional)',
             },

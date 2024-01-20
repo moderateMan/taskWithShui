@@ -34,7 +34,7 @@ export function UploadDragSingle({
   const showLoading = useBoolean(false);
   const [fileNameList, setFilenameList] = useState<string[]>((files as string[]) || []);
   const [fileList, setFileList] = useState<File[]>([]);
-  // debugger;
+  // ;
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     multiple,
     disabled,

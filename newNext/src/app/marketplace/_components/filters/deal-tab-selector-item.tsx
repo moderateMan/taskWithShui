@@ -19,10 +19,6 @@ export interface IDealTabSelectorItemProps {
 // ----------------------------------------------------------------------
 
 export default function DealTabSelectorItem(props: IDealTabSelectorItemProps) {
-  const { marketplaceDealQueryAct } = useFlatInject('dealStore');
-  const { seachParams, marketDealType, setSeachParams } = useFlatInject('marketStore');
-  const mdUp = useResponsive('up', 'md');
-
   const underlineActiveStyle = {
     content: '""',
     position: 'absolute',

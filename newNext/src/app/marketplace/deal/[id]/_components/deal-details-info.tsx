@@ -2,7 +2,7 @@ import { Avatar, Button, Checkbox, Grid } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import dayjs from 'dayjs';
+import myDay from 'src/common/myDay';
 import { useCallback, useState } from 'react';
 import ProductPrice from 'src/common/components/product-price';
 import { useFlatInject } from 'src/service';
@@ -16,6 +16,8 @@ import DealConnectionMaker from './deal-details-connection-maker';
 import ShareMenu from './deal-details-share';
 import { returnTypeBasedOnDealType } from 'src/common/components/deal-landing-item';
 import { DealType } from 'src/types/deal';
+import { usePathname, useRouter } from 'src/routes/hooks';
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -58,14 +60,13 @@ export default function DealDetailsInfo({
   liked,
   type,
 }: Props) {
-  const mdUp = useResponsive('up', 'md');
-
-  const { likeDealAct } = useFlatInject('ecommerceStore');
-
+  const pathName = usePathname();
+  const { userInfo } = useFlatInject('authStore');
+  const shareFlag = pathName.includes('share');
+  const router = useRouter();
+  const { likeDealAct } = useFlatInject('dealStore');
   const [color, setColor] = useState('red');
-
   const [memory, setMemory] = useState('128gb');
-
   const handleChangeColor = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setColor((event.target as HTMLInputElement).value);
   }, []);
@@ -115,7 +116,7 @@ export default function DealDetailsInfo({
           {returnTypeBasedOnDealType(type)}
         </Stack>
         <Stack direction={'row'}>
-          {logo ? <img src={logo} height={'40px'} width={'40px'}></img> : <Avatar>{}</Avatar>}
+          {logo ? <img src={logo} height={'40px'} width={'40px'}></img> : <Avatar>{ }</Avatar>}
           <Typography
             fontFamily={primaryFont.style.fontStyle}
             sx={{
@@ -170,7 +171,7 @@ export default function DealDetailsInfo({
               lineHeight: '48px' /* 150% */,
             }}
           >
-            {expireTime ? customFormat(dayjs(expireTime)) : ''}
+            {expireTime ? customFormat(myDay(expireTime)) : ''}
           </Typography>
           <Typography variant="subtitle2" color="#696969" fontWeight={400}>
             Deal posted
@@ -186,7 +187,7 @@ export default function DealDetailsInfo({
               lineHeight: '48px' /* 150% */,
             }}
           >
-            {expireTime ? `${dayjs(expireTime).diff(dayjs(), 'day')} days` : ''}
+            {expireTime ? `${myDay(expireTime).diff(myDay(), 'day')} days` : ''}
           </Typography>
           <Typography color="#696969" fontWeight={400} variant="subtitle2">
             Left to invest
@@ -194,7 +195,16 @@ export default function DealDetailsInfo({
         </Grid>
       </Grid>
 
-      <Stack spacing={2} direction={{ xs: 'column', md: 'row' }} alignItems={{ md: 'center' }}>
+      <Stack
+        onClick={() => {
+          if (shareFlag && !userInfo) {
+            router.push(paths.loginCover);
+          }
+        }}
+        spacing={2}
+        direction={{ xs: 'column', md: 'row' }}
+        alignItems={{ md: 'center' }}
+      >
         <DealConnectionMaker name={name} deal_id={deal_id} />
       </Stack>
 
@@ -202,33 +212,15 @@ export default function DealDetailsInfo({
 
       <Stack spacing={3} direction="row" justifyContent={{ xs: 'center', md: 'unset' }}>
         <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
-          {/* <Checkbox
-            onClick={() => {
-              likeDealAct({
-                id: deal_id,
-              });
-            }}
-            checked={liked}
-            onChange={(e) => {}}
-            icon={<Iconify icon="iconoir:bookmark" />}
-            checkedIcon={
-              <Iconify
-                icon="iconoir:bookmark-solid"
-                onClick={() => {
-                  likeDealAct({
-                    id: deal_id,
-                  });
-                }}
-              />
-            }
-            sx={{ color: 'text.primary' }}
-          />
-          <Typography>Wishlist</Typography> */}
           <Button
             onClick={() => {
-              likeDealAct({
-                id: deal_id,
-              });
+              if (shareFlag && !userInfo) {
+                router.push(paths.loginCover);
+              } else {
+                likeDealAct({
+                  id: deal_id,
+                });
+              }
             }}
             sx={{ fontSize: '16px', lineHeight: '22px', fontWeight: 400 }}
             startIcon={
@@ -243,8 +235,16 @@ export default function DealDetailsInfo({
           </Button>
         </Stack>
 
-        <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
-          {/* <Iconify icon="carbon:share" sx={{ mr: 1 }} /> Share */}
+        <Stack
+          onClick={() => {
+            if (shareFlag && !userInfo) {
+              router.push(paths.loginCover);
+            }
+          }}
+          direction="row"
+          alignItems="center"
+          sx={{ typography: 'subtitle2' }}
+        >
           <ShareMenu deal_id={deal_id} />
         </Stack>
       </Stack>

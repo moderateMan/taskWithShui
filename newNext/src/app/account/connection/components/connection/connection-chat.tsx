@@ -1,11 +1,9 @@
 import { Stack } from '@mui/material';
 import { talkjs_token } from 'configs';
-import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 import useIsMobile from 'src/common/hooks/useIsMobile';
 import { useFlatInject } from 'src/service';
 import Talk from 'talkjs';
-dayjs.extend(require('dayjs/plugin/relativeTime'));
 
 export interface ConnectionChatProps {
   oppositeUser: {

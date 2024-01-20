@@ -74,7 +74,7 @@ export default function CropModal({
             onComplete={onComplete}
             validateFunc={(file) => {
               const [flag = true, info = 'error'] = validateFunc?.(file) || [];
-              debugger;
+              ;
               if (!flag) {
                 setErrFlag(true);
                 setErrInfo(info);

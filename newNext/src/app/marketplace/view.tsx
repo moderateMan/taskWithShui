@@ -1,9 +1,9 @@
 'use client';
 import { Stack } from '@mui/material';
 import Container from '@mui/material/Container';
-import DealFilters from './_components/filters/deal-filters';
+import DealFilters from './_components/filters';
 import { useFlatInject } from 'src/service';
-import MarketDealList from './_components/list/travel-tour-list';
+import MarketDealList from './_components/list/market-deal-list';
 import DealTabSelector from './_components/filters/deal-tab-selector';
 import { SplashScreen } from 'src/commonOld/components/loading-screen';
 import PreferenceView from './_components/preference/preference-view';

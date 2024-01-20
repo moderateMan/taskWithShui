@@ -1,11 +1,10 @@
 import styled from '@emotion/styled';
 import { Avatar, Button, Stack, Typography } from '@mui/material';
-import dayjs from 'dayjs';
+import myDay from 'src/common/myDay';
 import useIsMobile from 'src/common/hooks/useIsMobile';
 import { useFlatInject } from 'src/service';
 import { IConnection } from 'src/service/model';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
-dayjs.extend(require('dayjs/plugin/relativeTime'));
 
 export interface ConnectionRequestListItemProps extends IConnection {}
 
@@ -30,16 +29,17 @@ export const ConnectionRequestedListItem = (props: ConnectionRequestListItemProp
         {props?.first_name ? props?.first_name[0] : 'N/A'}
       </Avatar>
       <Typography
-        width={'150px'}
+        width={isMobile ? '100%' : '120px'}
+        fontFamily={secondaryFont.style.fontFamily}
         color={'#14417D'}
         fontSize={'14px'}
         fontWeight={700}
         fontStyle={'normal'}
-        fontFamily={primaryFont.style.fontFamily}
+        textOverflow={'wrap'}
       >
         {props?.first_name + ' ' + props?.last_name}
       </Typography>
-      <Stack direction={'column'} spacing={1} minWidth={'300px'}>
+      <Stack direction={'column'} spacing={1} minWidth={isMobile ? '100%' : '200px'}>
         <Typography
           color={'#637381'}
           fontSize={'14px'}
@@ -62,7 +62,7 @@ export const ConnectionRequestedListItem = (props: ConnectionRequestListItemProp
         >
           {
             // @ts-ignore
-            'Connection Request Sent' + ' ' + dayjs(props.created_at).fromNow()
+            'Connection Request Sent' + ' ' + myDay(props.created_at).fromNow()
           }
         </Typography>
       </Stack>

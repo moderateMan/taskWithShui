@@ -40,6 +40,7 @@ export function FieldSelect({
       render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}
+          value={field.value || ""}
           select
           fullWidth
           SelectProps={{

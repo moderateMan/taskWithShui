@@ -9,6 +9,8 @@ type Props = {
 };
 
 export default function Reviews({ comments }: Props) {
+  console.log("comments", comments);
+  
   return (
     <>
       {comments.map((comment) => {

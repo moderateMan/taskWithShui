@@ -27,13 +27,13 @@ _http.interceptors.response.use(
   },
   (err) => {
     const { response } = err;
-    const { status, data } = response;
+    const { status, data } = response || {};
     if (Array.isArray(data?.message)) {
       data?.message.forEach((mes: string) => {
         notify.error(mes);
       });
     } else {
-      notify.error(data.message || err.message || 'net error');
+      notify.error(data?.message || err?.message || 'net error');
     }
     if (status == 401) {
       storageHelper.clear();

@@ -1,14 +1,16 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
+import { createRoot } from 'react-dom/client';
+import { UseBooleanReturnType } from 'src/muiEazy/hooks/use-boolean';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialog-container': {
@@ -26,37 +28,37 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export function Modal({
-  content,
-  actionConfig,
-  title,
-}: {
+interface ModalProps {
+  openFlag: UseBooleanReturnType,
   title?: string;
   content?: () => React.JSX.Element;
   actionConfig?: { label: string; handleClick?: () => void; render?: () => React.JSX.Element }[];
-}) {
-  const [open, setOpen] = React.useState(false);
+  handleClose?: () => void
+}
+
+export function Modal({
+  openFlag,
+  content,
+  actionConfig,
+  title,
+  handleClose
+}: ModalProps) {
   const Content = React.useMemo(() => content, [content]);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const _handleClose = () => {
+    openFlag.onFalse();
+    handleClose!?.()
   };
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button>
-      <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+      <BootstrapDialog onClose={_handleClose} aria-labelledby="customized-dialog-title" open={openFlag.value}>
         <>
           <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
             {title}
           </DialogTitle>
           <IconButton
             aria-label="close"
-            onClick={handleClose}
+            onClick={_handleClose}
             sx={{
               position: 'absolute',
               right: 8,
@@ -78,9 +80,6 @@ export function Modal({
             ) : (
               <>
                 <Typography gutterBottom>
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-                  facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac,
-                  vestibulum at eros.
                 </Typography>
                 <Typography gutterBottom>
                   Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
@@ -111,4 +110,20 @@ export function Modal({
       </BootstrapDialog>
     </>
   );
+}
+
+const modalApi = (props: ModalProps) => {
+  let dom = document.getElementById('modal_node')
+  if (dom) {
+    dom.remove()
+  }
+  dom = document.createElement('div')
+  dom.setAttribute('id', "modal_node")
+  document.body.appendChild(dom)
+  const node = <Modal {...props} openFlag={props.openFlag}></Modal>
+  createRoot(dom).render(node)
+}
+
+Modal.confirm = (props: ModalProps) => {
+  return modalApi(props)
 }

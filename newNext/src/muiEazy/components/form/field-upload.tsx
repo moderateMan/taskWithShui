@@ -1,6 +1,7 @@
 import FormHelperText from '@mui/material/FormHelperText';
 import { Controller, useFormContext } from 'react-hook-form';
 import { UploadBtn, UploadDrag, UploadProps } from '../upload';
+import { useEffect } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +38,15 @@ export function FieldUpload({
   isCrop,
   ...other
 }: FieldUploadProps) {
-  const { control, setValue, getValues } = useFormContext();
+  const { control, setValue, getValues, watch, trigger } = useFormContext();
+  useEffect(() => {
+    const subscription = watch((values, info) => {
+      if (info.name == name) {
+        trigger(name)
+      }
+    })
+    return () => subscription.unsubscribe();
+  }, [])
   return (
     <Controller
       name={name}

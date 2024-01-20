@@ -2,12 +2,12 @@
 
 import Typography from '@mui/material/Typography';
 import { useCallback, useEffect, useState } from 'react';
+import { statisticsSeparator } from 'src/common/utils/statistics-reducer';
+import storageHelper from 'src/common/utils/storageHelper';
 import { useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { useFlatInject } from 'src/service';
 import DealList from './_components/deal-list/list';
-import { statisticsReducer, statisticsSeparator } from 'src/common/utils/statistics-reducer';
-import storageHelper from 'src/common/utils/storageHelper';
 
 // ----------------------------------------------------------------------
 
@@ -46,20 +46,18 @@ export default function DealView() {
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setTab(newValue);
   }, []);
+
   const {
     setCurrentDeal,
-    dealMarketList,
-    marketplaceDealQueryAct,
     current_user_deals_list,
-    current_user_deals_list_counter,
+    statistics,
+    queryDealListAct,
     queryDealForDashboardAct,
     renewDealAct,
-    statistics,
-    statistics_count,
     getDealStatisticsAct,
   } = useFlatInject('dealStore');
   useEffect(() => {
-    marketplaceDealQueryAct();
+    queryDealListAct();
     queryDealForDashboardAct();
     getDealStatisticsAct();
   }, []);

@@ -14,8 +14,7 @@ type Props = {
 };
 
 export default function ReviewToolbar({ sort, onChangeSort, onOpenForm }: Props) {
-  const { dealDetail } = useFlatInject('ecommerceStore');
-  const { comments, findByDealIDAct } = useFlatInject('commentStore');
+  const { comments, dealDetail, setDealComentPagination } = useFlatInject('dealStore');
 
   const mdUp = useResponsive('up', 'md');
 
@@ -65,9 +64,6 @@ export default function ReviewToolbar({ sort, onChangeSort, onOpenForm }: Props)
             endIcon={<Iconify icon="iconoir:nav-arrow-down" />}
             onClick={() => {
               if (dealDetail && dealDetail.id) {
-                findByDealIDAct({
-                  deal_id: dealDetail.id,
-                });
               }
             }}
           >

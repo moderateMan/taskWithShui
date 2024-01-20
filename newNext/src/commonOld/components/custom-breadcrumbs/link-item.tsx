@@ -49,8 +49,6 @@ export default function BreadcrumbsLink({ link, activeLast, disabled }: Props) {
   );
 
   if (href) {
-    console.log('href', href);
-    
     return (
       <Link component={RouterLink} href={href} sx={styles}>
         {renderContent}

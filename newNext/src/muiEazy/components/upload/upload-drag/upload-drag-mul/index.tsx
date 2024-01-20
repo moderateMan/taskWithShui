@@ -69,8 +69,9 @@ export function UploadDragMul({
         });
       } else {
         showLoading.onTrue();
-        const newFile = await uploadAction?.(acceptedFiles[0]);
-        showLoading.onFalse();
+        const newFile = await uploadAction?.(acceptedFiles[0]).finally(() => {
+          showLoading.onFalse()
+        })
         if (newFile!) {
           onAdd!?.(newFile);
           setFileList([...fileList, ...acceptedFiles]);
@@ -213,8 +214,9 @@ export function UploadDragMul({
         name={fileName}
         onComplete={async (file) => {
           showLoading.onTrue();
-          const newFile = await uploadAction?.(file);
-          showLoading.onFalse();
+          const newFile = await uploadAction?.(file).finally(() => {
+            showLoading.onFalse()
+          });
           if (newFile!) {
             onAdd!?.(newFile);
             setFileList([...fileList, file]);

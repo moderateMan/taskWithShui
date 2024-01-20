@@ -5,29 +5,19 @@ import Iconify from 'src/commonOld/components/iconify';
 import { useFlatInject } from 'src/service';
 
 export default function DealFilterMain() {
-  const { marketplaceDealQueryAct } = useFlatInject('dealStore');
-  const { seachParams, setSeachParams } = useFlatInject('marketStore');
+  const { searchData, setSeachParams, setMarketListPageNum } = useFlatInject('marketStore');
   const mdUp = useResponsive('up', 'md');
   return (
     <InputBase
       onChange={(e) => {
-        setSeachParams({
-          ...seachParams,
-          name: e.target.value,
-        });
+        setSeachParams(e.target.value);
       }}
-      value={seachParams.name}
+      value={searchData}
       fullWidth
       placeholder={mdUp ? 'Search By keyword or Industry' : 'Search'}
       onKeyUp={(e) => {
         if (e.key === 'Enter') {
-          marketplaceDealQueryAct({
-            title: seachParams.name ? seachParams.name : undefined,
-            category: seachParams.category ? seachParams.category : undefined,
-            order: {
-              created_at: 'desc',
-            },
-          });
+          setMarketListPageNum(1);
         }
       }}
       startAdornment={

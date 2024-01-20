@@ -14,8 +14,18 @@ import { FieldMulProps } from '../components/form/field-mul';
 import { FieldRadioGroupProps } from '../components/form/field-radio-group';
 import { FieldTextProps } from '../components/form/field-text-field';
 import { InputType, getField } from '../utils/get-field';
-import React from 'react';
+import React, { useState } from 'react';
+import { uuidv4 } from '../utils';
 
+export type FieldConfig = Partial<FieldTextProps> &
+  Partial<FieldSelectProps> &
+  Partial<FieldUploadProps> &
+  Partial<FieldDatePickerProps> &
+  Partial<FieldCheckboxProps> &
+  Partial<FieldEditorProps> &
+  Partial<FieldMultiSelectProps> &
+  Partial<FieldMulProps> &
+  Partial<FieldRadioGroupProps>;
 export interface FormConfigItem {
   id?: string;
   prefix?: string | string[];
@@ -25,22 +35,16 @@ export interface FormConfigItem {
   defaultValue?: unknown;
   name?: string;
   label?: string;
+  labelMap?: { [key: string]: string }
   group?: string;
   isHidden?: boolean;
   wrapper?: (props: { children?: React.ReactNode }) => React.ReactNode;
-  fieldConfig?: Partial<FieldTextProps> &
-    Partial<FieldSelectProps> &
-    Partial<FieldUploadProps> &
-    Partial<FieldDatePickerProps> &
-    Partial<FieldCheckboxProps> &
-    Partial<FieldEditorProps> &
-    Partial<FieldMultiSelectProps> &
-    Partial<FieldMulProps> &
-    Partial<FieldRadioGroupProps>;
+  fieldConfig?: FieldConfig,
+
   config?: {
     options?:
-      | string[]
-      | { key: string | number; value: string | number; label: string | number; info?: string }[];
+    | string[]
+    | { key: string | number; value: string | number; label: string | number; info?: string }[];
   };
   watch?: (props: {
     currentConfig: Omit<FormConfigItem, 'watch'>;
@@ -51,8 +55,8 @@ export interface FormConfigItem {
   isNotInForm?: boolean;
 }
 
-export const useGetField = () => {
-  const getFieldByFormConfig = (keyBase: string, item: FormConfigItem) => {
+export const useGetField = (methods: UseFormReturn | null = null) => {
+  const useGetFieldByFormConfig = (keyBase: string, item: FormConfigItem,) => {
     const {
       isHidden,
       type,
@@ -61,7 +65,6 @@ export const useGetField = () => {
       prefix = '',
       fieldConfig,
       wrapper,
-      name,
     } = item;
     if (isHidden) return;
     let key = keyBase;
@@ -116,7 +119,7 @@ export const useGetField = () => {
       fieldNode = <FieldItem {...fieldConfig} name={key} label={label} key={key} />;
     } else if (type === 'multiple') {
       const FieldItem = getField(type);
-      fieldNode = <FieldItem {...fieldConfig} name={key} key={key} />;
+      fieldNode = <FieldItem methods={methods!} {...fieldConfig} name={key} key={key} />;
     } else if (type === 'upload') {
       const FieldItem = getField(type);
       fieldNode = (
@@ -176,5 +179,5 @@ export const useGetField = () => {
     }
     return fieldNode;
   };
-  return getFieldByFormConfig;
+  return useGetFieldByFormConfig;
 };

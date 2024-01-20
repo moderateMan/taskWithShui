@@ -1,13 +1,10 @@
-import { DealEntity, DealStatus, DealType, IDealComponentList } from "src/types/deal";
-import { IBaseModel } from "./base";
-import { FileType, FileUploadApiRequest } from "./appStoreModel";
-
-
+import { DealEntity, DealStatus, DealType, IDealComponentList } from 'src/types/deal';
+import { FileUploadApiRequest } from './appStoreModel';
 
 export interface INewDealDraft {
   title: string;
 
-  type: DealType
+  type: DealType;
 
   sub_title: string;
 
@@ -51,8 +48,8 @@ export interface QueryDeal {
   is_approved?: boolean;
   is_draft?: boolean;
   official_deal_id?: number;
-  page: number,
-  page_size: number,
+  page: number;
+  page_size: number;
 }
 
 export interface QueryDealForDashboard extends QueryDeal {
@@ -60,9 +57,12 @@ export interface QueryDealForDashboard extends QueryDeal {
 }
 
 export interface QueryDealForMarketplace {
+  type?: DealType | undefined;
   title?: string;
   category?: string;
-  order: {}
+  order: {};
+  page?: number,
+  page_size?: number,
 }
 
 export interface UploadDealFileModel extends FileUploadApiRequest {
@@ -95,7 +95,7 @@ export enum DealFileComponentType {
   DEAL_ATTACHMENT_FILE = 'DEAL_ATTACHMENT_FILE',
 }
 
-export interface DealStatisticsQueryModel { 
+export interface DealStatisticsQueryModel {
   deal_ids: number[];
   created_at?: [Date, Date];
 }

@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import notify from 'src/common/utils/notify';
 import storageHelper from 'src/common/utils/storageHelper';
+import { Modal, useBoolean } from 'src/muiEazy';
 import useHashParams from 'src/routes/hooks/use-hash-params';
 import { paths } from 'src/routes/paths';
 import { useFlatInject } from 'src/service';
@@ -18,9 +19,6 @@ import { FaqFromView } from './components/formViewSections/faqFromView';
 import { MarketFormView } from './components/formViewSections/marketFormView';
 import { MediaFormView } from './components/formViewSections/mediaFormView';
 import { TabView } from './components/tabView';
-import { useBoolean } from 'src/muiEazy';
-import PostDealTipModal from './components/post-deal-tip-modal';
-import { Modal } from 'src/muiEazy';
 
 export type FromRefType = UseFormReturn<
   {
@@ -52,13 +50,7 @@ export default function DealFormView() {
   const formRef_faq = useRef<FromRefType>();
   const allFormRef = useRef<FromRefType[]>();
   const [errorResult, setErrRes] = useState<boolean[]>([]);
-  allFormRef.current = [
-    formRef_dealBasic.current!,
-    formRef_business.current!,
-    formRef_market.current!,
-    formRef_media.current!,
-    formRef_faq.current!,
-  ];
+  const isShowSubmitModal = useBoolean(false);
   useEffect(() => {
     if (!id) {
       setTabId('1');
@@ -66,6 +58,23 @@ export default function DealFormView() {
   }, [id]);
   const [dealId, setDealId] = useState(id || NaN);
   const [tabId, setTabId] = useState(query.get('tabId') || getHashData().tabId || '1');
+  const validate = async (formArr: FromRefType[]) => {
+    let checkArr = formArr!.map((item) => {
+      return item!.trigger();
+    });
+    const resArr = await Promise.all(checkArr);
+    setErrRes(resArr);
+
+    if (
+      resArr.some((item) => {
+        return !item;
+      })
+    ) {
+      notify.error('error')
+      return false;
+    }
+    return true
+  }
   useEffect(() => {
     if (dealId) {
       queryDealByIdAct({
@@ -153,39 +162,31 @@ export default function DealFormView() {
       setDealId(data.payload.content[0].id);
       setTabId('2');
     } else {
-      let checkArr = allFormRef.current!.map((item) => {
-        return item!.trigger();
-      });
-      const resArr = await Promise.all(checkArr);
-      setErrRes(resArr);
-      if (
-        resArr.some((item) => {
-          return !item;
-        })
-      ) {
-        return notify.error('error');
-      }
       let result = {};
       allFormRef.current!.forEach((item) => {
         let values = item!.getValues();
         result = merge(result, values);
       });
+
       let dealBody: DealEntity = {
         ...currentDeal!,
         ...result,
         id: id,
       };
       if (type == 'SUBMIT') {
+
         await submitDraftAct(dealBody);
         notify.success('Submit Deal Success!');
+        isShowSubmitModal.onTrue()
       } else {
         await updateDraftAct(dealBody);
         notify.success('Update Deal Success!');
+        router.back()
       }
     }
   };
 
-  const open = useBoolean(true);
+
   return (
     <>
       <Typography variant="h5" sx={{ mb: 3 }}>
@@ -216,8 +217,24 @@ export default function DealFormView() {
             fontWeight: '700',
           }}
           variant="contained"
-          onClick={() => {
-            handleSubmit('SUBMIT');
+          onClick={async () => {
+            // 当前处于创建第一阶段
+            if (tabId == '1' && !id) {
+              allFormRef.current = [
+                formRef_dealType.current!,
+              ]
+            } else {
+              allFormRef.current = [
+                formRef_dealBasic.current!,
+                formRef_business.current!,
+                formRef_market.current!,
+                formRef_media.current!,
+                formRef_faq.current!,
+              ];
+            }
+            if (await validate(allFormRef.current)) {
+              handleSubmit('SUBMIT');
+            }
           }}
         >
           Submit for approval
@@ -258,15 +275,34 @@ export default function DealFormView() {
         <Button
           variant="contained"
           onClick={async () => {
-            handleSubmit();
+            if (tabId == '1' && !id) {
+              allFormRef.current = [
+                formRef_dealType.current!,
+              ]
+            } else {
+              allFormRef.current = [
+                formRef_dealBasic.current!,
+                formRef_business.current!,
+                formRef_market.current!,
+                formRef_media.current!,
+                formRef_faq.current!,
+              ];
+            }
+            if (await validate([])) {
+              handleSubmit();
+            }
           }}
         >
           Save
         </Button>
-      </Stack>
+      </Stack >
       <Modal
+        openFlag={isShowSubmitModal}
         title={''}
         actionConfig={[]}
+        handleClose={() => {
+          router.back()
+        }}
         content={() => {
           return (
             <Box>
@@ -322,12 +358,18 @@ export default function DealFormView() {
                     margin: '0 12px',
                   }}
                   variant="contained"
+                  onClick={() => {
+                    router.push(paths.root)
+                  }}
                 >
                   Return to Scaling
                 </Button>
                 <Button
                   sx={{
                     margin: '0 12px',
+                  }}
+                  onClick={() => {
+                    router.push(paths.faqs)
                   }}
                 >
                   FAQ
@@ -337,7 +379,7 @@ export default function DealFormView() {
           );
         }}
       />
-      {!id && <PostDealTipModal open={open.value} onClose={() => open.onFalse()} />}
+      {/* {!id && <PostDealTipModal open={open.value} onClose={() => open.onFalse()} />} */}
     </>
   );
 }

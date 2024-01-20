@@ -2,13 +2,12 @@ import { Divider, MenuItem } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import myDay from 'src/common/myDay';
 import { Iconify, Image } from 'src/muiEazy';
+import { useFlatInject } from 'src/service';
+import { DealStatistics } from 'src/service/stores/dealStore/model';
 import { DealEntity, DealStatus } from 'src/types/deal';
 import CustomPopover, { usePopover } from '../custom-popover';
-import dayjs from 'dayjs';
-import { DealStatistics } from 'src/service/stores/dealStore/model';
-import { renewalCaculator } from 'src/common/utils/renewal-caculator';
-import { useFlatInject } from 'src/service';
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +54,7 @@ export default function EcommerceCartItem({
         />
 
         <Stack spacing={0.5} sx={{ p: 2 }}>
-          <Typography variant="subtitle2" textOverflow={'clip'} width={160}>
+          <Typography variant="subtitle2" textOverflow={"ellipsis"} width={160}>
             {itemData.title}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -66,7 +65,7 @@ export default function EcommerceCartItem({
 
       <Stack sx={{ width: 90 }}>
         <Typography variant="subtitle2">
-          {itemData.expire_at ? dayjs(itemData.expire_at).format('DD/MM/YYYY') : 'N/A'}
+          {itemData.expire_at ? myDay(itemData.expire_at).format('DD/MM/YYYY') : 'N/A'}
         </Typography>
       </Stack>
       <Stack sx={{ width: 90 }}>
@@ -102,7 +101,7 @@ export default function EcommerceCartItem({
           <MenuItem
             // expire date is less than 5 days
             disabled={
-              itemData.expire_at ? dayjs(itemData.expire_at).diff(dayjs(), 'day') > 5 : false
+              itemData.expire_at ? myDay(itemData.expire_at).diff(myDay(), 'day') > 5 : false
             }
             onClick={() => {
               handleRenewal?.(itemData);

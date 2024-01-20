@@ -6,7 +6,7 @@ import { SelectChangeEvent } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useFlatInject } from 'src/service';
 import { NotificationListItem } from './components/notification-components/notification-list-item';
-
+import { Modal, useBoolean } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 
@@ -32,6 +32,8 @@ export default function UserNotificationView() {
     notificationQueryAct();
   }, []);
 
+  console.log(notification);
+
   // todo: now working on
   return (
     <>
@@ -40,18 +42,13 @@ export default function UserNotificationView() {
       </Typography>
 
       <Stack spacing={3}>
-        {/* <Select fullWidth value={notification_sort} onChange={handleSort}>
-          {notification_sort_option.map((item) => (
-            <MenuItem value={item.value}>{item.label}</MenuItem>
-          ))}
-        </Select> */}
-
         <Stack spacing={1}>
           {notification.map((item) => (
-            <NotificationListItem {...item} />
+            <NotificationListItem {...item} key={item.id} />
           ))}
         </Stack>
       </Stack>
+
     </>
   );
 }

@@ -17,18 +17,27 @@ export const useFormConfig = ({
   type?: DealType;
 }): FormConfig => {
   const { categoryFindAllAct, allPrimeCategory = [] } = useFlatInject('categoryStore');
-  const { getUploadUrlAct } = useFlatInject('dealStore');
-  let hidden = [DealType.PARTNERSHIPS].includes(type!) ? true : false;
+  const { getUploadUrlAct, targetType } = useFlatInject('dealStore');
+
   useEffect(() => {
     categoryFindAllAct();
   }, []);
   if (defaultValues?.['sub_title']) {
   }
   return useMemo<FormConfig>(() => {
-    return {
+    // Ask: 对于Capitail Raising和Sell A Business为必须
+    const isAckRequired = [DealType.CAPITAL_RAISING, DealType.SELL_A_BUSINESS].includes(targetType!);
+    // Ask Description
+    //  1.  对于Startup pitch为必须
+    // 2.  对于Capitail Raising，Equity, Sell A Business为非必须
+    // 3.  对于Partnerships因为不显示 所以不存在校验
+    const isAckDescriptionRequired = targetType == DealType.STARTUP_PITCH
+    const isAckDescriptionHidden = targetType == DealType.PARTNERSHIPS
+    let config: FormConfig = {
       sub_title: {
         defaultValue: defaultValues?.['sub_title'],
         label: 'Sub-heading',
+        schema: Yup.string().max(50).min(2),
         fieldConfig: {
           required: true,
         },
@@ -72,20 +81,31 @@ export const useFormConfig = ({
       },
       highlights: {
         name: 'components.highlights',
-        defaultValue: defaultValues?.['components']?.['highlights'] || null,
+        defaultValue: defaultValues?.['components']?.['highlights'] || ["", "", ""],
         label: 'Highlights',
         type: 'multiple',
         fieldConfig: {
           addLabel: 'Add highlight',
-          //TODO 设置highlights的placeholder
           label: 'highlights',
+          validateFunc: (file) => {
+            let flag = true;
+            let info = '';
+            if (file.size > 6 * 1024 * 1024) {
+              flag = false;
+              info =
+                'The file size cannot be larger than 2M';
+            }
+            return [flag, info];
+          },
+          itemFieldConfig: {
+            label: "Enter highlights",
+            required: true,
+          },
         },
-        schema: Yup.array().test({
+        schema: Yup.array().of(Yup.string().max(200).required("This is a required field")).test({
           test(value, ctx) {
             if (
-              value!?.filter((item) => {
-                return item;
-              }).length >= 3
+              value!?.length >= 3
             ) {
               return true;
             } else {
@@ -112,16 +132,11 @@ export const useFormConfig = ({
           ? Yup.number().min(0, 'Amount must be greater than or equal to 0')
           : null,
         fieldConfig: {
-          // disabled: disabled,
-          required: [DealType.CAPITAL_RAISING, DealType.SELL_A_BUSINESS].includes(type!)
-            ? true
-            : false,
+          required: isAckRequired,
           type: 'number',
         },
-        label: `Amount ${
-          [DealType.CAPITAL_RAISING, DealType.SELL_A_BUSINESS].includes(type!) ? '' : '(optional)'
-        }`,
-        isHidden: hidden,
+        label: `Amount ${[DealType.CAPITAL_RAISING, DealType.SELL_A_BUSINESS].includes(type!) ? '' : '(optional)'
+          }`,
         wrapper: ({ children }) => {
           return (
             <FromWrapper
@@ -137,14 +152,14 @@ export const useFormConfig = ({
         },
       },
       ask_desc: {
+        isHidden: isAckDescriptionHidden,
         defaultValue: defaultValues?.['ask_desc'] || '',
         schema: Yup.string().max(1000, 'Description must be less than 1000 characters'),
-        isHidden: hidden,
         fieldConfig: {
           multiline: true,
           minRows: 4,
           type: 'textarea',
-          required: [DealType.STARTUP_PITCH].includes(type!) ? true : false,
+          required: isAckDescriptionRequired,
         },
         label: `Ask Description ${[DealType.STARTUP_PITCH].includes(type!) ? '' : '(optional)'}`,
         wrapper: ({ children }) => {
@@ -156,16 +171,27 @@ export const useFormConfig = ({
         label: 'Upload logo (optional)',
         name: 'components.pics',
         defaultValue: defaultValues?.['components']?.['pics'] || [],
+        schema: Yup.array().test({
+          test(value, ctx) {
+            if (
+              value!?.length >= 3
+            ) {
+              return true;
+            } else {
+              return ctx.createError({ message: 'You need to create at least 3 Pictures!' });
+            }
+          },
+        }),
         fieldConfig: {
           isCrop: true,
           multiple: true,
           validateFunc: (file) => {
             let flag = true;
             let info = '';
-            if (file.size < 0.7 * 1024 * 1024) {
+            if (file.size > 6 * 1024 * 1024) {
               flag = false;
               info =
-                'The file size is too small (worry that the file is too small and the quality is not good)';
+                'The file size cannot be larger than 6M';
             }
             return [flag, info];
           },
@@ -180,7 +206,7 @@ export const useFormConfig = ({
               id: storageHelper.getItem('DEAL_ID'),
               type: FileType.DealPic,
               file,
-            });
+            })
             return fileUrl;
           },
         },
@@ -196,6 +222,16 @@ export const useFormConfig = ({
             width: '200px',
           },
           multiple: false,
+          validateFunc: (file) => {
+            let flag = true;
+            let info = '';
+            if (file.size > 2 * 1024 * 1024) {
+              flag = false;
+              info =
+                'The file size cannot be larger than 2M';
+            }
+            return [flag, info];
+          },
           uploadAction: async (file: File) => {
             const {
               payload: { fileUrl },
@@ -213,5 +249,7 @@ export const useFormConfig = ({
         },
       },
     };
-  }, [allPrimeCategory, defaultValues]);
+
+    return config
+  }, [allPrimeCategory, defaultValues, targetType]);
 };

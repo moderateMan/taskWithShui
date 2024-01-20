@@ -1,13 +1,10 @@
-import { Icon } from '@iconify/react';
 import { Box, Button, Modal, Stack } from '@mui/material';
 import { talkjs_token } from 'configs';
-import dayjs from 'dayjs';
 import React, { useEffect, useRef, useState } from 'react';
 import useIsMobile from 'src/common/hooks/useIsMobile';
 import Iconify from 'src/commonOld/components/iconify';
 import { useFlatInject } from 'src/service';
 import Talk from 'talkjs';
-dayjs.extend(require('dayjs/plugin/relativeTime'));
 
 // styling of the modal
 const style = {
@@ -37,7 +34,7 @@ export const ConnectionChatModal = (props: ConnectionChatProps) => {
   const chatboxEl = useRef(null);
 
   // modal controll
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState<boolean>(false);
   const handleOpen = async () => {
     setChatBoxLoaded(false);
     await userQueryByIDAct(props.oppositeUser.id);
@@ -53,7 +50,7 @@ export const ConnectionChatModal = (props: ConnectionChatProps) => {
         name: userInfo.first_name || userInfo.email,
         email: userInfo.email,
         photoUrl: userInfo?.metadata?.avatar || 'https://demo.talkjs.com/img/11.jpg',
-        welcomeMessage: 'Hey, how can I help?',
+        welcomeMessage: 'Hey, Let us start to make a deal',
         role: 'default',
       });
 
@@ -98,16 +95,6 @@ export const ConnectionChatModal = (props: ConnectionChatProps) => {
       <Button variant="contained" onClick={handleOpen} sx={{ width: '200px' }}>
         Message
       </Button>
-
-      <Box
-        sx={{
-          '&:hover': {
-            cursor: 'pointer',
-          },
-        }}
-      >
-        <Icon icon={'tabler:dots'} />
-      </Box>
       <Modal
         open={open}
         onClose={handleClose}
@@ -158,4 +145,4 @@ export const ConnectionChatModal = (props: ConnectionChatProps) => {
   );
 };
 
-const ReactionButton = (props: any) => {};
+const ReactionButton = (props: any) => { };

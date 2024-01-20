@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import dayjs from 'dayjs';
+import myDay from 'src/common/myDay';
 import { DealEntity } from 'src/types/deal';
 
 const Bg = styled(Box)(() => ({
@@ -80,13 +80,13 @@ const DeailSection = ({ deal }: { deal: DealEntity }) => {
         {created_at && (
           <Stack>
             <NameItem>Deal posted</NameItem>
-            <InfoItem>{dayjs(created_at).format('YYYY-MM-DD')}</InfoItem>
+            <InfoItem>{myDay(created_at).format('YYYY-MM-DD')}</InfoItem>
           </Stack>
         )}
         {expire_at && (
           <Stack>
             <NameItem>time Left to invest</NameItem>
-            <InfoItem>{dayjs(expire_at).diff(dayjs(), 'day')} days</InfoItem>
+            <InfoItem>{myDay(expire_at).diff(myDay(), 'day')} days</InfoItem>
           </Stack>
         )}
       </Bg>

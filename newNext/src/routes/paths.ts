@@ -8,6 +8,7 @@ export const paths = {
     opportunities: `/marketplace/deals&opportunities`,
     deal: `/marketplace/deal`,
     preview: `/marketplace/preview`,
+    share: `/marketplace/share`,
     opportunity: `/marketplace/opportunity`,
     request: `/marketplace/request`, // the request page for members to submit the request for new opportunities.
   },

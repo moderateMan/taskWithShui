@@ -1,10 +1,9 @@
 import { Avatar, Stack, Typography } from '@mui/material';
-import dayjs from 'dayjs';
 import { IConnection } from 'src/service/model';
 import { secondaryFont } from 'src/theme/typography';
 import { ConnectionChatModal } from './connection-chat-popup';
 import useIsMobile from 'src/common/hooks/useIsMobile';
-dayjs.extend(require('dayjs/plugin/relativeTime'));
+import myDay from 'src/common/myDay';
 
 export interface ConnectionListItemProps extends IConnection {}
 
@@ -33,12 +32,13 @@ export const ConnectionListItem = (props: ConnectionListItemProps) => {
           </Avatar>
         )}
         <Typography
-          width={isMobile ? '100%' : '150px'}
+          width={isMobile ? '100%' : '120px'}
           fontFamily={secondaryFont.style.fontFamily}
           color={'#14417D'}
           fontSize={'14px'}
           fontWeight={700}
           fontStyle={'normal'}
+          textOverflow={'wrap'}
         >
           {props?.first_name + ' ' + props?.last_name}
         </Typography>
@@ -63,7 +63,7 @@ export const ConnectionListItem = (props: ConnectionListItemProps) => {
           >
             {
               // @ts-ignore
-              'Connected' + ' ' + 'since' + ' ' + dayjs(props.created_at).fromNow()
+              'Connected' + ' ' + 'since' + ' ' + myDay(props.created_at).fromNow()
             }
           </Typography>
         </Stack>

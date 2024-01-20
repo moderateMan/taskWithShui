@@ -13,9 +13,9 @@ import { useFlatInject } from 'src/service';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 
 export default function DealConnectionMaker({ name, deal_id }: { name: string; deal_id: number }) {
-  const { connectionRequestAct, connection, connectionRequests, connectionQueryAct } =
+  const { connectionRequestAct, connection, connectionQueryAct } =
     useFlatInject('connectionStore');
-  const { fetchDealDetailAct, dealDetail } = useFlatInject('ecommerceStore');
+  const { dealDetail } = useFlatInject('dealStore');
   const { userInfo } = useFlatInject('authStore');
   const [connected, setConnected] = React.useState<boolean>(false);
   const [current_user_ownDeal, setCurrentUserOwnDeal] = React.useState<boolean>(false);
@@ -225,52 +225,6 @@ export default function DealConnectionMaker({ name, deal_id }: { name: string; d
               </Button>
             </Stack>
           </Stack>
-
-          {/* <Iconify
-            icon="mdi:close"
-            onClick={handleClose}
-            sx={{ position: 'absolute', top: 10, right: 10, cursor: 'pointer' }}
-          />
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Please leave your Notes:
-          </Typography>
-          <TextField
-            value={note}
-            id="outlined-basic"
-            label="Notes to the Owner"
-            variant="filled"
-            sx={{ width: '100%', mt: 2 }}
-            maxRows={8}
-            minRows={4}
-            multiline
-            onChange={(e) => {
-              setNote(e.target.value);
-            }}
-          />
-          <Button
-            fullWidth={!mdUp}
-            size="large"
-            color="inherit"
-            variant="contained"
-            onClick={() => {
-              if (!note || !dealDetail?.user_id) {
-                alert('Please leave your notes');
-              } else {
-                connectionRequestAct({
-                  note,
-                  target_user_id: dealDetail?.user_id,
-                  deal_name: dealDetail.title
-                });
-                handleClose();
-              }
-            }}
-            sx={{
-              width: mdUp ? '40%' : '100%',
-              mt: 5,
-            }}
-          >
-            Send Connection Request
-          </Button> */}
         </Box>
       </Modal>
     </div>

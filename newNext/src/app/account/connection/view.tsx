@@ -7,7 +7,10 @@ import { useCallback, useState } from 'react';
 import { ConnectionList } from './components/connection/connection-list';
 import { ConnectionRequestsList } from './components/connection/connection-request-list';
 
-const TABS = ['My Connections', 'My Requests'];
+const TABS = [
+  'My Connections',
+  'My Requests'
+];
 
 interface TabPanelProps {
   children?: React.ReactNode;

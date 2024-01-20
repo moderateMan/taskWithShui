@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { MutableRefObject, useEffect } from 'react';
 import { useFields } from 'src/muiEazy';
 import { primaryFont } from 'src/theme/typography';
-import { FromRefType } from '../../../formView';
+import { FromRefType } from '../../../formViewNew';
 import { useFormConfig } from './useFormConfig';
 import { useFlatInject } from 'src/service';
 
@@ -16,14 +16,12 @@ export const DealTypeView = ({
   const { setDealType } = useFlatInject('dealStore');
   const formConfig = useFormConfig({ defaultValues });
   const { formNode, methods } = useFields(formConfig);
-  methods.watch((e: any) => {
-    setDealType(e.type);
-  });
   useEffect(() => {
     formRef.current = methods;
-    methods.watch((e: any) => {
+    const subscription = methods.watch((e: any) => {
       setDealType(e.type);
     });
+    return subscription.unsubscribe()
   }, [methods]);
   return (
     <>

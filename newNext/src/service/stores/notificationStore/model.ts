@@ -29,11 +29,12 @@ export enum NotificationType {
 
 export interface INotification extends IBaseModel {
   notification_type: NotificationType;
-  notification_type_source_id: number;
   title: string;
   content: string;
   is_read: boolean;
   user_id: number;
+  comment_place: number;
+  notification_type_source_id: number;
 }
 
 export interface INotificationQueryParams {

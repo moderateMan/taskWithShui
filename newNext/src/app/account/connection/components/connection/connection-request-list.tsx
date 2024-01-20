@@ -1,11 +1,10 @@
 import { SelectChangeEvent, Stack } from '@mui/material';
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+import useIsMobile from 'src/common/hooks/useIsMobile';
+import { useFlatInject } from 'src/service';
 import { ConnectionRequestListItem } from './connection-request-list-item';
 import { ConnectionRequestedListItem } from './connection-requested-list-item';
-import { useFlatInject } from 'src/service';
-import useIsMobile from 'src/common/hooks/useIsMobile';
-dayjs.extend(require('dayjs/plugin/relativeTime'));
+
 
 export const ConnectionRequestsList = () => {
   const { userInfo } = useFlatInject('authStore');
@@ -37,12 +36,6 @@ export const ConnectionRequestsList = () => {
         <Stack spacing={1}>
           {connectionRequests.map((item: any) => (
             <ConnectionRequestListItem {...item} />
-          ))}
-        </Stack>
-
-        <Stack spacing={1}>
-          {connectionRequested.map((item) => (
-            <ConnectionRequestedListItem {...item} />
           ))}
         </Stack>
       </Stack>

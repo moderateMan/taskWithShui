@@ -11,6 +11,15 @@ import {
 import { DealEntity } from 'src/types/deal';
 import { DealStatistics, QueryDealByIdApiRequest } from './model';
 import { FileUploadApiRespone } from 'src/service/model/appStoreModel';
+import { ICommentWithReplies } from '../commentStore/model';
+
+function commentFindByDealIDApi(payload: { deal_id: number; page: number; page_size: number }) {
+  return http.request<{ content: ICommentWithReplies[]; count: number }>({
+    url: '/api/comment/query/deal',
+    method: 'POST',
+    data: { ...payload },
+  });
+}
 
 // 市场列表
 function dealMarketplaceListApi(params: QueryDealForMarketplace) {
@@ -118,6 +127,35 @@ function getDealStatisticsApi(params: DealStatisticsQueryModel) {
 }
 
 const api = {
+  // 查询deal详情
+  fetchDealDetailApi(params: TargetDeal) {
+    return http.request<{ content: DealEntity[]; count: number }>({
+      url: '/api/deal/query/id',
+      method: 'POST',
+      data: {
+        id: params.id,
+      },
+    });
+  },
+  fetchDealWishlistApi(params: { ids: number[] }) {
+    return http.request<{ content: DealEntity[]; count: number }>({
+      url: '/api/deal/query/marketplace',
+      method: 'POST',
+      data: {
+        ids: params.ids,
+      },
+    });
+  },
+
+  likeDealApi(params: TargetDeal) {
+    return http.request<{ content: string }>({
+      url: '/api/deal/wish',
+      method: 'POST',
+      data: {
+        id: params.id,
+      },
+    });
+  },
   dealMarketplaceListApi,
   dealLandingPageListApi,
   createDraftApi,
@@ -130,6 +168,7 @@ const api = {
   getDealFileUploadApi,
   fileUploadApi,
   getDealStatisticsApi,
+  commentFindByDealIDApi,
 };
 
 export default api;

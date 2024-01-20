@@ -22,8 +22,8 @@ interface Props extends DialogProps {
 
 export default function ReviewNewForm({ onClose, ...other }: Props) {
   const { userInfo } = useFlatInject('authStore');
-  const { dealDetail } = useFlatInject('ecommerceStore');
-  const { loading, setLoading, createCommentAct, findByDealIDAct } = useFlatInject('commentStore');
+  const { dealDetail } = useFlatInject('dealStore');
+  const { createCommentAct, findByDealIDAct } = useFlatInject('commentStore');
 
   const defaultValues = {
     review: '',

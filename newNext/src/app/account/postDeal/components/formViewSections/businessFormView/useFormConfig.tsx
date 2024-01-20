@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
-import { FormConfig } from 'src/muiEazy';
+import { FormConfig, getValueByPath } from 'src/muiEazy';
 import { getPresetConfig } from '../../../utils/getPreSetConfig';
 import { useFlatInject } from 'src/service';
 import { DealFileComponentType } from 'src/service/model';
 import storageHelper from 'src/common/utils/storageHelper';
 import { FileType } from 'src/service/model/appStoreModel';
 import { FromWrapper } from '../../wrapper';
+import * as Yup from 'yup'
 
 export const useFormConfig = ({
   defaultValues,
@@ -82,9 +83,39 @@ export const useFormConfig = ({
         label: 'Sub-heading',
         type: 'multiple',
         defaultValue: defaultValues?.['components']?.['team'],
+        schema: Yup.array().of(Yup.object().shape({
+          name: Yup.string().optional().test({
+            test(value: any, ctx) {
+              if (ctx.parent.image) {
+                if (
+                  value
+                ) {
+                  return true;
+                } else {
+                  return ctx.createError({ message: 'This is required!' });
+                }
+              }
+              return true
+            },
+          }),
+          title: Yup.string().test({
+            test(value: any, ctx) {
+              if (ctx.parent.image) {
+                if (
+                  value
+                ) {
+                  return true;
+                } else {
+                  return ctx.createError({ message: 'This is required!' });
+                }
+              }
+              return true
+            },
+          })
+        })),
         fieldConfig: {
           mulType: 'obj',
-          mulFromConfig: {
+          childFieldConfig: {
             image: {
               label: 'Upload team member image (optional)',
               type: 'upload',
@@ -107,9 +138,50 @@ export const useFormConfig = ({
             },
             name: {
               label: 'Team member name (optional)',
+              watch(props) {
+                const { info: { name: eventName }, values, currentConfig } = props;
+                const { name = "", fieldConfig = {} } = currentConfig;
+                let mulId = name.split(".").slice(-2, -1)[0]
+                const teamArr = getValueByPath('components-team', values, {})
+                let targetEventKey = `components.team.${mulId}.image`;
+                const imageValue = teamArr[Number(mulId)]?.image
+
+                if (eventName == targetEventKey) {
+                  if (!currentConfig.fieldConfig) {
+                    currentConfig.fieldConfig = {}
+                  }
+                  if (imageValue) {
+                    currentConfig.fieldConfig!.required = true
+                    currentConfig.label = 'Team member name'
+                  } else {
+                    currentConfig.fieldConfig!.required = false
+                    currentConfig.label = 'Team member name (optional)'
+                  }
+                }
+              }
             },
             title: {
               label: 'Team member role (optional)',
+              watch(props) {
+                const { info: { name: eventName }, values, currentConfig } = props;
+                const { name = "", fieldConfig = {} } = currentConfig;
+                let mulId = name.split(".").slice(-2, -1)[0]
+                const teamArr = getValueByPath('components-team', values, {})
+                let targetEventKey = `components.team.${mulId}.image`;
+                const imageValue = teamArr[Number(mulId)]?.image
+                if (eventName == targetEventKey) {
+                  if (!currentConfig.fieldConfig) {
+                    currentConfig.fieldConfig = {}
+                  }
+                  if (imageValue) {
+                    currentConfig.fieldConfig!.required = true
+                    currentConfig.label = 'Team member name'
+                  } else {
+                    currentConfig.fieldConfig!.required = false
+                    currentConfig.label = 'Team member name (optional)'
+                  }
+                }
+              }
             },
           } as FormConfig,
         },

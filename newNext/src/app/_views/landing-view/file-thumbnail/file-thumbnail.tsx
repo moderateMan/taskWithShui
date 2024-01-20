@@ -17,7 +17,7 @@ export function FileThumbnail({ file, sx }: FileIconProps) {
         src={file as string}
         onError={(_) => {
           //@ts-ignore
-          _.target.src = fileSvg;
+          // _.target.src = fileSvg;
         }}
         sx={{
           width: 52,

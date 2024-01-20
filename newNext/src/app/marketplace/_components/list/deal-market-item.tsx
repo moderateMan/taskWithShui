@@ -27,7 +27,7 @@ function DealItemMarket({ deal }: Props) {
   const { id, tags, title, logo, components } = deal;
   const { pics, video } = components || {};
   const mdUp = useResponsive('up', 'md');
-  const { likeDealAct } = useFlatInject('ecommerceStore');
+  const { likeDealAct } = useFlatInject('dealStore');
   console.log('deal', deal);
   const liked = useBoolean(deal.liked);
   const router = useRouter();
@@ -141,7 +141,7 @@ function DealItemMarket({ deal }: Props) {
               fontWeight={600}
               lineHeight={'28px'}
               color={'text.primary'}
-              // noWrap={true}
+            // noWrap={true}
             >
               {deal.title}
             </Typography>
@@ -154,7 +154,7 @@ function DealItemMarket({ deal }: Props) {
             lineHeight={'22px'}
             color={'#59745D'}
             width={'230px'}
-            // noWrap={true}
+          // noWrap={true}
           >
             {deal.sub_title}
           </Typography>

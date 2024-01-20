@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { MutableRefObject, useEffect } from 'react';
 import { useFields } from 'src/muiEazy';
 import { primaryFont } from 'src/theme/typography';
-import { FromRefType } from '../../../formView';
+import { FromRefType } from '../../../formViewNew';
 import { useFormConfig } from './useFormConfig';
 
 export const FaqFromView = ({

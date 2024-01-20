@@ -1,15 +1,19 @@
 import 'mui-eazy/dist/style.css';
-import ServiceProvider from 'src/service/serviceProvider';
+import Script from 'next/script';
 import MotionLazy from 'src/commonOld/components/animate/motion-lazy';
+import MessageProvider from 'src/commonOld/components/message';
 import ProgressBar from 'src/commonOld/components/progress-bar';
 import { SettingsDrawer, SettingsProvider } from 'src/commonOld/components/settings';
 import 'src/global.css';
 import { LocalizationProvider } from 'src/locales';
+import NotificationProvider from 'src/service/notificationProvider';
+import ServiceProvider from 'src/service/serviceProvider';
 import ThemeProvider from 'src/theme';
 import { primaryFont } from 'src/theme/typography';
-import NotificationProvider from 'src/service/notificationProvider';
-import Script from 'next/script';
-import MessageProvider from 'src/commonOld/components/message';
+import { Session } from '@talkjs/react';
+import { talkjs_token } from 'configs';
+import { useTalkJSSession } from 'src/service/talkjsProvider';
+
 // ----------------------------------------------------------------------
 
 export const metadata = {
@@ -48,6 +52,7 @@ type Props = {
 };
 
 export default function RootLayout({ children }: Props) {
+
   return (
     <html lang="en" className={primaryFont.className}>
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-39H5XT7LPV" />
@@ -65,6 +70,7 @@ export default function RootLayout({ children }: Props) {
           id="ze-snippet"
           src="https://static.zdassets.com/ekr/snippet.js?key=a1e639ba-bd15-435e-ae24-153bdcc74c8d"
         ></Script>
+
         <NotificationProvider>
           <ServiceProvider>
             <LocalizationProvider>

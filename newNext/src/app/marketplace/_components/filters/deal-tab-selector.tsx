@@ -1,8 +1,8 @@
 import Stack, { StackProps } from '@mui/material/Stack';
+import { useResponsive } from 'src/muiEazy';
 import { useFlatInject } from 'src/service';
 import { DealType } from 'src/types/deal';
 import DealTabSelectorItem from './deal-tab-selector-item';
-import { useResponsive } from 'src/muiEazy';
 
 // ----------------------------------------------------------------------
 
@@ -48,11 +48,8 @@ export const testData = [
 // ----------------------------------------------------------------------
 
 export default function DealTabSelector({ sx, ...other }: StackProps) {
-  const { marketplaceDealQueryAct } = useFlatInject('dealStore');
-  const { seachParams, marketDealType, setSeachParams, setMarketDealType } =
-    useFlatInject('marketStore');
+  const { marketDealType, setMarketDealType } = useFlatInject('marketStore');
   const mdUp = useResponsive('up', 'md');
-
   return (
     <Stack
       spacing={mdUp ? 8 : 1}

@@ -1,5 +1,5 @@
 import { format, getTime, formatDistanceToNow } from 'date-fns';
-import dayjs from 'dayjs';
+import myDay from 'src/common/myDay';
 // ----------------------------------------------------------------------
 
 type InputValue = Date | string | number | null;
@@ -30,7 +30,7 @@ export function fToNow(date: InputValue) {
 
 // 输入你的日期，这里假设日期为 "2023-10-12"。
 // 自定义格式化函数，添加 "th" 后缀。
-export function customFormat(date: dayjs.Dayjs) {
+export function customFormat(date: myDay.Dayjs) {
   const day = date.date();
   const month = date.format('MMM');
   const year = date.year();

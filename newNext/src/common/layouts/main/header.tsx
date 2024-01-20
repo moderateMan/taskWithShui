@@ -6,10 +6,12 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import { useTheme } from '@mui/material/styles';
-import { Iconify, useOffSetTop, useResponsive } from 'src/muiEazy';
+import { Session } from '@talkjs/react';
+import { talkjs_token } from 'configs';
 import HeaderShadow from 'src/common/components/header-shadow';
 import Label from 'src/commonOld/components/label';
 import Logo from 'src/commonOld/components/logo';
+import { Iconify, useOffSetTop, useResponsive } from 'src/muiEazy';
 import { paths } from 'src/routes/paths';
 import { useFlatInject } from 'src/service';
 import { bgBlur } from 'src/theme/css';
@@ -31,91 +33,99 @@ export default function Header({ headerOnDark }: Props) {
   const offset = useOffSetTop();
   const mdUp = useResponsive('up', 'md');
 
+  // this component loads the current user's TalkJS Session
   return (
-    <AppBar>
-      <Toolbar
-        disableGutters
-        sx={{
-          height: {
-            xs: HEADER.H_MOBILE,
-            md: HEADER.H_DESKTOP,
-          },
-          transition: theme.transitions.create(['height', 'background-color'], {
-            easing: theme.transitions.easing.easeInOut,
-            duration: theme.transitions.duration.shorter,
-          }),
-          ...(headerOnDark && {
-            color: 'common.white',
-          }),
-          ...(offset && {
-            ...bgBlur({ color: theme.palette.background.default }),
-            color: 'text.primary',
+    <Session appId={talkjs_token} userId={userInfo ? userInfo?.id.toString() : "0"}>
+      <AppBar>
+        <Toolbar
+          disableGutters
+          sx={{
             height: {
-              md: HEADER.H_DESKTOP - 16,
+              xs: HEADER.H_MOBILE,
+              md: HEADER.H_DESKTOP,
             },
-          }),
-        }}
-      >
-        <Container
-          maxWidth="xl"
-          sx={{ height: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+            transition: theme.transitions.create(['height', 'background-color'], {
+              easing: theme.transitions.easing.easeInOut,
+              duration: theme.transitions.duration.shorter,
+            }),
+            ...(headerOnDark && {
+              color: 'common.white',
+            }),
+            ...(offset && {
+              ...bgBlur({ color: theme.palette.background.default }),
+              color: 'text.primary',
+              height: {
+                md: HEADER.H_DESKTOP - 16,
+              },
+            }),
+          }}
         >
-          <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={10}>
-            <Box sx={{ lineHeight: 0, position: 'relative' }}>
-              <Logo />
+          <Container
+            maxWidth="xl"
+            sx={{
+              height: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={10}>
+              <Box sx={{ lineHeight: 0, position: 'relative' }}>
+                <Logo />
 
-              <Link href="#" target="_blank" rel="noopener">
-                <Label
-                  color="info"
-                  sx={{
-                    ml: 11,
-                    px: 0.5,
-                    top: -4,
-                    left: 1,
-                    height: 20,
-                    fontSize: 11,
-                    cursor: 'pointer',
-                    position: 'absolute',
-                  }}
-                >
-                  beta
-                </Label>
-              </Link>
-            </Box>
-
-            {mdUp && <NavDesktop data={navConfig} />}
-          </Stack>
-
-          <Stack spacing={2} direction="row" alignItems="center" justifyContent="flex-end">
-            <Stack spacing={2} direction="row" alignItems="center" justifyContent="flex-end">
-              {/* <Searchbar/> */}
-              {/* <SettingsButton/> */}
-              {mdUp && <MenuBtn />}
-              {userInfo && mdUp && (
-                <Link href={paths.account.postDeal}>
-                  <Button
-                    variant="contained"
-                    startIcon={<Iconify icon={'carbon:rocket'} color="#FFD600" />}
+                <Link href="#" target="_blank" rel="noopener">
+                  <Label
+                    color="info"
                     sx={{
-                      '&:hover': {
-                        cursor: 'pointer',
-                      },
+                      ml: 11,
+                      px: 0.5,
+                      top: -4,
+                      left: 1,
+                      height: 20,
+                      fontSize: 11,
+                      cursor: 'pointer',
+                      position: 'absolute',
                     }}
                   >
-                    Post A Deal
-                  </Button>
+                    beta
+                  </Label>
                 </Link>
-              )}
+              </Box>
+
+              {mdUp && <NavDesktop data={navConfig} />}
             </Stack>
-          </Stack>
 
-          {!mdUp && (
-            <NavMobile data={[{ title: 'Account', path: paths.account.personal }, ...navConfig]} />
-          )}
-        </Container>
-      </Toolbar>
+            <Stack spacing={2} direction="row" alignItems="center" justifyContent="flex-end">
+              <Stack spacing={2} direction="row" alignItems="center" justifyContent="flex-end">
+                {mdUp && <MenuBtn />}
+                {userInfo && mdUp && (
+                  <Link href={paths.account.postDeal}>
+                    <Button
+                      variant="contained"
+                      startIcon={<Iconify icon={'carbon:rocket'} color="#FFD600" />}
+                      sx={{
+                        '&:hover': {
+                          cursor: 'pointer',
+                        },
+                      }}
+                    >
+                      Post A Deal
+                    </Button>
+                  </Link>
+                )}
+              </Stack>
+            </Stack>
 
-      {offset && <HeaderShadow />}
-    </AppBar>
+            {!mdUp && (
+              <NavMobile
+                data={[{ title: 'Account', path: paths.account.personal }, ...navConfig]}
+              />
+            )}
+          </Container>
+        </Toolbar>
+
+        {offset && <HeaderShadow />}
+      </AppBar>
+    </Session>
   );
 }
