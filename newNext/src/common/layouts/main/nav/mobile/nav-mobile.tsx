@@ -50,12 +50,10 @@ export default function NavMobile({ data }: NavProps) {
       >
         <Scrollbar>
           <Logo sx={{ mx: 2.5, my: 3 }} />
-
           <List component="nav" disablePadding>
             {data.map((link) => (
               <NavList key={link.title} item={link} />
             ))}
-
             {userInfo && (
               <Box sx={{ width: '100%', paddingLeft: '30px' }}>
                 <Button

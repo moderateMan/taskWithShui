@@ -6,7 +6,6 @@ import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import CustomBreadcrumbs from 'src/commonOld/components/custom-breadcrumbs';
 import { SplashScreen } from 'src/commonOld/components/loading-screen';
-import { useBoolean } from 'src/commonOld/hooks/use-boolean';
 import { useResponsive } from 'src/muiEazy';
 import { useFlatInject } from 'src/service';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
@@ -161,7 +160,7 @@ export default function DealDetailView() {
                         {'Highlights'}
                       </Typography>
 
-                      {highlights!?.map((item, index) => {
+                      {highlights!?.map((item:any, index:any) => {
                         return (
                           <Box key={index}>
                             <Typography

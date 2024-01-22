@@ -20,7 +20,10 @@ export default function LangdingView() {
   console.log(mdUp);
 
   useEffect(() => {
-    landingQueryListAct();
+    landingQueryListAct({
+      page: 1,
+      page_size: 8
+    });
   }, []);
 
   return (

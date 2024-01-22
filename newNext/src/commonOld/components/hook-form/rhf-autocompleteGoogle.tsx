@@ -34,6 +34,10 @@ export default function RHFAutocomplete<
 
   const { placePredictions, getPlacePredictions } = usePlacesService({
     apiKey: 'AIzaSyC2UQBWd-kkALximl2gxxBxuVTJ9rE2b7w',
+    debounce: 300,
+    options: {
+      LocationBias: 'au',
+    },
   });
 
   return (

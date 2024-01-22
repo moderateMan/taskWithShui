@@ -38,9 +38,9 @@ export const ForAnyone = ({ mdUp }: { mdUp: boolean }) => {
   return (
     <>
       <ColoredPart mdUp={mdUp}>
-        <Stack direction={mdUp ? 'row' : 'column'} justifyContent={'space-between'} rowGap={'56px'}>
+        <Stack columnGap={'56px'} direction={mdUp ? 'row' : 'column'} justifyContent={'space-between'} rowGap={'56px'}>
           <Box component={'img'} src={'/assets/icons/Img_Course_S.6.png'} sx={imageStyle} />
-          <Stack gap={'24px'} marginTop={mdUp ? '72px' : undefined} maxWidth={'700px'}>
+          <Stack gap={'24px'} flex={1}>
             <Typography fontFamily={secondaryFont.style.fontFamily} sx={titleStyle}>
               For SME Owners and Investors.
             </Typography>
@@ -64,8 +64,9 @@ export const ForAnyone = ({ mdUp }: { mdUp: boolean }) => {
           direction={mdUp ? 'row' : 'column-reverse'}
           justifyContent={'space-between'}
           rowGap={'56px'}
+          columnGap={'56px'}
         >
-          <Stack gap={'24px'} marginTop={mdUp ? '72px' : undefined} maxWidth={'700px'}>
+          <Stack gap={'24px'} flex={1}>
             <Typography fontFamily={secondaryFont.style.fontFamily} sx={titleStyle}>
               For Partners
             </Typography>

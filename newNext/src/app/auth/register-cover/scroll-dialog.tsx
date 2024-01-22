@@ -1,15 +1,13 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 // @mui
+import { Box, Link } from '@mui/material';
 import Button from '@mui/material/Button';
-import DialogTitle from '@mui/material/DialogTitle';
+import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import Dialog, { DialogProps } from '@mui/material/Dialog';
-import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
-import { Box, Link, Modal } from '@mui/material';
 import { TabView } from 'src/muiEazy';
-import PdfViewer from 'src/common/components/pdf-viewer';
 
 // ----------------------------------------------------------------------
 

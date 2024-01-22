@@ -19,6 +19,7 @@ import { FaqFromView } from './components/formViewSections/faqFromView';
 import { MarketFormView } from './components/formViewSections/marketFormView';
 import { MediaFormView } from './components/formViewSections/mediaFormView';
 import { TabView } from './components/tabView';
+import PostDealTipModal from './components/post-deal-tip-modal';
 
 export type FromRefType = UseFormReturn<
   {
@@ -29,6 +30,7 @@ export type FromRefType = UseFormReturn<
 >;
 // ----------------------------------------------------------------------
 export default function DealFormView() {
+  const open = useBoolean(true)
   const router = useRouter();
   const {
     targetType: type,
@@ -174,14 +176,13 @@ export default function DealFormView() {
         id: id,
       };
       if (type == 'SUBMIT') {
-
+        await updateDraftAct(dealBody);
         await submitDraftAct(dealBody);
         notify.success('Submit Deal Success!');
         isShowSubmitModal.onTrue()
       } else {
         await updateDraftAct(dealBody);
         notify.success('Update Deal Success!');
-        router.back()
       }
     }
   };
@@ -205,7 +206,8 @@ export default function DealFormView() {
             padding: '0 20px',
             fontWeight: '700',
           }}
-          onClick={() => {
+          onClick={async () => {
+            await handleSubmit()
             router.push(paths.marketplace.preview + '/' + id);
           }}
         >
@@ -288,7 +290,7 @@ export default function DealFormView() {
                 formRef_faq.current!,
               ];
             }
-            if (await validate([])) {
+            if (await validate(allFormRef.current)) {
               handleSubmit();
             }
           }}
@@ -301,7 +303,7 @@ export default function DealFormView() {
         title={''}
         actionConfig={[]}
         handleClose={() => {
-          router.back()
+          router.push(paths.account.deals)
         }}
         content={() => {
           return (
@@ -359,7 +361,7 @@ export default function DealFormView() {
                   }}
                   variant="contained"
                   onClick={() => {
-                    router.push(paths.root)
+                    router.push(paths.account.deals)
                   }}
                 >
                   Return to Scaling
@@ -379,7 +381,7 @@ export default function DealFormView() {
           );
         }}
       />
-      {/* {!id && <PostDealTipModal open={open.value} onClose={() => open.onFalse()} />} */}
+      {!id && <PostDealTipModal open={open.value} onClose={() => open.onFalse()} />}
     </>
   );
 }

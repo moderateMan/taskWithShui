@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import Stack, { StackProps } from '@mui/material/Stack';
 import { useResponsive } from 'src/muiEazy';
 import { useFlatInject } from 'src/service';
-import DealFilterMain from './deal-filter-main';
+import SearchMain from './searchMain';
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ import DealFilterMain from './deal-filter-main';
 
 export default function DealFilters({ sx, ...other }: StackProps) {
   // 用作参考
-  const { setSeachParams, setMarketListPageNum } = useFlatInject('marketStore');
+  const { resetSearchFilter, setMarketListPageNum } = useFlatInject('marketStore');
   const mdUp = useResponsive('up', 'md');
   return (
     <Stack
@@ -22,7 +22,7 @@ export default function DealFilters({ sx, ...other }: StackProps) {
       sx={{ p: 4, borderRadius: 2, bgcolor: 'background.neutral', ...sx }}
       {...other}
     >
-      <DealFilterMain />
+      <SearchMain />
       <Button
         size="large"
         color="primary"
@@ -52,7 +52,7 @@ export default function DealFilters({ sx, ...other }: StackProps) {
             borderRadius: '8px',
           }}
           onClick={() => {
-            setSeachParams('');
+            resetSearchFilter();
           }}
         >
           Reset All

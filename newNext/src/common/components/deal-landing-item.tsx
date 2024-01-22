@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import { memo } from 'react';
-import { testData } from 'src/app/marketplace/_components/filters/deal-tab-selector';
+import { testData } from 'src/app/marketplace/_components/filters/market-type-selcetor';
 import Iconify from 'src/commonOld/components/iconify';
 import Image from 'src/commonOld/components/image';
 import SvgColor from 'src/commonOld/components/svg-color';

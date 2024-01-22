@@ -4,7 +4,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import myDay from 'src/common/myDay';
 import { Iconify, Image } from 'src/muiEazy';
-import { useFlatInject } from 'src/service';
 import { DealStatistics } from 'src/service/stores/dealStore/model';
 import { DealEntity, DealStatus } from 'src/types/deal';
 import CustomPopover, { usePopover } from '../custom-popover';
@@ -27,9 +26,6 @@ export default function EcommerceCartItem({
   statistic,
 }: Props) {
   const popover = usePopover();
-  const {} = useFlatInject('dealStore');
-
-  console.log('itemData', itemData);
 
   return (
     <Stack
@@ -41,7 +37,7 @@ export default function EcommerceCartItem({
         borderBottom: (theme) => `solid 1px ${theme.palette.divider}`,
       }}
     >
-      <Stack direction="row" alignItems="center" flexGrow={1}>
+      <Stack direction="row" alignItems="center" flexGrow={1} width={0}>
         <Image
           src={itemData.logo || ''}
           sx={{
@@ -112,7 +108,7 @@ export default function EcommerceCartItem({
           </MenuItem>
         )}
         <Divider sx={{ borderStyle: 'dashed' }} />
-        <MenuItem onClick={() => {}} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={() => { }} sx={{ color: 'error.main' }}>
           <Iconify icon="solar:trash-bin-trash-bold" />
           Archive
         </MenuItem>

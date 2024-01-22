@@ -18,6 +18,7 @@ const App = (props: React.PropsWithChildren) => {
   const notificationLoop = useRef<null | NodeJS.Timeout>(null);
 
   const startLoop = () => {
+    stopLoop()
     notificationLoop.current = setInterval(() => {
       notificationQueryAct();
     }, 15000);

@@ -2,9 +2,8 @@ import { Typography } from '@mui/material';
 import { MutableRefObject, useEffect } from 'react';
 import { useFields } from 'src/muiEazy';
 import { primaryFont } from 'src/theme/typography';
-import { FromRefType } from '../../../formViewNew';
+import { FromRefType } from '../../../formView';
 import { useFormConfig } from './useFormConfig';
-import { useFlatInject } from 'src/service';
 
 export const MarketFormView = ({
   defaultValues = {},

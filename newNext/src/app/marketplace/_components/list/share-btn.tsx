@@ -16,7 +16,7 @@ import {
   WhatsappShareButton,
 } from 'next-share';
 
-export default function ShareMenu({ deal_id, deal_name }: { deal_id: number; deal_name: string }) {
+export default function Sharebtn({ deal_id }: { deal_id: number }) {
   // construct the shared url
   const shared_url = `${process.env.NEXT_PUBLIC_DOMAIN_URI}/marketplace/share/${deal_id}`;
 
@@ -31,7 +31,7 @@ export default function ShareMenu({ deal_id, deal_name }: { deal_id: number; dea
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -40,13 +40,10 @@ export default function ShareMenu({ deal_id, deal_name }: { deal_id: number; dea
 
   return (
     <div>
-      <Button
-        onClick={handleClick}
-        sx={{ fontSize: '16px', lineHeight: '22px', fontWeight: 400 }}
-        startIcon={<Iconify icon="carbon:share" />}
-      >
-        Share
-      </Button>
+      <Iconify onClick={(e) => {
+        handleClick(e)
+        e.stopPropagation()
+      }} icon="carbon:share" />
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -55,12 +52,15 @@ export default function ShareMenu({ deal_id, deal_name }: { deal_id: number; dea
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
+        onClick={(e) => {
+          e.stopPropagation()
+        }}
       >
         <MenuItem onClick={handleClose}>
           <FacebookShareButton
             url={shared_url}
             quote={'next-share is a social share buttons for your next React apps.'}
-            hashtag={'#scaling'}
+            hashtag={'#nextshare'}
           >
             <Stack direction="row" spacing={2} alignItems="center" sx={{ typography: 'subtitle2' }}>
               <FacebookIcon size={24} round />
@@ -69,7 +69,7 @@ export default function ShareMenu({ deal_id, deal_name }: { deal_id: number; dea
           </FacebookShareButton>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <WhatsappShareButton url={shared_url} title={deal_name} >
+          <WhatsappShareButton url={shared_url}>
             <Stack direction="row" spacing={2} alignItems="center" sx={{ typography: 'subtitle2' }}>
               <WhatsappIcon size={24} round />
               <span>Share on Whatsapp</span>
@@ -99,10 +99,10 @@ export default function ShareMenu({ deal_id, deal_name }: { deal_id: number; dea
         >
           <Stack direction="row" spacing={2} alignItems="center" sx={{ typography: 'subtitle2' }}>
             <Iconify icon="iconoir:copy" sx={{ width: 24, height: 24 }} />
-            <span>{copied ? <strong>Copied!</strong> : 'Copy to Clipboard'}</span>
+            <span>{copied ? <strong>Copied!</strong> : "Copy to Clipboard"}</span>
           </Stack>
         </MenuItem>
       </Menu>
-    </div>
+    </div >
   );
 }

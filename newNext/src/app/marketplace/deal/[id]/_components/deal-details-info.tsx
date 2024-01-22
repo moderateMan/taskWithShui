@@ -1,23 +1,22 @@
-import { Avatar, Button, Checkbox, Grid } from '@mui/material';
+import { Avatar, Button, Grid } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import myDay from 'src/common/myDay';
 import { useCallback, useState } from 'react';
-import ProductPrice from 'src/common/components/product-price';
-import { useFlatInject } from 'src/service';
-import Iconify from 'src/commonOld/components/iconify';
-import Image from 'src/commonOld/components/image';
-import Label from 'src/commonOld/components/label';
-import { useResponsive } from 'src/commonOld/hooks/use-responsive';
-import { customFormat } from 'src/commonOld/utils/format-time';
-import { primaryFont, secondaryFont } from 'src/theme/typography';
-import DealConnectionMaker from './deal-details-connection-maker';
-import ShareMenu from './deal-details-share';
 import { returnTypeBasedOnDealType } from 'src/common/components/deal-landing-item';
-import { DealType } from 'src/types/deal';
+import ProductPrice from 'src/common/components/product-price';
+import myDay from 'src/common/myDay';
+import Iconify from 'src/commonOld/components/iconify';
+import Label from 'src/commonOld/components/label';
+import { customFormat } from 'src/commonOld/utils/format-time';
 import { usePathname, useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
+import { useFlatInject } from 'src/service';
+import { primaryFont } from 'src/theme/typography';
+import { DealType } from 'src/types/deal';
+import DealConnectionMaker from './deal-details-connection-maker';
+import ShareMenu from './deal-details-share';
+import Head from 'next/head';
 
 // ----------------------------------------------------------------------
 
@@ -62,6 +61,7 @@ export default function DealDetailsInfo({
 }: Props) {
   const pathName = usePathname();
   const { userInfo } = useFlatInject('authStore');
+  const previewFlag = pathName.includes('preview');
   const shareFlag = pathName.includes('share');
   const router = useRouter();
   const { likeDealAct } = useFlatInject('dealStore');
@@ -115,8 +115,12 @@ export default function DealDetailsInfo({
         >
           {returnTypeBasedOnDealType(type)}
         </Stack>
+        <Head>
+          <meta property="og:title" content={name} key="title" />
+          <meta property="og:description" content={desc} key="description" />
+        </Head>
         <Stack direction={'row'}>
-          {logo ? <img src={logo} height={'40px'} width={'40px'}></img> : <Avatar>{ }</Avatar>}
+          {logo ? <img src={logo} height={'40px'} width={'40px'}></img> : <Avatar>{}</Avatar>}
           <Typography
             fontFamily={primaryFont.style.fontStyle}
             sx={{
@@ -213,6 +217,7 @@ export default function DealDetailsInfo({
       <Stack spacing={3} direction="row" justifyContent={{ xs: 'center', md: 'unset' }}>
         <Stack direction="row" alignItems="center" sx={{ typography: 'subtitle2' }}>
           <Button
+            disabled={previewFlag}
             onClick={() => {
               if (shareFlag && !userInfo) {
                 router.push(paths.loginCover);
@@ -235,18 +240,20 @@ export default function DealDetailsInfo({
           </Button>
         </Stack>
 
-        <Stack
-          onClick={() => {
-            if (shareFlag && !userInfo) {
-              router.push(paths.loginCover);
-            }
-          }}
-          direction="row"
-          alignItems="center"
-          sx={{ typography: 'subtitle2' }}
-        >
-          <ShareMenu deal_id={deal_id} />
-        </Stack>
+        {!previewFlag && (
+          <Stack
+            onClick={() => {
+              if (shareFlag && !userInfo) {
+                router.push(paths.loginCover);
+              }
+            }}
+            direction="row"
+            alignItems="center"
+            sx={{ typography: 'subtitle2' }}
+          >
+            <ShareMenu deal_id={deal_id} deal_name={name} />
+          </Stack>
+        )}
       </Stack>
     </>
   );

@@ -118,7 +118,7 @@ export default function Header({ headerOnDark }: Props) {
 
             {!mdUp && (
               <NavMobile
-                data={[{ title: 'Account', path: paths.account.personal }, ...navConfig]}
+                data={[{ title: 'Account', path: paths.account.personal }, { title: 'Notification', path: paths.account.notification }, { title: 'Message', path: paths.account.notification }, ...navConfig]}
               />
             )}
           </Container>

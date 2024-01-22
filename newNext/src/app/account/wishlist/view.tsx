@@ -10,7 +10,7 @@ export default function EcommerceAccountWishlistView() {
   return (
     <>
       <Typography variant="h5" sx={{ mb: 3 }}>
-        Wishlist
+        Favourites
       </Typography>
       <Box width={'100%'} height={'100%'}>
         <DealWishList />

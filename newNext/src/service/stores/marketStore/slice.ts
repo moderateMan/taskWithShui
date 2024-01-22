@@ -81,6 +81,10 @@ const marketSlice = createSliceCustom({
       const { payload } = action;
       state.landingPageDealListCounter = payload;
     },
+    resetSearchFilter(state) {
+      state.searchData = '';
+      state.marketDealType = DealType.ALL;
+    },
   },
   extraReducers: (builder) => {},
 });

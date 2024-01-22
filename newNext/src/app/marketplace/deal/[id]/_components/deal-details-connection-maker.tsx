@@ -9,6 +9,7 @@ import notify from 'src/common/utils/notify';
 import Iconify from 'src/commonOld/components/iconify';
 import SvgColor from 'src/commonOld/components/svg-color';
 import { useResponsive } from 'src/commonOld/hooks/use-responsive';
+import { usePathname } from 'src/routes/hooks';
 import { useFlatInject } from 'src/service';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 
@@ -19,7 +20,9 @@ export default function DealConnectionMaker({ name, deal_id }: { name: string; d
   const { userInfo } = useFlatInject('authStore');
   const [connected, setConnected] = React.useState<boolean>(false);
   const [current_user_ownDeal, setCurrentUserOwnDeal] = React.useState<boolean>(false);
-
+  const pathName = usePathname();
+  const previewFlag = pathName.includes('preview');
+  const shareFlag = pathName.includes('share');
   const mdUp = useResponsive('up', 'md');
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -62,7 +65,7 @@ export default function DealConnectionMaker({ name, deal_id }: { name: string; d
         size="large"
         color="inherit"
         variant="contained"
-        disabled={connected || current_user_ownDeal}
+        disabled={connected || current_user_ownDeal || previewFlag || shareFlag}
         onClick={() => {
           handleOpen();
         }}

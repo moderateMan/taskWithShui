@@ -175,10 +175,10 @@ export const useFormConfig = ({
                   }
                   if (imageValue) {
                     currentConfig.fieldConfig!.required = true
-                    currentConfig.label = 'Team member name'
+                    currentConfig.label = 'Team member role'
                   } else {
                     currentConfig.fieldConfig!.required = false
-                    currentConfig.label = 'Team member name (optional)'
+                    currentConfig.label = 'Team member role (optional)'
                   }
                 }
               }

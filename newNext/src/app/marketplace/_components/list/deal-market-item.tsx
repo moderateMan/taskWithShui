@@ -1,21 +1,20 @@
-import { Avatar, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Checkbox from '@mui/material/Checkbox';
 import Divider from '@mui/material/Divider';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import NProgress from 'nprogress';
 import { memo } from 'react';
 import Image from 'src/common/components/image';
-import { RouterLink } from 'src/routes/components';
+import { useBoolean } from 'src/commonOld/hooks/use-boolean';
+import { Iconify, useResponsive } from 'src/muiEazy';
+import { useRouter } from 'src/routes/hooks';
+import { useFlatInject } from 'src/service';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 import { DealEntity } from 'src/types/deal';
 import { returnTypeBasedOnDealType } from './deal-landing-item';
-import { Iconify, useResponsive } from 'src/muiEazy';
-import { useFlatInject } from 'src/service';
-import { useBoolean } from 'src/commonOld/hooks/use-boolean';
-import NProgress from 'nprogress';
-import { useRouter } from 'src/routes/hooks';
+import Sharebtn from './share-btn';
 
 // ----------------------------------------------------------------------
 
@@ -24,8 +23,8 @@ type Props = {
 };
 
 function DealItemMarket({ deal }: Props) {
-  const { id, tags, title, logo, components } = deal;
-  const { pics, video } = components || {};
+  const { id, components } = deal;
+  const { pics } = components || {};
   const mdUp = useResponsive('up', 'md');
   const { likeDealAct } = useFlatInject('dealStore');
   console.log('deal', deal);
@@ -176,9 +175,9 @@ function DealItemMarket({ deal }: Props) {
             sx={{
               p: 2.5,
             }}
+            columnGap={'56px'}
           >
             <Stack
-              spacing={0.5}
               direction="row"
               alignItems={'center'}
               justifyContent={'center'}
@@ -194,11 +193,12 @@ function DealItemMarket({ deal }: Props) {
                 fontStyle: 'normal',
                 fontWeight: 700,
                 lineHeight: '20px',
+                wordBreak: 'break-all'
               }}
             >
               {deal.prime_category_name}
             </Stack>
-            <Iconify icon="carbon:share" color="common.black" />
+            <Sharebtn deal_id={id}></Sharebtn>
           </Stack>
         </Box>
       </Box>

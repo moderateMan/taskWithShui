@@ -6,6 +6,7 @@ import Image from 'src/commonOld/components/image';
 import { bgGradient } from 'src/theme/css';
 import Lightbox, { useLightbox } from 'src/commonOld/components/lightbox';
 import Carousel, { useCarousel, CarouselArrows } from 'src/commonOld/components/carousel';
+import Head from 'next/head';
 
 // ----------------------------------------------------------------------
 
@@ -174,6 +175,9 @@ export default function DealDetailsCarousel({ images }: Props) {
           },
         }}
       >
+        <Head>
+          <meta property="og:image" content={images[0]} key="image" />
+        </Head>
         {renderLargeImg}
         {renderThumbnails}
       </Box>

@@ -7,15 +7,16 @@ import { INotification, NotificationType } from 'src/service/stores/notification
 import { secondaryFont } from 'src/theme/typography';
 import { paths } from 'src/routes/paths';
 import { Modal, useBoolean } from 'src/muiEazy';
+import CongratsShareMenu from './sharelist';
 
-export interface NotificationListItemProps extends INotification { }
+export interface NotificationListItemProps extends INotification {}
 
 export const NotificationListItem = (props: NotificationListItemProps) => {
   const isMobile = useIsMobile();
-  const isShowSubmitModal = useBoolean()
+  const isShowSubmitModal = useBoolean();
   const { notificationDeleteAct, notificationReadAct } = useFlatInject('notificationStore');
   const { notification_type, comment_place, notification_type_source_id } = props;
-  const router = useRouter()
+  const router = useRouter();
   return (
     <Stack
       direction={isMobile ? 'column' : 'row'}
@@ -30,9 +31,13 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
       }}
       onClick={() => {
         if (notification_type == NotificationType.MEMBER_DEAL_COMMENT) {
-          router.push(`${paths.marketplace.deal}/${notification_type_source_id}?commentPlace=${comment_place}`)
+          router.push(
+            `${paths.marketplace.deal}/${notification_type_source_id}?commentPlace=${comment_place}`
+          );
         } else if (notification_type == NotificationType.MEMBER_DEAL_PUBLISHED) {
-          isShowSubmitModal.onTrue()
+          isShowSubmitModal.onTrue();
+        } else if (notification_type == NotificationType.CONNECTION_REQUEST) {
+          router.push(paths.account.connection);
         }
         notificationReadAct({ id: props.id });
       }}
@@ -94,8 +99,7 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
         openFlag={isShowSubmitModal}
         title={''}
         actionConfig={[]}
-        handleClose={() => {
-        }}
+        handleClose={() => {}}
         content={() => {
           return (
             <Box>
@@ -136,8 +140,8 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
                   mb: '8px',
                 }}
               >
-                Your Deal is now visible on the Scaling Marketplace.
-                Share with your friends and network!
+                Your Deal is now visible on the Scaling Marketplace. Share with your friends and
+                network!
               </Typography>
               <Stack
                 sx={{
@@ -146,23 +150,13 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
                 justifyContent={'center'}
                 direction={'row'}
               >
-                <Button
-                  sx={{
-                    margin: '0 12px',
-                  }}
-                  variant="contained"
-                  onClick={() => {
-                    router.push(`${paths.marketplace.share}/${notification_type_source_id}`)
-                  }}
-                >
-                  Share your deal
-                </Button>
+                <CongratsShareMenu deal_id={notification_type_source_id} />
                 <Button
                   sx={{
                     margin: '0 12px',
                   }}
                   onClick={() => {
-                    router.push(paths.root)
+                    router.push(paths.marketplace.root);
                   }}
                 >
                   View on Scaling
@@ -176,4 +170,4 @@ export const NotificationListItem = (props: NotificationListItemProps) => {
   );
 };
 
-const ReactionButton = (props: any) => { };
+const ReactionButton = (props: any) => {};

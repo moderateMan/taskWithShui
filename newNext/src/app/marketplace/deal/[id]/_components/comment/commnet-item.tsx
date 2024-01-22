@@ -37,7 +37,6 @@ export default function ReviewItem({
   id,
 }: Props) {
   const { createReplyAct, likeDealByIDAct, findByDealIDAct } = useFlatInject('commentStore');
-  const { dealDetail } = useFlatInject('dealStore');
   const openReply = useBoolean();
   const helpfulClicked = useBoolean();
 

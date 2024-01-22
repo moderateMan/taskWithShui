@@ -226,7 +226,7 @@ export default function UploadAvatar({
           }}
         >
           <Iconify icon="carbon:edit" sx={{ mr: 1 }} />
-          {avatar ? 'Change avatar' : 'Upload avatar'}
+          {avatar ? 'Change Profile photo' : 'Upload Profile photo'}
         </Stack>
       </Stack>
     </BoxContent>

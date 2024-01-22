@@ -107,7 +107,6 @@ const DeailSection = ({ deal }: { deal: DealEntity }) => {
                 whiteSpace: 'nowrap',
               }}
               onClick={() => {
-                fetch(item);
               }}
               spacing={2}
             >

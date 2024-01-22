@@ -5,6 +5,7 @@ import React, { useCallback } from 'react';
 import UserPersonalView from './views/user-personal-view';
 import UserProfileCompany from './views/user-profile-company';
 import UserProfileEnquiryView from './views/user-profile-enquiries-view';
+import AccountPreferenceView from './views/user-profile-preferences';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -20,6 +21,7 @@ const TABS = [
   'My Companies',
   // 'Comments',
   // 'Feedback'
+  'My Preferences',
 ];
 
 export default function EcommerceAccountIndexView() {
@@ -59,6 +61,10 @@ export default function EcommerceAccountIndexView() {
 
       <CustomTabPanel value={tab} index={'My Companies'}>
         <UserProfileCompany />
+      </CustomTabPanel>
+
+      <CustomTabPanel value={tab} index={'My Preferences'}>
+        <AccountPreferenceView />
       </CustomTabPanel>
     </>
   );

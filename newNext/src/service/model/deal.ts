@@ -60,7 +60,7 @@ export interface QueryDealForMarketplace {
   type?: DealType | undefined;
   title?: string;
   category?: string;
-  order: {};
+  order?: {};
   page?: number,
   page_size?: number,
 }

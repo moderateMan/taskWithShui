@@ -4,7 +4,7 @@ import { DealType } from 'src/types/deal';
 import { FromWrapper } from '../components/wrapper';
 import storageHelper from 'src/common/utils/storageHelper';
 import { useFlatInject } from 'src/service';
-import * as yup from 'yup'
+import * as yup from 'yup';
 
 const DealTypeOption = [
   {
@@ -20,12 +20,12 @@ const DealTypeOption = [
   {
     label: 'Startup Pitch',
     value: DealType.STARTUP_PITCH,
-    info: 'Create high value synergies by seeking suppliers, distribution channels, or collaborative opportunities for mutual growth.',
+    info: 'Present your idea-stage business, seeking support in funding, products, or valuable feedback.',
   },
   {
     label: 'Partnerships',
     value: DealType.PARTNERSHIPS,
-    info: 'Present your idea-stage business, seeking support in funding, products, or valuable feedback.',
+    info: 'Create high value synergies by seeking suppliers, distribution channels, or collaborative opportunities for mutual growth.',
   },
   {
     label: 'Sell A Business',
@@ -42,7 +42,7 @@ export const useDealTypeFormViewConfig = ({
   type?: string;
 }): FormConfig => {
   const { currentDeal, setDealType } = useFlatInject('dealStore');
-  debugger
+  debugger;
   return useMemo<FormConfig>(() => {
     return {
       title: {
@@ -76,8 +76,7 @@ export const useDealTypeFormViewConfig = ({
           return <FromWrapper name="Select your deal type*">{children}</FromWrapper>;
         },
         watch(props) {
-          
-          setDealType(props.values.type)
+          setDealType(props.values.type);
         },
         config: {
           options: Object.values(DealTypeOption).map((item) => {

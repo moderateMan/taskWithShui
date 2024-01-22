@@ -7,8 +7,17 @@ const watch = (listenerMiddleware: ListenerMiddleware) => {
   // 监听Pagination信息改变
   startAppListening({
     matcher: createMatcher<PaginationData>((action) => {
-      let flag = action.type == `${getActionType('dealStore').setDealComentPagination}`;
-      if (flag && action.payload.pageNum !== undefined) {
+      if (
+        action.type == `${getActionType('dealStore').setDealComentPagination}` &&
+        action.payload.pageNum !== undefined
+      ) {
+        return true;
+      }
+      debugger;
+      if (
+        action.type == `${getActionType('commentStore').createCommentAct}/fulfilled` ||
+        action.type == `${getActionType('commentStore').createReplyAct}/fulfilled`
+      ) {
         return true;
       }
       return false;

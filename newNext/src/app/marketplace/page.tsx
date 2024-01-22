@@ -1,4 +1,4 @@
-import TravelToursView from './view';
+import MarketplaceListView from './view';
 
 // ----------------------------------------------------------------------
 
@@ -6,6 +6,6 @@ export const metadata = {
   title: 'Marketplace',
 };
 
-export default function TravelToursPage() {
-  return <TravelToursView />;
+export default function MarketplacePage() {
+  return <MarketplaceListView />;
 }

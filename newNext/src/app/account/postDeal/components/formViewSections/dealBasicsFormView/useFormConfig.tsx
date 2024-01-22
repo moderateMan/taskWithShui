@@ -168,7 +168,7 @@ export const useFormConfig = ({
       },
       pics: {
         type: 'upload',
-        label: 'Upload logo (optional)',
+        label: 'Upload images (3 at least)',
         name: 'components.pics',
         defaultValue: defaultValues?.['components']?.['pics'] || [],
         schema: Yup.array().test({

@@ -21,7 +21,7 @@ const navigations = [
     icon: <Iconify icon="carbon:user" />,
   },
   {
-    title: 'Wishlist',
+    title: 'Favorites',
     path: paths.account.wishlist,
     icon: <Iconify icon="carbon:favorite" />,
   },

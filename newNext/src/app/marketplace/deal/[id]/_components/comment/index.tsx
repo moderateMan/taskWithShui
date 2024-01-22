@@ -3,12 +3,12 @@ import Pagination, { paginationClasses } from '@mui/material/Pagination';
 import { SelectChangeEvent } from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useCallback, useEffect, useState } from 'react';
-import ReviewNewForm from 'src/common/components/review-new-form';
 import { useBoolean } from 'src/commonOld/hooks/use-boolean';
 import { useSearchParams } from 'src/routes/hooks';
 import { useFlatInject } from 'src/service';
 import ReviewList from './comment-list';
 import ReviewToolbar from './comment-toolbar';
+import ReviewNewForm from './review-new-form';
 
 // ----------------------------------------------------------------------
 

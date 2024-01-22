@@ -51,7 +51,9 @@ export function Modal({
 
   return (
     <>
-      <BootstrapDialog onClose={_handleClose} aria-labelledby="customized-dialog-title" open={openFlag.value}>
+      <BootstrapDialog onClick={(e) => {
+        e.stopPropagation()
+      }} onClose={_handleClose} aria-labelledby="customized-dialog-title" open={openFlag.value}>
         <>
           <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
             {title}

@@ -99,7 +99,7 @@ function Card({
       <FileThumbnail file={file} />
 
       <ListItemText
-        primary={file}
+        primary={file.split('/').slice(-1)[0]}
         secondary={''}
         secondaryTypographyProps={{
           component: 'span',

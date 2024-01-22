@@ -19,8 +19,7 @@ function dealLandingPageListApi(params: QueryDealForMarketplace) {
     method: 'POST',
     data: {
       ...params,
-      page: 1,
-      page_size: 5,
+     
     },
   });
 }

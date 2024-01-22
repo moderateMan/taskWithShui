@@ -12,7 +12,7 @@ import { RouterLink } from 'src/routes/components';
 import { paths } from 'src/routes/paths';
 import { primaryFont, secondaryFont } from 'src/theme/typography';
 import { DealEntity, DealType } from 'src/types/deal';
-import { testData } from '../filters/deal-tab-selector';
+import { testData } from '../filters/market-type-selcetor';
 import SvgColor from 'src/commonOld/components/svg-color';
 
 // ----------------------------------------------------------------------
