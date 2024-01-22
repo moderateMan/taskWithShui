@@ -1,0 +1,12 @@
+.read-scientific {
+  height: 100%;
+  .search-bar-wrapper {
+    padding: 10px 20px;
+    border-bottom: 1px solid #f1f2f6;
+  }
+  .content-wrapper {
+    height: calc(100% - 60px);
+    overflow: auto;
+    padding: 0 20px;
+  }
+}

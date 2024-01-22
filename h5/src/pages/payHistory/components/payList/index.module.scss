@@ -1,0 +1,54 @@
+.pay-list {
+  .item {
+    & + .item {
+      border-top: 1px solid #f1f2f6;
+    }
+    padding: 20px 0;
+    display: flex;
+    .cover-img {
+      border-radius: 4px;
+      margin-right: 12px;
+      object-fit: cover;
+      width: 120px;
+      height: 85px;
+    }
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .title {
+        color: #030504;
+        line-height: 20px;
+        font-size: 16px;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+      .content-footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        .time {
+          color: #bcc2cc;
+        }
+        .review {
+          font-size: 14px;
+          line-height: 16px;
+          padding: 4px 8px;
+          --border-radius: 4px;
+        }
+      }
+    }
+  }
+  .footer {
+    margin: -20px 0 10px;
+  }
+}
