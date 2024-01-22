@@ -13,7 +13,7 @@ const watch = (listenerMiddleware: ListenerMiddleware) => {
       ) {
         return true;
       }
-      debugger;
+      // debugger;
       if (
         action.type == `${getActionType('commentStore').createCommentAct}/fulfilled` ||
         action.type == `${getActionType('commentStore').createReplyAct}/fulfilled`

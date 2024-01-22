@@ -14,6 +14,7 @@ import { RouterLink } from 'src/routes/components';
 import { usePathname } from 'src/routes/hooks';
 import { navConfig, pageLinks } from './config-navigation';
 import { NavListProps } from './nav/types';
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -64,30 +65,28 @@ const NewFooter = (props: { mdUp: boolean }) => {
             >
               Post a deal
             </Button>
-            <Button sx={{ width: '146px' }}>
-              Sign up/ Login
-            </Button>
+            <Button sx={{ width: '146px' }}>Sign up/ Login</Button>
           </Stack>
         </Stack>
         <Stack direction={props.mdUp ? 'row' : 'column'} gap={props.mdUp ? '24px' : '48px'}>
           <Stack gap={'20px'} width={'215px'}>
             <Typography sx={titleStyle}>Discover</Typography>
-            <Typography>Home</Typography>
-            <Typography>About</Typography>
-            <Typography>Find Deals</Typography>
-            <Typography>FAQ</Typography>
+            <Link href={paths.root}>Home</Link>
+            <Link href={paths.about}>About</Link>
+            <Link href={paths.marketplace.root}>Find Deals</Link>
+            <Link href={paths.faqs}>FAQ</Link>
           </Stack>
           <Stack gap={'20px'} width={'215px'}>
             <Typography sx={titleStyle}>Social</Typography>
-            <Typography>Instagram</Typography>
-            <Typography>LinkedIn</Typography>
-            <Typography>Facebook</Typography>
+            <Link href="#">Instagram</Link>
+            <Link href="#">LinkedIn</Link>
+            <Link href="#">Facebook</Link>
           </Stack>
           <Stack gap={'20px'} width={'215px'}>
             <Typography sx={titleStyle}>Legal</Typography>
-            <Typography>Terms of service</Typography>
-            <Typography>Cookie notice</Typography>
-            <Typography>Community & content guidelines</Typography>
+            <Link href={paths.terms}>Terms of service</Link>
+            <Link href="#">Cookie notice</Link>
+            <Link href="#">Community & content guidelines</Link>
           </Stack>
         </Stack>
       </Stack>

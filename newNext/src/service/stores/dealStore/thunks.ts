@@ -42,7 +42,7 @@ const thunks = createThunks(names.dealStore, {
     dp('dealStore', 'setLikeList', content);
   },
   queryDealDetailAct: async (params: TargetDeal, api) => {
-    debugger;
+    // debugger;
     const {
       data: { content, count },
     } = await httpApi.fetchDealDetailApi(params);

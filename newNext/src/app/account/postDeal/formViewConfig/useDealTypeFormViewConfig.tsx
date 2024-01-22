@@ -42,7 +42,7 @@ export const useDealTypeFormViewConfig = ({
   type?: string;
 }): FormConfig => {
   const { currentDeal, setDealType } = useFlatInject('dealStore');
-  debugger;
+  // debugger;
   return useMemo<FormConfig>(() => {
     return {
       title: {

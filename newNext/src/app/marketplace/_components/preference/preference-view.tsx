@@ -71,7 +71,7 @@ export default function PreferenceView(props: { is_open: boolean }) {
         onClose={handleClose}
         closeAfterTransition
         sx={{
-          width: "100%",
+          width: '100%',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -82,11 +82,13 @@ export default function PreferenceView(props: { is_open: boolean }) {
             sx={{
               width: is_mobile ? '95%' : '40%',
               minHeight: is_mobile ? '80%' : '70%',
+              maxHeight: '95%',
               bgcolor: 'background.paper',
               borderRadius: '10px',
               border: 'none',
               p: 4,
-              overflow: 'hidden',
+              overflow: 'hidden auto',
+              position: 'relative',
             }}
           >
             <Iconify

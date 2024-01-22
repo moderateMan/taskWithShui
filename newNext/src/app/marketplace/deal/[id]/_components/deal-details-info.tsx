@@ -12,7 +12,7 @@ import { customFormat } from 'src/commonOld/utils/format-time';
 import { usePathname, useRouter } from 'src/routes/hooks';
 import { paths } from 'src/routes/paths';
 import { useFlatInject } from 'src/service';
-import { primaryFont } from 'src/theme/typography';
+import { primaryFont, secondaryFont } from 'src/theme/typography';
 import { DealType } from 'src/types/deal';
 import DealConnectionMaker from './deal-details-connection-maker';
 import ShareMenu from './deal-details-share';
@@ -122,7 +122,7 @@ export default function DealDetailsInfo({
         <Stack direction={'row'}>
           {logo ? <img src={logo} height={'40px'} width={'40px'}></img> : <Avatar>{}</Avatar>}
           <Typography
-            fontFamily={primaryFont.style.fontStyle}
+            fontFamily={secondaryFont.style.fontFamily}
             sx={{
               color: '#141414',
               fontSize: '32px',
@@ -145,7 +145,12 @@ export default function DealDetailsInfo({
         <Stack spacing={2}>
           <ProductPrice
             price={price}
-            sx={{ fontSize: '48px', fontWeight: 700, color: '#14417D' }}
+            sx={{
+              fontSize: '48px',
+              fontWeight: 700,
+              color: '#14417D',
+              fontFamily: secondaryFont.style.fontFamily,
+            }}
           />
           <Typography
             variant="caption"
@@ -167,6 +172,7 @@ export default function DealDetailsInfo({
       >
         <Grid item xs={12} md={5} lg={5}>
           <Typography
+            fontFamily={secondaryFont.style.fontFamily}
             sx={{
               color: '#14417D',
               fontSize: '32px',
@@ -183,6 +189,7 @@ export default function DealDetailsInfo({
         </Grid>
         <Grid item xs={12} md={5} lg={5}>
           <Typography
+            fontFamily={secondaryFont.style.fontFamily}
             sx={{
               color: '#14417D',
               fontSize: '32px',
