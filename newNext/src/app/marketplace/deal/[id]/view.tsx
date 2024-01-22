@@ -245,9 +245,9 @@ export default function DealDetailView() {
                             >
                               <Stack spacing={4}>
                                 <Typography
+                                  fontFamily={secondaryFont.style.fontFamily}
                                   sx={{
                                     color: '#232323',
-                                    fontFamily: 'Inter',
                                     fontSize: '18px',
                                     fontStyle: 'normal',
                                     lineHeight: '27px',
