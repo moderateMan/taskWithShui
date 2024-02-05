@@ -1,21 +1,22 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import SuperProvider from "./service/providers";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "./index.scss";
 import VConsole from "vconsole";
-const vConsole = new VConsole();
+import "./index.scss";
 
+if (process.env.NODE_ENV === "development") {
+  new VConsole();
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   // <React.StrictMode>
-    <SuperProvider>
-      <App />
-    </SuperProvider>
+  <SuperProvider>
+    <App />
+  </SuperProvider>
   // </React.StrictMode>
 );
 

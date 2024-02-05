@@ -11,7 +11,14 @@ export function loading(text = "加载中...") {
 
 export function error(text = "系统开小差，请稍后重试...") {
   Toast.show({
-    icon: 'fail',
+    icon: "fail",
+    content: text,
+  });
+}
+
+export function success(text = "提交成功") {
+  Toast.show({
+    icon: "success",
     content: text,
   });
 }

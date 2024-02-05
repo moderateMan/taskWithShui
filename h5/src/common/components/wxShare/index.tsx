@@ -1,21 +1,50 @@
 import { Avatar, Popup, PopupProps } from "antd-mobile";
-import { ReactElement, cloneElement, useEffect, useState } from "react";
+import {
+  ReactElement,
+  cloneElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import WxLogo from "./assets/wx.png";
 import WxMomments from "./assets/moments.png";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import wx from "weixin-js-sdk";
 import styles from "./index.module.scss";
+import { getWechatCfg } from "../../apis";
 
-type WxShareProps = PopupProps & {
+type WxSharePopupProps = PopupProps & {
+  appId?: string;
+  getShareFrendsConfig?: () => wx.IupdateAppMessageShareData;
+  getShareMomentsConfig?: () => wx.IupdateTimelineShareData;
+};
+
+type WxShareProps = WxSharePopupProps & {
   target: ReactElement;
 };
 
-function WxSharePopup(props: PopupProps) {
+function WxSharePopup(props: WxSharePopupProps) {
+  const { appId, getShareFrendsConfig, getShareMomentsConfig } = props;
   const [visible, setVisible] = useState(false);
+
+  const initWxConfig = useCallback(async () => {
+    const { data } = await getWechatCfg();
+    if (data) {
+      wx.config({
+        ...data,
+        appId: appId || process.env.REACT_APP_APP_ID!,
+        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"],
+      });
+    }
+  }, [appId]);
 
   useEffect(() => {
     setVisible(true);
   }, []);
+
+  useEffect(() => {
+    initWxConfig();
+  }, [initWxConfig]);
 
   const actions = [
     {
@@ -23,15 +52,29 @@ function WxSharePopup(props: PopupProps) {
       title: "分享给朋友",
       onClick: () => {
         wx.ready(() => {
-          //需在用户可能点击分享按钮前就先调用
+          const {
+            title = document.title,
+            desc = document
+              .getElementsByTagName("meta")
+              ?.namedItem("description")?.content || "",
+            link = window.location.href,
+            imgUrl = (
+              document.querySelector<HTMLLinkElement>(
+                `link[rel="shortcut icon"]`
+              ) || document.querySelector<HTMLLinkElement>(`link[rel="icon"]`)
+            )?.href || "",
+            success,
+            ...rest
+          } = getShareFrendsConfig?.() || {};
           wx.updateAppMessageShareData({
-            title: "", // 分享标题
-            desc: "", // 分享描述
-            link: "", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: "", // 分享图标
-            success() {
-              // 设置成功
+            ...rest,
+            title,
+            desc,
+            link,
+            imgUrl,
+            success(...args) {
               setVisible(false);
+              success?.(...args);
             },
           });
         });
@@ -42,14 +85,25 @@ function WxSharePopup(props: PopupProps) {
       title: "分享到朋友圈",
       onClick: () => {
         wx.ready(() => {
-          //需在用户可能点击分享按钮前就先调用
+          const {
+            title = document.title,
+            link = window.location.href,
+            imgUrl = (
+              document.querySelector<HTMLLinkElement>(
+                `link[rel="shortcut icon"]`
+              ) || document.querySelector<HTMLLinkElement>(`link[rel="icon"]`)
+            )?.href || "",
+            success,
+            ...rest
+          } = getShareMomentsConfig?.() || {};
           wx.updateTimelineShareData({
-            title: "", // 分享标题
-            link: "", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: "", // 分享图标
-            success() {
-              // 设置成功
+            ...rest,
+            title,
+            link,
+            imgUrl,
+            success(...args) {
               setVisible(false);
+              success?.(...args);
             },
           });
         });
@@ -82,20 +136,22 @@ function WxSharePopup(props: PopupProps) {
 }
 
 export default function WxShare(props: WxShareProps) {
-  return cloneElement(props.target, { onClick: share });
+  const { target, ...rest } = props;
+  return cloneElement(target, { onClick: () => share(rest) });
 }
 
-export const share = () => {
+export const share = (props?: WxSharePopupProps) => {
   const container = document.createElement("div");
   container.style.display = "none";
   document.body.append(container);
-  ReactDOM.render(
+  const root = ReactDOM.createRoot(container);
+  root.render(
     <WxSharePopup
+      {...props}
       afterClose={() => {
-        ReactDOM.unmountComponentAtNode(container);
+        root.unmount();
         container.remove();
       }}
-    />,
-    container
+    />
   );
 };

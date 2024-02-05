@@ -1,10 +1,10 @@
-import instance from ".";
+import instance, { Page } from ".";
 
 export interface CreateOrderRequestParams {
   /**
    * 课程id
    */
-  courseId: number;
+  courseId: string;
 }
 export interface CreateOrderResponseData {
   /**
@@ -34,7 +34,7 @@ export interface CreateOrderResponseData {
   /**
    * 课程id
    */
-  courseId: number;
+  courseId: string;
   /**
    * 课程标题
    */
@@ -44,7 +44,7 @@ export interface CreateOrderResponseData {
    */
   createTime: string;
   createUser: string;
-  id: number;
+  id: string;
   /**
    * 手机号
    */
@@ -70,7 +70,7 @@ export interface CreateOrderResponseData {
   /**
    * 下单用户id
    */
-  userId: number;
+  userId: string;
   valid: number;
   /**
    * 微信openId
@@ -83,11 +83,7 @@ export function createOrder(data: CreateOrderRequestParams) {
 }
 
 export interface OrderListRequestParams {
-  criteria: {
-    courseCode: string;
-    courseId: number;
-    serialId: string;
-  };
+  page: Page;
 }
 
 export interface OrderListResponseData {
@@ -118,7 +114,7 @@ export interface OrderListResponseData {
   /**
    * 课程id
    */
-  courseId: number;
+  courseId: string;
   /**
    * 课程标题
    */
@@ -128,7 +124,7 @@ export interface OrderListResponseData {
    */
   createTime: string;
   createUser: string;
-  id: number;
+  id: string;
   /**
    * 手机号
    */
@@ -154,8 +150,8 @@ export interface OrderListResponseData {
   /**
    * 下单用户id
    */
-  userId: number;
-  valid: number;
+  userId: string;
+  valid: string;
   /**
    * 微信openId
    */
@@ -170,7 +166,7 @@ export interface PrePayRequestParams {
   /**
    * 订单id
    */
-  orderId: number;
+  orderId: string;
 }
 
 export interface PrePayResponseData {
@@ -193,7 +189,7 @@ export interface CommentRequestParams {
   /**
    * 订单id
    */
-  orderId: number;
+  orderId: string;
   /**
    * 评分
    */
@@ -212,13 +208,13 @@ export interface CommentResponseData {
   /**
    * 课程id
    */
-  courseId: number;
+  courseId: string;
   /**
    * 评价时间
    */
   createTime: string;
   createUser: string;
-  id: number;
+  id: string;
   modifyTime: string;
   modifyUser: string;
   /**
@@ -228,7 +224,7 @@ export interface CommentResponseData {
   /**
    * 订单id
    */
-  orderId: number;
+  orderId: string;
   /**
    * 订单流水号
    */
@@ -240,8 +236,8 @@ export interface CommentResponseData {
   /**
    * 用户id
    */
-  userId: number;
-  valid: number;
+  userId: string;
+  valid: string;
   /**
    * 微信openId
    */

@@ -3,7 +3,7 @@ import slice from "./slice";
 import thunks from "./thunks";
 import watch from "./watch";
 
-const mainStore: {
+const editProfileStore: {
   slice: typeof slice;
   thunks: typeof thunks;
   watch: typeof watch;
@@ -13,4 +13,4 @@ const mainStore: {
   watch,
 };
 
-export default mainStore;
+export default editProfileStore;

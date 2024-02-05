@@ -1,20 +1,15 @@
-import { SafeArea, TabBar } from "antd-mobile";
+import { TabBar } from "antd-mobile";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import styles from "./index.module.scss";
 import { useEffect } from "react";
 import cls from "classnames";
-import {
-  AppOutline,
-  ContentOutline,
-  UnorderedListOutline,
-  UserOutline,
-} from "antd-mobile-icons";
 import { getAbsolutePath, routes, rootPrefix } from "../../router";
 import { useFlat } from "../../service";
 import {
   getWechatLoginCode,
   gotoCodeUrl,
 } from "../../common/utils/wechat-login";
+import { Icon } from "@iconify/react";
 
 export default function MainLayout() {
   const location = useLocation();
@@ -35,7 +30,10 @@ export default function MainLayout() {
         </span>
       ),
       icon: (active: boolean) => (
-        <AppOutline className={cls(styles.link, active && styles.active)} />
+        <Icon
+          icon="iconoir:home-alt-slim-horiz"
+          className={cls(styles.link, active && styles.active)}
+        />
       ),
     },
     {
@@ -46,7 +44,10 @@ export default function MainLayout() {
         </span>
       ),
       icon: (active: boolean) => (
-        <ContentOutline className={cls(styles.link, active && styles.active)} />
+        <Icon
+          icon="fluent:book-32-regular"
+          className={cls(styles.link, active && styles.active)}
+        />
       ),
     },
     {
@@ -57,7 +58,8 @@ export default function MainLayout() {
         </span>
       ),
       icon: (active: boolean) => (
-        <UnorderedListOutline
+        <Icon
+          icon="carbon:datastore"
           className={cls(styles.link, active && styles.active)}
         />
       ),
@@ -70,7 +72,10 @@ export default function MainLayout() {
         </span>
       ),
       icon: (active: boolean) => (
-        <UserOutline className={cls(styles.link, active && styles.active)} />
+        <Icon
+          icon="ep:user"
+          className={cls(styles.link, active && styles.active)}
+        />
       ),
     },
   ];
@@ -81,16 +86,16 @@ export default function MainLayout() {
     }
   }, [pathname]);
 
-  useEffect(() => {
-    if (!userInfo) {
-      const code = getWechatLoginCode();
-      if (!code) {
-        gotoCodeUrl({ appId: "wx40b7f14d86ba784c" });
-      } else {
-        login({ code });
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!userInfo?.token) {
+  //     const code = getWechatLoginCode();
+  //     if (!code) {
+  //       gotoCodeUrl();
+  //     } else {
+  //       login({ code });
+  //     }
+  //   }
+  // }, []);
 
   return (
     <main className={styles.main}>

@@ -51,7 +51,32 @@
       }
     }
   }
+  .loading {
+    width: 100%;
+    color: var(--adm-color-light);
+    display: flex;
+    align-items: center;
+    border-width: 0;
+    border-color: var(--adm-color-border);
+    border-style: solid;
+    font-size: 14px;
+
+    .divider-content {
+      padding: 0 16px;
+    }
+
+    &::before,
+    &::after {
+      flex: auto;
+      display: block;
+      content: "";
+      border-style: inherit;
+      border-color: inherit;
+      border-width: 1px 0 0;
+    }
+  }
   .footer {
-    margin: -20px 0 10px;
+    margin: -16px 0 10px;
+    width: 100%;
   }
 }

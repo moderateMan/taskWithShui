@@ -1,4 +1,5 @@
-import { useParams } from "react-router";
+import { useLoaderData, useNavigate, useParams } from "react-router";
+import dayjs from "dayjs";
 import styles from "./index.module.scss";
 import {
   HeartFill,
@@ -6,12 +7,33 @@ import {
   LockOutline,
   SendOutline,
 } from "antd-mobile-icons";
-import { Avatar, Button, Footer, Rate } from "antd-mobile";
+import { Avatar, Button, Footer, Rate, SpinLoading } from "antd-mobile";
 import cls from "classnames";
-import WxShare, { share } from "../../common/components/wxShare";
+import { share } from "../../common/components/wxShare";
+import { useFlat } from "../../service";
+import { useEffect, useState } from "react";
+import { collect, createOrder, prepay, uncollect } from "../../common/apis";
+import { LoaderDataType, getAbsolutePath, routes } from "../../router";
+import { pay } from "../../common/utils/wechat-pay";
+import { error, success } from "../../common/utils/toast";
 
 export default function Pay() {
-  const params = useParams();
+  const params = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  const { detail: initDetail } = useLoaderData() as LoaderDataType;
+  const [detail, setDetail] = useState(initDetail);
+
+  useEffect(() => {
+    if (detail?.bought) {
+      navigate(
+        getAbsolutePath(routes.scientific.pathname(detail.course.id!)),
+        {
+          replace: true,
+        }
+      );
+    }
+  }, [detail]);
   const actions = [
     {
       title: "分享",
@@ -20,35 +42,54 @@ export default function Pay() {
     },
     {
       title: "收藏",
-      icon:
-        Number(params?.id) % 2 === 0 ? (
-          <HeartOutline className={styles["icon"]} color="#000000" />
-        ) : (
-          <HeartFill className={styles["icon"]} color="#f04859" />
-        ),
-      onClick: () => {},
+      icon: detail?.collect ? (
+        <HeartFill className={styles["icon"]} color="#f04859" />
+      ) : (
+        <HeartOutline className={styles["icon"]} color="#000000" />
+      ),
+      onClick: () => {
+        const promise = detail?.collect
+          ? uncollect({ id: params.id })
+          : collect({ courseId: params.id });
+        promise.then(() => {
+          setDetail({ ...detail!, collect: !detail?.collect });
+        });
+      },
     },
   ];
+
+  const buy = async () => {
+    const order = await createOrder({ courseId: detail?.course.id! });
+    const payload = await prepay({ orderId: order.id });
+    const data = await pay(payload);
+    if (data) {
+      success("支付成功");
+      navigate(getAbsolutePath(routes.scientific.pathname(detail.course.id!)), {
+        replace: true,
+      });
+    }
+  };
+
   return (
     <div className={styles["pay"]}>
       <div className={styles["wrapper"]}>
         <div className={styles["scientific"]}>
           <div className={styles["header"]}>
-            <h3 className={styles["title"]}>
-              浅析未来的5至10年不同领域的CAR-T技术的研究进展及应用趋势
-            </h3>
+            <h3 className={styles["title"]}>{detail?.course.title}</h3>
             <div className={styles["desc"]}>
               <span className={styles["label"]}>文献价格：</span>
-              <span className={styles["price"]}>20元</span>
+              <span className={styles["price"]}>{detail?.course.price}元</span>
             </div>
           </div>
           <div className={styles["content"]}>
-            <img
-              src="https://img.zcool.cn/community/0104c15cd45b49a80121416816f1ec.jpg@1280w_1l_2o_100sh.jpg"
-              className={styles["img"]}
-            />
+            <img src={detail?.course.cover} className={styles["img"]} />
             <div className={styles["mask"]}>
-              <Button className={styles["lock-btn"]}>
+              <Button
+                className={styles["lock-btn"]}
+                onClick={buy}
+                loading={"auto"}
+                loadingText="正在支付"
+              >
                 <LockOutline />
                 购买后查看全部文献
               </Button>
@@ -58,17 +99,21 @@ export default function Pay() {
         <hr className={styles["hr"]} />
         <h3 className={cls(styles["sub"], styles["title"])}>评价</h3>
         <div className={styles["list"]}>
-          {[1, 2, 3, 4].map((i, idx) => (
-            <div className={styles["review"]} key={idx}>
+          {detail?.commentList.map((comment) => (
+            <div className={styles["review"]} key={comment.id}>
               <div className={styles["profile"]}>
                 <div className={styles["left"]}>
                   <Avatar
-                    src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                    src={comment.avatar || ""}
                     className={styles["avatar"]}
                   />
                   <div className={styles["info"]}>
-                    <span className={styles["name"]}>高先生</span>
-                    <span className={styles["time"]}>2023-06-08</span>
+                    <span className={styles["name"]}>
+                      {comment.nickname || comment.wechatOpenId}
+                    </span>
+                    <span className={styles["time"]}>
+                      {dayjs(comment.modifyTime).format("YYYY-MM-DD")}
+                    </span>
                   </div>
                 </div>
                 <div className={styles["right"]}>
@@ -76,15 +121,15 @@ export default function Pay() {
                     className={styles["stars"]}
                     readOnly
                     count={5}
-                    value={5}
+                    value={comment.rate}
                   />
-                  <span className={styles["score"]}>5.0</span>
+                  <span className={styles["score"]}>
+                    {comment.rate?.toFixed(1)}
+                  </span>
                   <span className={styles["unit"]}>分</span>
                 </div>
               </div>
-              <p className={styles["text"]}>
-                视频挺好的，教学非常专业，老师专业度也很高，学习了一段时间发现提高非常多
-              </p>
+              <p className={styles["text"]}>{comment.comment}</p>
             </div>
           ))}
           <Footer label="到底了~" className={styles["end"]}></Footer>
@@ -92,12 +137,23 @@ export default function Pay() {
       </div>
       <div className={styles["footer"]}>
         {actions.map((i) => (
-          <div key={i.title} className={styles["action"]} onClick={i.onClick}>
+          <div
+            key={i.title}
+            className={styles["action"]}
+            onClick={() => i.onClick()}
+          >
             {i.icon}
             {i.title}
           </div>
         ))}
-        <Button className={styles["pay-btn"]}>立即购买</Button>
+        <Button
+          className={styles["pay-btn"]}
+          onClick={buy}
+          loading={"auto"}
+          loadingText="正在支付"
+        >
+          立即购买
+        </Button>
       </div>
     </div>
   );

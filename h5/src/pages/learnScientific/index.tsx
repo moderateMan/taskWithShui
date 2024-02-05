@@ -1,10 +1,14 @@
-import { InfiniteScroll, Tabs } from "antd-mobile";
+import { Tabs } from "antd-mobile";
 import styles from "./index.module.scss";
 import SearchBar from "../../common/components/searchBar";
 import ScientificList from "../../common/components/scientificList";
-import { Course, CourseType } from "../../common/apis";
-import { useFlat, useResetRedux } from "../../service";
-import { useEffect, useRef } from "react";
+import { Course, CourseType, getList } from "../../common/apis";
+import { useFlat } from "../../service";
+import { useEffect, useMemo, useRef } from "react";
+import useLoadPage, {
+  FetchPageType,
+  isFinishFunctionType,
+} from "../../common/hooks/useLoadPage";
 
 const tabItems = [
   {
@@ -17,44 +21,57 @@ const tabItems = [
   },
 ];
 
+const createFetchPageFunctionByCategory: (
+  category: CourseType
+) => FetchPageType<{ search?: string }, Course> =
+  (category) =>
+  ({ pageSize, current, search }) =>
+    getList({
+      page: { pageNo: current, pageSize: pageSize },
+      criteria: {
+        type: "ARTICLE",
+        title: search,
+        category,
+      },
+    }).then(
+      ({ data }) =>
+        data && {
+          data: data.list,
+          current: data.pageable.pageNo,
+          count: data.count,
+          pageSize: data.pageable.pageSize,
+        }
+    );
+
+const isFinish: isFinishFunctionType<Course> = ({ pageSize, current, count }) =>
+  pageSize * (current + 1) >= count;
+
 export default function LearnScientific() {
-  const {
-    getCourseList,
-    search,
-    setSearch,
-    type,
-    setType,
-    list,
-    setList,
-    reset,
-  } = useFlat("learnScientificStore");
-  const cacheRef = useRef<Record<CourseType, Course[]>>({
-    [CourseType.PAID_COURSE]: [],
-    [CourseType.FREE_COURSE]: [],
-  });
-  const queryList = async (type: CourseType, search?: string) => {
-    setType(type);
-    setSearch(search);
-    /** 不是搜索状态时再显示缓存 */
-    if (!search) {
-      setList(cacheRef.current[type]);
+  const { search, setSearch, type, setType } = useFlat("learnScientificStore");
+
+  const free = useLoadPage(
+    createFetchPageFunctionByCategory(CourseType.FREE_COURSE),
+    { isFinish }
+  );
+  const paid = useLoadPage(
+    createFetchPageFunctionByCategory(CourseType.PAID_COURSE),
+    { isFinish }
+  );
+
+  const page = useMemo(() => {
+    if (type === CourseType.FREE_COURSE) {
+      return free;
     }
-    const data = await getCourseList({
-      page: { pageNo: 0, pageSize: 999 },
-      criteria: { category: type, title: search, type: "ARTICLE" },
-    });
-    /** 不是搜索状态时再缓存 */
-    if (!search) {
-      cacheRef.current[type] = data.payload || [];
+    if (type === CourseType.PAID_COURSE) {
+      return paid;
     }
-  };
+  }, [type, free, paid]);
 
   useEffect(() => {
-    queryList(type, search);
-    return () => {
-      reset();
-    };
-  }, []);
+    page?.reload({ search });
+  }, [type]);
+
+  const loadMore = page?.loadPage && (() => page.loadPage({ search }));
 
   return (
     <div className={styles["learn-scientific"]}>
@@ -62,8 +79,8 @@ export default function LearnScientific() {
         <SearchBar
           value={search}
           clearable
-          onClear={() => queryList(type)}
-          onSearch={(value) => queryList(type, value)}
+          onClear={() => page?.reload?.({})}
+          onSearch={(value) => page?.reload?.({ search: value })}
           onChange={setSearch}
         />
       </div>
@@ -72,7 +89,7 @@ export default function LearnScientific() {
           activeKey={type}
           className={styles["tabs"]}
           stretch={false}
-          onChange={(key) => queryList(key as CourseType, search)}
+          onChange={(key) => setType(key as CourseType)}
         >
           {tabItems.map((item) => (
             <Tabs.Tab
@@ -81,7 +98,11 @@ export default function LearnScientific() {
               key={item.key}
               destroyOnClose
             >
-              <ScientificList data={list} />
+              <ScientificList
+                data={page?.data}
+                loadMore={loadMore}
+                hasMore={page ? !page.isFinish : false}
+              />
             </Tabs.Tab>
           ))}
         </Tabs>

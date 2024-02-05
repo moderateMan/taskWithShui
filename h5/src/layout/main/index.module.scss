@@ -22,6 +22,19 @@ $tabbar-height: 48px;
       color: rgba(0, 0, 0, 0.7);
       &.active {
         color: #3166f5;
+        position: relative;
+        &::before {
+          display: inline-block;
+          content: "";
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          position: absolute;
+          top: -12px;
+          right: 0;
+          background-color: #3166f5;
+          opacity: 0.2;
+        }
       }
     }
   }

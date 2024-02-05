@@ -1,4 +1,3 @@
-"use client";
 /* Core */
 import { Provider } from "react-redux";
 import "./setup";
@@ -7,15 +6,15 @@ import "./setup";
 import { reduxStore } from ".";
 
 const App = (props: React.PropsWithChildren<{}>) => {
-	return <>{props.children}</>;
+  return <>{props.children}</>;
 };
 
 const Providers = (props: React.PropsWithChildren<{}>) => {
-	return (
-		<Provider store={reduxStore}>
-			<App>{props.children}</App>
-		</Provider>
-	);
+  return (
+    <Provider store={reduxStore}>
+      <App>{props.children}</App>
+    </Provider>
+  );
 };
 
 export default Providers;

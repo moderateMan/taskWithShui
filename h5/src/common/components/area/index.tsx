@@ -70,3 +70,29 @@ export default function Area(props: AreaProps) {
     </>
   );
 }
+
+export const getNameByCode = (code: string) =>
+  ({
+    ...areaList.city_list,
+    ...areaList.county_list,
+    ...areaList.province_list,
+  }[code]);
+
+const getCodeByRecord = (name: string, record: Record<string, string>) =>
+  Object.entries(record).find((i) => i[1] === name)?.[0];
+
+export const getCodesByNameOption = (option: {
+  province: string;
+  city: string;
+  district: string;
+}) => {
+  const { province, city, district } = option;
+  const recordList = [
+    areaList.province_list,
+    areaList.city_list,
+    areaList.county_list,
+  ];
+  return [province, city, district].map((name, idx) =>
+    getCodeByRecord(name, recordList[idx])
+  );
+};

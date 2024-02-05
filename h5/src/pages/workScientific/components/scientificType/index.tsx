@@ -32,7 +32,7 @@ export default function ScientificType(props: ScientificTypeProps) {
         <span className={styles["unit"]}> /字 起</span>
       </p>
       <Button className={styles["button"]} onClick={onClick}>
-        选择
+        咨询
       </Button>
     </div>
   );

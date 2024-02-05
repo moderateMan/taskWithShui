@@ -1,4 +1,4 @@
-import instance from ".";
+import instance, { Course, ListData, Response } from ".";
 
 export interface LoginRequestParams {
   /**
@@ -39,7 +39,7 @@ export interface LoginResponseData {
   /**
    * 用户id
    */
-  id: number;
+  id: string;
   /**
    * 用户手机号
    */
@@ -64,7 +64,7 @@ export interface LoginResponseData {
 
 /** 微信登陆 */
 export function login(data: LoginRequestParams) {
-  return instance.post<{}, LoginResponseData>("/wechat/login", null, {
+  return instance.post<{}, Response<LoginResponseData>>("/wechat/login", null, {
     params: data,
   });
 }
@@ -98,7 +98,7 @@ export interface UserInfoResponseData {
    * 医院
    */
   hospital: string;
-  id: number;
+  id: string;
   /**
    * 手机号
    */
@@ -123,7 +123,7 @@ export interface UserInfoResponseData {
 
 /** 获取当前用户信息 */
 export function getCurrentUserInfo() {
-  return instance.get<UserInfoResponseData>("/user/current");
+  return instance.get<Response<UserInfoResponseData>>("/user/current");
 }
 
 export interface UpdateUserInfoRequestParams {
@@ -181,7 +181,7 @@ export interface UpdateUserInfoResponseData {
    * 医院
    */
   hospital: string;
-  id: number;
+  id: string;
   /**
    * 手机号
    */
@@ -203,23 +203,53 @@ export interface UpdateUserInfoResponseData {
 
 /** 更新用户信息 */
 export function updateUserInfo(data: UpdateUserInfoRequestParams) {
-  return instance.post<{}, UpdateUserInfoResponseData>("/user/update", data);
+  return instance.post<{}, Response<UpdateUserInfoResponseData>>(
+    "/user/update",
+    data
+  );
 }
 export interface CollectRequestParams {
-  courseId?: number;
+  courseId?: string;
 }
 
+export interface UnCollectRequestParams {
+  id?: string;
+}
 /** 收藏 */
 export function collect(data: CollectRequestParams) {
   return instance.post("/user/collect/add", null, { params: data });
 }
 
 /** 取消收藏 */
-export function uncollect(data: CollectRequestParams) {
-  return instance.post("/user/collect/delete", data);
+export function uncollect(data: UnCollectRequestParams) {
+  return instance.post("/user/collect/delete", null, { params: data });
 }
 
 /** 收藏列表 */
 export function getCollectList() {
-  return instance.post("/user/collect/list", { criteria: {} });
+  return instance.post<{}, Response<ListData<Course>>>("/user/collect/list", {
+    criteria: {},
+  });
+}
+
+export interface WechatCfg {
+  /**
+   * 公众号唯一标识
+   */
+  appId: string;
+  /**
+   * 生成签名的随机串
+   */
+  nonceStr: string;
+  signature: string;
+  /**
+   * 生成签名的时间戳
+   */
+  timestamp: number;
+}
+
+export function getWechatCfg() {
+  return instance.get<{}, Response<WechatCfg>>("/wechat/cfgino", {
+    params: { url: window.location.href },
+  });
 }

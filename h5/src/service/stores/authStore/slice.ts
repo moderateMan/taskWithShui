@@ -12,8 +12,7 @@ export interface SliceState {
 
 const initialState = (): SliceState => {
   return {
-    // userInfo: getLocal<LoginResponseData>("userInfo"),
-    userInfo: undefined,
+    userInfo: getLocal<LoginResponseData>("userInfo"),
   };
 };
 

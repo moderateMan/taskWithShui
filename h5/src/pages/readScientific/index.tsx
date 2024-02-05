@@ -3,21 +3,41 @@ import SearchBar from "../../common/components/searchBar";
 import ScientificList from "../../common/components/scientificList";
 import { useFlat } from "../../service";
 import { useEffect } from "react";
+import useLoadPage, { FetchPageType } from "../../common/hooks/useLoadPage";
+import { Course, getList } from "../../common/apis";
 
-export default function ReadScientific() {
-  const { search, data, setSearch, getCourseList } = useFlat(
-    "readScientificStore"
+const fetchPage: FetchPageType<{ search?: string }, Course> = ({
+  pageSize,
+  current,
+  search,
+}) =>
+  getList({
+    page: { pageNo: current, pageSize: pageSize },
+    criteria: { type: "ARTICLE", title: search },
+  }).then(
+    ({ data }) =>
+      data && {
+        data: data.list,
+        current: data.pageable.pageNo,
+        count: data.count,
+        pageSize: data.pageable.pageSize,
+      }
   );
 
-  const getList = (search?: string) => {
-    getCourseList({
-      page: { pageNo: 0, pageSize: 999 },
-      criteria: { type: "ARTICLE", title: search },
-    });
-  };
+export default function ReadScientific() {
+  const { search, setSearch } = useFlat("readScientificStore");
+
+  const { loadPage, reload, data, isFinish } = useLoadPage(fetchPage, {
+    isFinish: ({ pageSize, current, count }) =>
+      pageSize * (current + 1) >= count,
+  });
+
+  const loadMore = () => loadPage({ search });
+
+  const reset = (search?: string) => reload({ search });
 
   useEffect(() => {
-    getList();
+    loadMore();
   }, []);
 
   return (
@@ -27,12 +47,17 @@ export default function ReadScientific() {
           value={search}
           clearable
           onChange={setSearch}
-          onClear={getList}
-          onSearch={getList}
+          onClear={reset}
+          onSearch={reset}
         />
       </div>
       <div className={styles["content-wrapper"]}>
-        <ScientificList showPrice={false} data={data} />
+        <ScientificList
+          showPrice={false}
+          data={data}
+          loadMore={loadMore}
+          hasMore={!isFinish}
+        />
       </div>
     </div>
   );

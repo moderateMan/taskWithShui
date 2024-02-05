@@ -5,24 +5,16 @@ import names from "../../../service/stores/names";
 import { Paper } from "../../../common/apis";
 
 /* Types */
-export interface SliceState {
-  data: Paper[];
-}
+export interface SliceState {}
 
 const initialState = (): SliceState => {
-  return {
-    data: [],
-  };
+  return {};
 };
 
 const slice = createSliceCustom({
   name: names.workScientificStore,
   stateInit: initialState,
-  reducers: {
-    setData(state, action: PayloadAction<Paper[]>) {
-      state.data = action.payload;
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {},
 });

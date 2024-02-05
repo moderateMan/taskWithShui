@@ -6,7 +6,7 @@ import names from "../names";
 
 const thunks = createThunks(names.appStore, {
   login: async (arg: LoginRequestParams) => {
-    const data = await login(arg);
+    const { data } = await login(arg);
     dp("authStore", "setUserInfo", data);
   },
 });

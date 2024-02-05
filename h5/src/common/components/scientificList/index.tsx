@@ -1,4 +1,10 @@
-import { Empty, Footer } from "antd-mobile";
+import {
+  DotLoading,
+  Empty,
+  Footer,
+  InfiniteScroll,
+  InfiniteScrollProps,
+} from "antd-mobile";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router";
 import { getAbsolutePath, routes } from "../../../router";
@@ -10,10 +16,12 @@ import dayjs from "../../utils/day";
 interface ScientificListProps {
   showPrice?: boolean;
   data?: Course[];
+  loadMore?: InfiniteScrollProps["loadMore"];
+  hasMore?: boolean;
 }
 
 export default function ScientificList(props: ScientificListProps) {
-  const { showPrice = true, data = [] } = props;
+  const { showPrice = true, data = [], loadMore, hasMore = false } = props;
   const navigate = useNavigate();
 
   if (isEmpty(data)) return <Empty description="暂无数据" />;
@@ -27,16 +35,13 @@ export default function ScientificList(props: ScientificListProps) {
             className={styles["item"]}
             key={idx}
             onClick={() => {
-              navigate({
-                pathname: getAbsolutePath(
+              navigate(
+                getAbsolutePath(
                   isFree
-                    ? routes.scientific.pathname(idx)
-                    : idx % 2 === 0
-                    ? routes.pay.pathname(idx)
-                    : routes.scientific.pathname(idx)
-                ),
-                search: isFree ? "free=true" : "",
-              });
+                    ? routes.scientific.pathname(course.id!)
+                    : routes.pay.pathname(course.id!)
+                )
+              );
             }}
           >
             <img src={course.cover} className={styles["cover-img"]} />
@@ -54,7 +59,24 @@ export default function ScientificList(props: ScientificListProps) {
           </div>
         );
       })}
-      <Footer label="到底了~" className={styles["footer"]}></Footer>
+      {loadMore ? (
+        <InfiniteScroll loadMore={loadMore} hasMore={hasMore}>
+          {(hasMore) =>
+            hasMore ? (
+              <div className={styles["loading"]}>
+                <span className={styles["divider-content"]}>
+                  <span>加载中</span>
+                  <DotLoading />
+                </span>
+              </div>
+            ) : (
+              <Footer label="到底了~" className={styles["footer"]}></Footer>
+            )
+          }
+        </InfiniteScroll>
+      ) : (
+        <Footer label="到底了~" className={styles["footer"]}></Footer>
+      )}
     </div>
   );
 }

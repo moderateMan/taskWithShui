@@ -1,18 +1,22 @@
-import { useLocation, useParams } from "react-router";
+import { useLoaderData, useLocation, useParams } from "react-router";
 import styles from "./index.module.scss";
 import { HeartFill, HeartOutline, SendOutline } from "antd-mobile-icons";
 import { pdfjs, Document, Page } from "react-pdf";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Space, SpinLoading } from "antd-mobile";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
+import { useFlat } from "../../service";
+import { uncollect, collect } from "../../common/apis";
+import { share } from "../../common/components/wxShare";
+import { LoaderDataType } from "../../router";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
   import.meta.url
 ).toString();
 
-const url = new URL("../../../newNext/public/assets/FINAL+privacy-policy-Scaling_Version1_0_20231117.docx+(1).pdf", import.meta.url).toString();
+const url = new URL("../../assets/test.pdf", import.meta.url).toString();
 
 const options = {
   cMapUrl: "/cmaps/",
@@ -20,40 +24,52 @@ const options = {
 };
 export default function Scientific() {
   const params = useParams();
-  const location = useLocation();
-  const isFree = !!(new URLSearchParams(location.search).get('free'))
 
   const [numPages, setNumPages] = useState<number>();
+  const { detail: initDetail, isFree } = useLoaderData() as LoaderDataType;
+  const [detail, setDetail] = useState(initDetail);
+
   const actions = [
     {
       title: "分享",
       icon: <SendOutline className={styles["icon"]} color="#000000" />,
+      onClick: share,
     },
     {
       title: "收藏",
-      icon:
-        Number(params?.id) % 2 === 0 ? (
-          <HeartOutline className={styles["icon"]} />
-        ) : (
-          <HeartFill className={styles["icon"]} color="#f04859" />
-        ),
+      icon: detail?.collect ? (
+        <HeartFill className={styles["icon"]} color="#f04859" />
+      ) : (
+        <HeartOutline className={styles["icon"]} color="#000000" />
+      ),
+      onClick: () => {
+        const promise = detail?.collect
+          ? uncollect({ id: params.id })
+          : collect({ courseId: params.id });
+        promise.then(() => {
+          setDetail({ ...detail!, collect: !detail?.collect });
+        });
+      },
     },
   ];
   return (
     <div className={styles["scientific"]}>
       <div className={styles["header"]}>
         <h3 className={styles["title"]}>
-          浅析未来的5至10年不同领域的CAR-T技术的研究进展及应用趋势
+          {detail.course.title}=
         </h3>
         {!isFree && (
           <div className={styles["desc"]}>
             <span className={styles["label"]}>文献价格：</span>
-            <span className={styles["price"]}>20元</span>
+            <span className={styles["price"]}>{detail.course.price}元</span>
           </div>
         )}
       </div>
-      <div className={styles["content"]}>
-        <Document
+      <div
+        className={styles["content"]}
+        dangerouslySetInnerHTML={{ __html: detail.course.detailHtml! }}
+      >
+        {/* <Document
           file={url}
           className={styles["pdf"]}
           options={options}
@@ -78,11 +94,15 @@ export default function Scientific() {
               width={window.innerWidth}
             />
           ))}
-        </Document>
+        </Document> */}
       </div>
       <div className={styles["footer"]}>
         {actions.map((i) => (
-          <div key={i.title} className={styles["action"]}>
+          <div
+            key={i.title}
+            className={styles["action"]}
+            onClick={() => i.onClick()}
+          >
             {i.icon}
             {i.title}
           </div>

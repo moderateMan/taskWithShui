@@ -2,28 +2,27 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSliceCustom } from "redux-eazy";
 import names from "../../../service/stores/names";
+import { DetailData } from "../../../common/apis";
 
 /* Types */
 export interface SliceState {
-  appInfo: string;
+  detail?: DetailData;
 }
 
 const initialState = (): SliceState => {
   return {
-    appInfo: "test",
+    detail: undefined,
   };
 };
 
 const slice = createSliceCustom({
-  name: names.mainStore,
+  name: names.payStore,
   stateInit: initialState,
   reducers: {
-    setAppInfo(state, action: PayloadAction<string>) {
-      state.appInfo = action.payload;
+    setDetail(state, action: PayloadAction<DetailData>) {
+      state.detail = action.payload;
     },
   },
-
-  extraReducers: (builder) => {},
 });
 
 export default slice;

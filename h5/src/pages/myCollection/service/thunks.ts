@@ -1,17 +1,14 @@
 /* Instruments */
+import { getCollectList } from "../../../common/apis";
 import { dp } from "../../../service";
 import { createThunks } from "../../../service/setup";
 import names from "../../../service/stores/names";
-import httpApi from "./api";
 
 const thunks = createThunks(names.mainStore, {
-  testAct: async (arg: { id: string }, api) => {
-    const { data } = await httpApi.geoQueryApi(arg);
+  getCollectList: async (arg, api) => {
+    const { data } = await getCollectList();
     // todo  整合数据
-    dp("appStore", "setAppInfo", data.info);
-    return {
-      a: 1,
-    };
+    dp("myCollectionStore", "setCollectList", data?.list);
   },
 });
 export default thunks;

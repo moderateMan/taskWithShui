@@ -3,6 +3,9 @@ import { RightOutline } from "antd-mobile-icons";
 import styles from "./index.module.scss";
 import { useNavigate } from "react-router";
 import { getAbsolutePath, routes } from "../../router";
+import { useFlat } from "../../service";
+import { useEffect } from "react";
+import { getCurrentUserInfo } from "../../common/apis";
 
 export default function PersonalCenter() {
   const navigate = useNavigate();
@@ -16,15 +19,23 @@ export default function PersonalCenter() {
       title: routes.payHistory.title,
     },
   ];
+
+  const { userInfo } = useFlat("authStore");
+
+  useEffect(() => {
+    getCurrentUserInfo().then((res) => {
+      console.log(res, "wuyou");
+    });
+  }, []);
+
   return (
     <div className={styles["personal-center"]}>
       <div className={styles["header"]}>
         <div className={styles["left"]}>
-          <Avatar
-            src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-            className={styles["avatar"]}
-          />
-          <span className={styles["name"]}>张启明</span>
+          <Avatar src={userInfo?.avatar || ""} className={styles["avatar"]} />
+          <span className={styles["name"]}>
+            {userInfo?.nickname || userInfo?.wechatOpenId}
+          </span>
         </div>
         <div
           className={styles["right"]}

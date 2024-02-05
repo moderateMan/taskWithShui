@@ -1,4 +1,4 @@
-import instance from ".";
+import instance, { Response } from ".";
 
 export enum CourseType {
   "FREE_COURSE" = "FREE_COURSE",
@@ -36,13 +36,6 @@ export interface Page {
   pageSize: number;
 }
 
-export interface Response<T = any> {
-  code: string;
-  data: T | null;
-  msg: string;
-  success: boolean;
-}
-
 export interface ListData<T> {
   count: number;
   list: T[];
@@ -66,18 +59,18 @@ export interface Course {
    * 创建时间
    */
   createTime?: string;
-  createUser?: null;
-  detailHtml?: null;
-  detailRaw?: null;
-  id?: number;
-  introductionHtml?: null;
-  introductionRaw?: null;
+  createUser?: string;
+  detailHtml?: string;
+  detailRaw?: string;
+  id?: string;
+  introductionHtml?: string;
+  introductionRaw?: string;
   /**
    * 课程稿件地址
    */
   mediaUrl?: string;
   modifyTime?: string;
-  modifyUser?: null;
+  modifyUser?: string;
   /**
    * 课程价格
    */
@@ -104,8 +97,57 @@ export interface DetailRequestParams {
   /**
    * 课程id
    */
-  id?: number;
+  id?: string;
 }
+
+export interface Comment {
+  /**
+   * 评价用户头像
+   */
+  avatar?: string;
+  /**
+   * 评价内容
+   */
+  comment?: string;
+  /**
+   * 课程id
+   */
+  courseId?: number;
+  /**
+   * 评价时间
+   */
+  createTime?: string;
+  createUser?: string;
+  id?: number;
+  modifyTime?: string;
+  modifyUser?: string;
+  /**
+   * 评价用户昵称
+   */
+  nickname?: string;
+  /**
+   * 订单id
+   */
+  orderId?: number;
+  /**
+   * 订单流水号
+   */
+  orderSerialId?: string;
+  /**
+   * 评分
+   */
+  rate?: number;
+  /**
+   * 评价用户id
+   */
+  userId?: number;
+  valid?: number;
+  /**
+   * 评价wechatOpenId
+   */
+  wechatOpenId?: string;
+}
+
 
 export interface DetailData {
   /**
@@ -119,12 +161,12 @@ export interface DetailData {
   /**
    * 该课程评价列表
    */
-  commentList: string[];
+  commentList: Comment[];
   course: Course;
 }
 
 export function getDetail(data: DetailRequestParams) {
-  return instance.get<Response<DetailData>>("/course/detail", { params: data });
+  return instance.get<DetailData>("/course/detail", { params: data });
 }
 
 export interface PaperRequestParams {
@@ -144,7 +186,7 @@ export interface Paper {
   content?: string;
   createTime?: string;
   createUser?: string;
-  id?: number;
+  id?: string;
   modifyTime?: string;
   modifyUser?: string;
   /**

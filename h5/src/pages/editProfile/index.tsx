@@ -1,18 +1,62 @@
 import { Avatar, Form } from "antd-mobile";
 import styles from "./index.module.scss";
 import Input from "../../common/components/input";
-import Area from "../../common/components/area";
+import Area, {
+  getCodesByNameOption,
+  getNameByCode,
+} from "../../common/components/area";
+import { useFlat } from "../../service";
+import { useEffect, useMemo, useRef } from "react";
+import { UpdateUserInfoRequestParams } from "../../common/apis";
 
 export default function EditProfile() {
+  const { userInfo } = useFlat("authStore");
+  const { updateUserInfo } = useFlat("editProfileStore");
+  const formValueRef = useRef<UpdateUserInfoRequestParams>();
+
+  const initialValues = useMemo(() => {
+    const { province, city, district } = userInfo || {};
+    const areaList = [province, city, district];
+    const area = areaList.every(Boolean)
+      ? getCodesByNameOption({
+          province: province!,
+          city: city!,
+          district: district!,
+        })
+      : undefined;
+    return {
+      ...userInfo,
+      nickname: userInfo?.nickname || userInfo?.wechatOpenId,
+      area,
+    };
+  }, [userInfo]);
+
+  useEffect(() => {
+    return () => {
+      if (formValueRef.current) updateUserInfo(formValueRef.current);
+    };
+  }, []);
+
   return (
     <div className={styles["edit-profile"]}>
       <div className={styles["header"]}>
-        <Avatar
-          src="https://images.unsplash.com/photo-1548532928-b34e3be62fc6?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-          className={styles["avatar"]}
-        />
+        <Avatar src={userInfo?.avatar || ""} className={styles["avatar"]} />
       </div>
-      <Form layout="horizontal" className={styles["form"]} initialValues={{}}>
+      <Form
+        layout="horizontal"
+        className={styles["form"]}
+        initialValues={initialValues}
+        onValuesChange={(_, v) => {
+          const { area, nickname, mobile, ...resetValue } = v;
+          const formValue = {
+            province: getNameByCode(area?.[0]),
+            city: getNameByCode(area?.[1]),
+            district: getNameByCode(area?.[2]),
+            ...resetValue,
+          };
+          formValueRef.current = formValue;
+        }}
+      >
         <Form.Item label="微信名" name="nickname">
           <Input readOnly placeholder="请输入微信名" />
         </Form.Item>
@@ -29,7 +73,7 @@ export default function EditProfile() {
           <Input placeholder="请输入科室名称" />
         </Form.Item>
         <Form.Item label="邮箱" name="email">
-          <Input placeholder="请输入邮箱" />
+          <Input placeholder="请输入邮箱" type="email" />
         </Form.Item>
       </Form>
     </div>

@@ -43,4 +43,17 @@ declare module "@arco-design/color" {
   };
 }
 
-declare const WeixinJSBridge = {};
+declare const WeixinJSBridge = {
+  invoke: (
+    type: string,
+    payload: any,
+    callback: (ret: {
+      err_msg:
+        | "get_brand_wcpay_request:ok"
+        | "get_brand_wcpay_request:cancel"
+        | "get_brand_wcpay_request:fail";
+    }) => void
+  ) => void 0,
+};
+
+type Nullable<T> = T | undefined | null;
