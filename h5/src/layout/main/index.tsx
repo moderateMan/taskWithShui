@@ -4,17 +4,11 @@ import styles from "./index.module.scss";
 import { useEffect } from "react";
 import cls from "classnames";
 import { getAbsolutePath, routes, rootPrefix } from "../../router";
-import { useFlat } from "../../service";
-import {
-  getWechatLoginCode,
-  gotoCodeUrl,
-} from "../../common/utils/wechat-login";
 import { Icon } from "@iconify/react";
 
 export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { userInfo, login } = useFlat("authStore");
   const { pathname } = location;
 
   const setRouteActive = (value: string) => {
@@ -85,17 +79,6 @@ export default function MainLayout() {
       navigate(tabs[0].key, { replace: true });
     }
   }, [pathname]);
-
-  // useEffect(() => {
-  //   if (!userInfo?.token) {
-  //     const code = getWechatLoginCode();
-  //     if (!code) {
-  //       gotoCodeUrl();
-  //     } else {
-  //       login({ code });
-  //     }
-  //   }
-  // }, []);
 
   return (
     <main className={styles.main}>
