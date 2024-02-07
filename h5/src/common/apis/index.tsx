@@ -17,21 +17,21 @@ const config: CreateAxiosDefaults = {
 };
 
 if (process.env.NODE_ENV === "production") {
-  config.baseURL = "http://shejun-api.jefferyqjy.com/api";
+  config.baseURL = process.env.REACT_APP_BASE_URL;
 }
 const instance = axios.create(config);
 
-class ResponseError<T> extends Error {
-  code;
-  msg;
-  success;
-  constructor(data: Response<T>) {
-    super(data.msg);
-    this.code = data.code;
-    this.msg = data.msg;
-    this.success = data.success;
-  }
-}
+// class ResponseError<T> extends Error {
+//   code;
+//   msg;
+//   success;
+//   constructor(data: Response<T>) {
+//     super(data.msg);
+//     this.code = data.code;
+//     this.msg = data.msg;
+//     this.success = data.success;
+//   }
+// }
 
 let close: (() => void) | undefined = undefined;
 

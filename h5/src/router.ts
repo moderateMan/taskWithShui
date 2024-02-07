@@ -144,7 +144,6 @@ const createAuthLoader = (
     if (auth) {
       const { authStore } = reduxStore.getState();
       const { userInfo } = authStore;
-      console.log(userInfo, "wuyou", "hahahaah");
       if (!userInfo?.token) {
         const code = getWechatLoginCode();
         if (!code) {
