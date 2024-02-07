@@ -16,7 +16,7 @@ const config: CreateAxiosDefaults = {
   },
 };
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production" && process.env.REACT_APP_BASE_URL) {
   config.baseURL = process.env.REACT_APP_BASE_URL;
 }
 const instance = axios.create(config);
