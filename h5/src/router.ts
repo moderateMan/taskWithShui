@@ -20,6 +20,7 @@ import Page404 from "./pages/404";
 import PageError from "./pages/error";
 import { dp, reduxStore } from "./service";
 import { getWechatLoginCode, gotoCodeUrl } from "./common/utils/wechat-login";
+import { error } from "./common/utils/toast";
 
 export type LoaderDataType = {
   isFree?: boolean;
@@ -171,6 +172,7 @@ const redirectScientificLoader: Callback<LoaderFunction> = async (
     }
     return setData("detail", data);
   }
+
   return finish(redirect(getAbsolutePath(routes.error.pathname)));
 };
 
@@ -191,6 +193,30 @@ const redirectPayLoader: Callback<LoaderFunction> = async (
     return setData("isFree", true);
   }
 
+  return finish(redirect(getAbsolutePath(routes.error.pathname)));
+};
+
+const redirectReviewLoader: Callback<LoaderFunction> = async (
+  args,
+  _data,
+  { finish, setData }
+) => {
+  const { id } = args.params;
+  const url = new URL(args.request.url);
+  const query = new URLSearchParams(url.search);
+  const courseId = query.get("courseId");
+  if (id && courseId) {
+    const { data } = await getDetail({ id: courseId });
+    if (data.course.category === CourseType.PAID_COURSE) {
+      if (data.bought) {
+        return setData("detail", data);
+      } else {
+        error("用户未购买文献，不可评论！");
+        return finish(redirect(getAbsolutePath(routes.payHistory.pathname)));
+      }
+    }
+  }
+  error("文献不存在！")
   return finish(redirect(getAbsolutePath(routes.error.pathname)));
 };
 
@@ -215,6 +241,14 @@ const commonLoader = (route: (typeof routes)[keyof typeof routes]) =>
       createAuthLoader(routes.scientific.auth),
       redirectPayLoader,
       createTitleLoader(routes.scientific.title),
+    ],
+    { onError: loaderErrorHandler }
+  ),
+  reviewLoader = createAgent(
+    [
+      createAuthLoader(routes.review.auth),
+      redirectReviewLoader,
+      createTitleLoader(routes.review.title),
     ],
     { onError: loaderErrorHandler }
   );
@@ -265,7 +299,7 @@ const router = createBrowserRouter([
   {
     path: getAbsolutePath(routes.review.pathname(":id")),
     Component: routes.review.component,
-    loader: commonLoader(routes.review),
+    loader: reviewLoader,
   },
   {
     path: getAbsolutePath(routes.pay.pathname(":id")),

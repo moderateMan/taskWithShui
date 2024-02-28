@@ -29,11 +29,12 @@ function WxSharePopup(props: WxSharePopupProps) {
 
   const initWxConfig = useCallback(async () => {
     const { data } = await getWechatCfg();
+    console.log(data);
     if (data) {
       wx.config({
         ...data,
         appId: appId || process.env.REACT_APP_APP_ID!,
-        jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage"],
+        jsApiList: ["updateAppMessageShareData", "updateTimelineShareData"],
       });
     }
   }, [appId]);
@@ -51,32 +52,30 @@ function WxSharePopup(props: WxSharePopupProps) {
       logo: <Avatar src={WxLogo} className={styles["wx"]} />,
       title: "分享给朋友",
       onClick: () => {
-        wx.ready(() => {
-          const {
-            title = document.title,
-            desc = document
-              .getElementsByTagName("meta")
-              ?.namedItem("description")?.content || "",
-            link = window.location.href,
-            imgUrl = (
-              document.querySelector<HTMLLinkElement>(
-                `link[rel="shortcut icon"]`
-              ) || document.querySelector<HTMLLinkElement>(`link[rel="icon"]`)
-            )?.href || "",
-            success,
-            ...rest
-          } = getShareFrendsConfig?.() || {};
-          wx.updateAppMessageShareData({
-            ...rest,
-            title,
-            desc,
-            link,
-            imgUrl,
-            success(...args) {
-              setVisible(false);
-              success?.(...args);
-            },
-          });
+        const {
+          title = document.title,
+          desc = document.getElementsByTagName("meta")?.namedItem("description")
+            ?.content || "",
+          link = window.location.href,
+          imgUrl = (
+            document.querySelector<HTMLLinkElement>(
+              `link[rel="shortcut icon"]`
+            ) || document.querySelector<HTMLLinkElement>(`link[rel="icon"]`)
+          )?.href || "",
+          success,
+          ...rest
+        } = getShareFrendsConfig?.() || {};
+        wx.updateAppMessageShareData({
+          ...rest,
+          title,
+          desc,
+          link,
+          imgUrl,
+          success(...args) {
+            setVisible(false);
+            success?.(...args);
+          },
+          fail: console.log,
         });
       },
     },
@@ -84,28 +83,27 @@ function WxSharePopup(props: WxSharePopupProps) {
       logo: <Avatar src={WxMomments} />,
       title: "分享到朋友圈",
       onClick: () => {
-        wx.ready(() => {
-          const {
-            title = document.title,
-            link = window.location.href,
-            imgUrl = (
-              document.querySelector<HTMLLinkElement>(
-                `link[rel="shortcut icon"]`
-              ) || document.querySelector<HTMLLinkElement>(`link[rel="icon"]`)
-            )?.href || "",
-            success,
-            ...rest
-          } = getShareMomentsConfig?.() || {};
-          wx.updateTimelineShareData({
-            ...rest,
-            title,
-            link,
-            imgUrl,
-            success(...args) {
-              setVisible(false);
-              success?.(...args);
-            },
-          });
+        const {
+          title = document.title,
+          link = window.location.href,
+          imgUrl = (
+            document.querySelector<HTMLLinkElement>(
+              `link[rel="shortcut icon"]`
+            ) || document.querySelector<HTMLLinkElement>(`link[rel="icon"]`)
+          )?.href || "",
+          success,
+          ...rest
+        } = getShareMomentsConfig?.() || {};
+        wx.updateTimelineShareData({
+          ...rest,
+          title,
+          link,
+          imgUrl,
+          success(...args) {
+            setVisible(false);
+            success?.(...args);
+          },
+          fail: console.log,
         });
       },
     },

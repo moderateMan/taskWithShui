@@ -34,7 +34,7 @@ export default function PayHistory() {
 
   return (
     <div className={styles["pay-history"]}>
-      <PayList data={data} />
+      <PayList data={data} reload={reload} />
     </div>
   );
 }

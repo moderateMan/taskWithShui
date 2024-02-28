@@ -63,5 +63,5 @@
     "@types/webpack-env": "^1.18.4",
     "sass": "^1.69.5"
   },
-  "proxy": "http://shejun-api.jefferyqjy.com/api"
+  "proxy": "https://shejun.jefferyqjy.com/api"
 }

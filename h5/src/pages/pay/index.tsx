@@ -26,12 +26,9 @@ export default function Pay() {
 
   useEffect(() => {
     if (detail?.bought) {
-      navigate(
-        getAbsolutePath(routes.scientific.pathname(detail.course.id!)),
-        {
-          replace: true,
-        }
-      );
+      navigate(getAbsolutePath(routes.scientific.pathname(detail.course.id!)), {
+        replace: true,
+      });
     }
   }, [detail]);
   const actions = [
@@ -60,13 +57,20 @@ export default function Pay() {
 
   const buy = async () => {
     const order = await createOrder({ courseId: detail?.course.id! });
-    const payload = await prepay({ orderId: order.id });
-    const data = await pay(payload);
-    if (data) {
-      success("支付成功");
-      navigate(getAbsolutePath(routes.scientific.pathname(detail.course.id!)), {
-        replace: true,
-      });
+    if (order.success) {
+      const payload = await prepay({ orderId: order.data?.id! });
+      if (payload.success) {
+        const data = await pay(payload.data!);
+        if (data) {
+          success("支付成功");
+          navigate(
+            getAbsolutePath(routes.scientific.pathname(detail.course.id!)),
+            {
+              replace: true,
+            }
+          );
+        }
+      }
     }
   };
 

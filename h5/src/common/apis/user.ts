@@ -249,7 +249,7 @@ export interface WechatCfg {
 }
 
 export function getWechatCfg() {
-  return instance.get<{}, Response<WechatCfg>>("/wechat/cfgino", {
+  return instance.get<{}, Response<WechatCfg>>("/wechat/config", {
     params: { url: window.location.href },
   });
 }
