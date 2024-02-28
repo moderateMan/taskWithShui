@@ -1,5 +1,5 @@
 .pay {
-  height: 100vh;
+  height: 100%;
   .title {
     color: #030504;
     line-height: 20px;
@@ -7,7 +7,7 @@
     margin: 0;
   }
   .wrapper {
-    height: calc(100vh - 58px);
+    height: calc(100% - 58px);
     overflow: hidden;
     display: flex;
     flex-direction: column;
