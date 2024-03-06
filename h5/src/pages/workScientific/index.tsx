@@ -40,7 +40,7 @@ export default function WorkScientific() {
           key={idx}
           onClick={() => {
             if (userInfo) {
-              window.location.href = `https://chatbot.weixin.qq.com/webapp/eJPxVdexMCMP8JBspaJbsnZNAecIGg?openid=${
+              window.location.href = `https://chatbot.weixin.qq.com/webapp/y0TSb7KPrEucp6kGo4nmYSvCqWXb3N?openid=${
                 userInfo.wechatOpenId
               }&nickname=${userInfo.nickname}&avatar=${
                 userInfo.avatar
