@@ -36,6 +36,12 @@ function WxSharePopup(props: WxSharePopupProps) {
         appId: appId || process.env.REACT_APP_APP_ID!,
         jsApiList: ["updateAppMessageShareData", "updateTimelineShareData"],
       });
+      wx.ready(() => {
+        console.log("准备就绪");
+      });
+      wx.error((e) => {
+        console.log("起步失败", e);
+      });
     }
   }, [appId]);
 

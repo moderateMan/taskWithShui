@@ -29,7 +29,7 @@ export default function ScientificList(props: ScientificListProps) {
     <div className={styles["scientific-list"]}>
       {data.map((course, idx) => {
         const isFree = course.category === CourseType.FREE_COURSE;
-        const time = dayjs(course.modifyTime).fromNow();
+        const time = dayjs(course.createTime).fromNow();
         return (
           <div
             className={styles["item"]}

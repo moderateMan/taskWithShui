@@ -1,7 +1,6 @@
 import axios, { CreateAxiosDefaults } from "axios";
 import { error, loading } from "../utils/toast";
-import { getLocal } from "../utils/storage";
-import { LoginResponseData } from "./user";
+import { reduxStore } from "../../service";
 
 export interface Response<T = any> {
   code: string;
@@ -44,7 +43,8 @@ const finish = () => {
 
 instance.interceptors.request.use(
   (config) => {
-    const userInfo = getLocal<LoginResponseData>("userInfo");
+    const { authStore } = reduxStore.getState();
+    const { userInfo } = authStore;
     if (userInfo?.token) {
       config.headers["shejun-token"] = userInfo.token;
     }

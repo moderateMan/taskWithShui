@@ -14,7 +14,6 @@
     .scientific {
       padding: 20px;
       .header {
-        padding-bottom: 16px;
         .desc {
           margin-top: 8px;
           font-size: 14px;
@@ -28,6 +27,12 @@
             color: #f46b4f;
             font-weight: 600;
           }
+        }
+      }
+      .introduction {
+        color: #bcc2cc;
+        * {
+          max-width: 100%;
         }
       }
       .content {
@@ -61,93 +66,6 @@
             border-color: #db950e;
           }
         }
-      }
-    }
-    .hr {
-      display: block;
-      height: 8px;
-      background-color: #fafafb;
-      margin: 0;
-      border: none;
-    }
-    .sub {
-      padding: 20px;
-    }
-    .list {
-      flex: 1;
-      overflow: auto;
-      padding: 0 20px;
-      .review {
-        padding: 20px 0;
-        &:nth-child(1) {
-          padding-top: 0;
-        }
-        & + .review {
-          border-top: 1px solid #eff0f2;
-        }
-        .profile {
-          width: 100%;
-          margin-bottom: 12px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          .left {
-            width: calc(100% - 160px);
-            display: flex;
-            flex-direction: row;
-            overflow: hidden;
-            .avatar {
-              --size: 40px;
-              margin-right: 8px;
-              flex-shrink: 0;
-            }
-            .info {
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
-              flex: 1;
-              width: inherit;
-              .name {
-                display: inline-block;
-                color: #1a1a1a;
-                font-size: 15px;
-                font-weight: 600;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-              }
-              .time {
-                color: #808080;
-                font-weight: 500;
-              }
-            }
-          }
-          .right {
-            font-size: 16px;
-            color: #f46b4f;
-            .stars {
-              --star-size: 16px;
-            }
-            .score {
-              font-weight: 600;
-              margin: 0 2px;
-              vertical-align: middle;
-            }
-            .unit {
-              vertical-align: middle;
-            }
-          }
-        }
-        .text {
-          color: #4d4d4d;
-          margin: 0;
-          font-size: 15px;
-          font-weight: 500;
-        }
-      }
-      .end {
-        margin-top: -16px;
       }
     }
   }

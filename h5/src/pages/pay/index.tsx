@@ -1,5 +1,4 @@
 import { useLoaderData, useNavigate, useParams } from "react-router";
-import dayjs from "dayjs";
 import styles from "./index.module.scss";
 import {
   HeartFill,
@@ -7,15 +6,14 @@ import {
   LockOutline,
   SendOutline,
 } from "antd-mobile-icons";
-import { Avatar, Button, Footer, Rate, SpinLoading } from "antd-mobile";
-import cls from "classnames";
+import { Button } from "antd-mobile";
 import { share } from "../../common/components/wxShare";
-import { useFlat } from "../../service";
 import { useEffect, useState } from "react";
 import { collect, createOrder, prepay, uncollect } from "../../common/apis";
 import { LoaderDataType, getAbsolutePath, routes } from "../../router";
 import { pay } from "../../common/utils/wechat-pay";
-import { error, success } from "../../common/utils/toast";
+import { success } from "../../common/utils/toast";
+import CommentList from "../../common/components/commentList";
 
 export default function Pay() {
   const params = useParams<{ id: string }>();
@@ -85,6 +83,12 @@ export default function Pay() {
               <span className={styles["price"]}>{detail?.course.price}元</span>
             </div>
           </div>
+          <div
+            className={styles["introduction"]}
+            dangerouslySetInnerHTML={{
+              __html: detail.course.introductionHtml!,
+            }}
+          ></div>
           <div className={styles["content"]}>
             <img src={detail?.course.cover} className={styles["img"]} />
             <div className={styles["mask"]}>
@@ -100,44 +104,7 @@ export default function Pay() {
             </div>
           </div>
         </div>
-        <hr className={styles["hr"]} />
-        <h3 className={cls(styles["sub"], styles["title"])}>评价</h3>
-        <div className={styles["list"]}>
-          {detail?.commentList.map((comment) => (
-            <div className={styles["review"]} key={comment.id}>
-              <div className={styles["profile"]}>
-                <div className={styles["left"]}>
-                  <Avatar
-                    src={comment.avatar || ""}
-                    className={styles["avatar"]}
-                  />
-                  <div className={styles["info"]}>
-                    <span className={styles["name"]}>
-                      {comment.nickname || comment.wechatOpenId}
-                    </span>
-                    <span className={styles["time"]}>
-                      {dayjs(comment.modifyTime).format("YYYY-MM-DD")}
-                    </span>
-                  </div>
-                </div>
-                <div className={styles["right"]}>
-                  <Rate
-                    className={styles["stars"]}
-                    readOnly
-                    count={5}
-                    value={comment.rate}
-                  />
-                  <span className={styles["score"]}>
-                    {comment.rate?.toFixed(1)}
-                  </span>
-                  <span className={styles["unit"]}>分</span>
-                </div>
-              </div>
-              <p className={styles["text"]}>{comment.comment}</p>
-            </div>
-          ))}
-          <Footer label="到底了~" className={styles["end"]}></Footer>
-        </div>
+        <CommentList data={detail.commentList} />
       </div>
       <div className={styles["footer"]}>
         {actions.map((i) => (
