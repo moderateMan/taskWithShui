@@ -35,13 +35,7 @@ export default function ScientificList(props: ScientificListProps) {
             className={styles["item"]}
             key={idx}
             onClick={() => {
-              navigate(
-                getAbsolutePath(
-                  isFree
-                    ? routes.scientific.pathname(course.id!)
-                    : routes.pay.pathname(course.id!)
-                )
-              );
+              navigate(getAbsolutePath(routes.pay.pathname(course.id!)));
             }}
           >
             <img src={course.cover} className={styles["cover-img"]} />

@@ -63,7 +63,7 @@ export default function PayList(props: IProps) {
       text: "#4CD263",
       content: "去支付",
       onClick: toPay,
-      pathname: routes.scientific.pathname,
+      pathname: routes.pay.pathname,
     },
   };
 

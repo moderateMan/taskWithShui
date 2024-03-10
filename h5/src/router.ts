@@ -95,12 +95,12 @@ export const routes = {
     auth: true,
   },
   /** 免费文献/付费文献（已购买） */
-  scientific: {
-    pathname: (id: string | number) => `scientific/${id}`,
-    title: (data: any) => (data.isFree ? "免费文献" : "付费文献"),
-    component: Scientific,
-    auth: true,
-  },
+  // scientific: {
+  //   pathname: (id: string | number) => `scientific/${id}`,
+  //   title: (data: any) => (data.isFree ? "免费文献" : "付费文献"),
+  //   component: Scientific,
+  //   auth: true,
+  // },
   /** 错误页 */
   error: {
     pathname: "error",
@@ -159,45 +159,45 @@ const createAuthLoader = (
   };
 };
 
-const redirectScientificLoader: Callback<LoaderFunction> = async (
-  args,
-  _data,
-  { finish, setData }
-) => {
-  const { id } = args.params;
-  if (id) {
-    const { data } = await getDetail({ id });
-    if (data.bought && data.course.category === CourseType.PAID_COURSE) {
-      if (data.course.mediaUrl) {
-        window.location.href = data.course.mediaUrl;
-      }
-      return finish(redirect(getAbsolutePath(routes.scientific.pathname(id))));
-    }
-    return setData("detail", data);
-  }
+// const redirectScientificLoader: Callback<LoaderFunction> = async (
+//   args,
+//   _data,
+//   { finish, setData }
+// ) => {
+//   const { id } = args.params;
+//   if (id) {
+//     const { data } = await getDetail({ id });
+//     if (data.bought && data.course.category === CourseType.PAID_COURSE) {
+//       if (data.course.mediaUrl) {
+//         window.location.href = data.course.mediaUrl;
+//       }
+//       return finish(redirect(getAbsolutePath(routes.scientific.pathname(id))));
+//     }
+//     return setData("detail", data);
+//   }
 
-  return finish(redirect(getAbsolutePath(routes.error.pathname)));
-};
+//   return finish(redirect(getAbsolutePath(routes.error.pathname)));
+// };
 
-const redirectPayLoader: Callback<LoaderFunction> = async (
-  args,
-  _data,
-  { finish, setData }
-) => {
-  const { id } = args.params;
-  if (id) {
-    const { data } = await getDetail({ id });
-    setData("detail", data);
-    if (data.course.category === CourseType.PAID_COURSE) {
-      if (!data.bought) {
-        return finish(redirect(getAbsolutePath(routes.pay.pathname(id))));
-      }
-    }
-    return setData("isFree", true);
-  }
+// const redirectPayLoader: Callback<LoaderFunction> = async (
+//   args,
+//   _data,
+//   { finish, setData }
+// ) => {
+//   const { id } = args.params;
+//   if (id) {
+//     const { data } = await getDetail({ id });
+//     setData("detail", data);
+//     if (data.course.category === CourseType.PAID_COURSE) {
+//       if (!data.bought) {
+//         return finish(redirect(getAbsolutePath(routes.pay.pathname(id))));
+//       }
+//     }
+//     return setData("isFree", true);
+//   }
 
-  return finish(redirect(getAbsolutePath(routes.error.pathname)));
-};
+//   return finish(redirect(getAbsolutePath(routes.error.pathname)));
+// };
 
 const redirectReviewLoader: Callback<LoaderFunction> = async (
   args,
@@ -231,22 +231,22 @@ const commonLoader = (route: (typeof routes)[keyof typeof routes]) =>
       [createAuthLoader(route.auth), createTitleLoader(route.title)],
       { onError: loaderErrorHandler }
     ),
-  payLoader = createAgent(
-    [
-      createAuthLoader(routes.pay.auth),
-      redirectScientificLoader,
-      createTitleLoader(routes.pay.title),
-    ],
-    { onError: loaderErrorHandler }
-  ),
-  scientificLoader = createAgent(
-    [
-      createAuthLoader(routes.scientific.auth),
-      redirectPayLoader,
-      createTitleLoader(routes.scientific.title),
-    ],
-    { onError: loaderErrorHandler }
-  ),
+  // payLoader = createAgent(
+  //   [
+  //     createAuthLoader(routes.pay.auth),
+  //     redirectScientificLoader,
+  //     createTitleLoader(routes.pay.title),
+  //   ],
+  //   { onError: loaderErrorHandler }
+  // ),
+  // scientificLoader = createAgent(
+  //   [
+  //     createAuthLoader(routes.scientific.auth),
+  //     redirectPayLoader,
+  //     createTitleLoader(routes.scientific.title),
+  //   ],
+  //   { onError: loaderErrorHandler }
+  // ),
   reviewLoader = createAgent(
     [
       createAuthLoader(routes.review.auth),
@@ -307,22 +307,22 @@ const router = createBrowserRouter([
   {
     path: getAbsolutePath(routes.pay.pathname(":id")),
     Component: routes.pay.component,
-    loader: payLoader,
+    loader: commonLoader(routes.pay),
   },
+  // {
+  //   path: getAbsolutePath(routes.scientific.pathname(":id")),
+  //   Component: routes.scientific.component,
+  //   loader: scientificLoader,
+  // },
   {
-    path: getAbsolutePath(routes.scientific.pathname(":id")),
-    Component: routes.scientific.component,
-    loader: scientificLoader,
+    path: getAbsolutePath(routes.error.pathname),
+    Component: routes.error.component,
+    loader: commonLoader(routes.error),
   },
   {
     path: getAbsolutePath(routes.notFound.pathname),
     Component: routes.notFound.component,
     loader: commonLoader(routes.notFound),
-  },
-  {
-    path: getAbsolutePath(routes.error.pathname),
-    Component: routes.error.component,
-    loader: commonLoader(routes.error),
   },
 ]);
 
