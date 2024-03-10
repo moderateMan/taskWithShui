@@ -168,6 +168,9 @@ const redirectScientificLoader: Callback<LoaderFunction> = async (
   if (id) {
     const { data } = await getDetail({ id });
     if (data.bought && data.course.category === CourseType.PAID_COURSE) {
+      if (data.course.mediaUrl) {
+        window.location.href = data.course.mediaUrl;
+      }
       return finish(redirect(getAbsolutePath(routes.scientific.pathname(id))));
     }
     return setData("detail", data);
@@ -216,7 +219,7 @@ const redirectReviewLoader: Callback<LoaderFunction> = async (
       }
     }
   }
-  error("文献不存在！")
+  error("文献不存在！");
   return finish(redirect(getAbsolutePath(routes.error.pathname)));
 };
 

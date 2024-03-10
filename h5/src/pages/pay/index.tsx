@@ -61,12 +61,16 @@ export default function Pay() {
         const data = await pay(payload.data!);
         if (data) {
           success("支付成功");
-          navigate(
-            getAbsolutePath(routes.scientific.pathname(detail.course.id!)),
-            {
-              replace: true,
-            }
-          );
+          if (detail.course.mediaUrl) {
+            window.location.href = detail.course.mediaUrl;
+          } else {
+            navigate(
+              getAbsolutePath(routes.scientific.pathname(detail.course.id!)),
+              {
+                replace: true,
+              }
+            );
+          }
         }
       }
     }
@@ -87,6 +91,12 @@ export default function Pay() {
             className={styles["introduction"]}
             dangerouslySetInnerHTML={{
               __html: detail.course.introductionHtml!,
+            }}
+          ></div>
+          <div
+            className={styles["detail"]}
+            dangerouslySetInnerHTML={{
+              __html: detail.course.detailHtml!,
             }}
           ></div>
           <div className={styles["content"]}>

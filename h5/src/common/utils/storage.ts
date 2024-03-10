@@ -7,13 +7,23 @@ const jsonParse = (json: string | null) => {
   }
 };
 
-export const getLocal = <T>(key: string) => {
+export const getLocalInToday = <T>(key: string) => {
   const item = localStorage.getItem(key);
-  return jsonParse(item) as T | undefined;
+  const obj = jsonParse(item);
+  if (obj?.value && obj?.expire) {
+    if (obj.expire > Date.now()) {
+      return obj.value as T;
+    }
+  }
+  return undefined;
 };
 
-export const setLocal = <T>(key: string, item: T) => {
-  localStorage.setItem(key, JSON.stringify(item));
+export const setLocalInToday = <T>(key: string, item: T) => {
+  const data = {
+    value: item,
+    expire: new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000,
+  };
+  localStorage.setItem(key, JSON.stringify(data));
 };
 
 export const getSession = <T>(key: string) => {
