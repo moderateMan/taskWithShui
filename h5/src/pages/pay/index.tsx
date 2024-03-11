@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styles from "./index.module.scss";
 import {
   HeartFill,
@@ -19,11 +19,16 @@ import {
   uncollect,
 } from "../../common/apis";
 import { pay } from "../../common/utils/wechat-pay";
-import { success } from "../../common/utils/toast";
+import { success, warning } from "../../common/utils/toast";
 import CommentList from "../../common/components/commentList";
+import { useFlat } from "../../service";
+import { getAbsolutePath, routes } from "../../router";
 
 export default function Pay() {
   const params = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  const { userInfo } = useFlat("authStore");
 
   const [initDetail, setInitDetail] = useState<DetailData>();
 
@@ -68,7 +73,19 @@ export default function Pay() {
     },
   ];
 
+  const verify = () => {
+    const ret =
+      userInfo &&
+      Object.values(userInfo).every((i) => ![null, undefined, ""].includes(i));
+    if (!ret) {
+      warning("请完善个人信息！");
+      navigate(getAbsolutePath(routes.editProfile.pathname));
+    }
+    return ret;
+  };
+
   const buy = async () => {
+    if (!verify()) return;
     const order = await createOrder({ courseId: initDetail?.course.id! });
     if (order.success) {
       const payload = await prepay({ orderId: order.data?.id! });
@@ -79,6 +96,13 @@ export default function Pay() {
           fetchDetail();
         }
       }
+    }
+  };
+
+  const view = () => {
+    if (!verify()) return;
+    if (initDetail?.course.mediaUrl) {
+      window.location.href = initDetail?.course.mediaUrl;
     }
   };
 
@@ -110,21 +134,21 @@ export default function Pay() {
           <div className={styles["content"]}>
             <img src={initDetail?.course.cover} className={styles["img"]} />
             <div className={styles["mask"]}>
-              <Button
-                className={styles["lock-btn"]}
-                onClick={buy}
-                loading={"auto"}
-                loadingText="正在支付"
-              >
-                {needToBuy ? (
-                  <>
-                    <LockOutline />
-                    购买后查看全部文献
-                  </>
-                ) : (
-                  "查看全部文献"
-                )}
-              </Button>
+              {needToBuy ? (
+                <Button
+                  className={styles["lock-btn"]}
+                  onClick={buy}
+                  loading={"auto"}
+                  loadingText="正在支付"
+                >
+                  <LockOutline />
+                  购买后查看全部文献
+                </Button>
+              ) : (
+                <Button className={styles["lock-btn"]} onClick={view}>
+                  查看全部文献
+                </Button>
+              )}
             </div>
           </div>
         </div>

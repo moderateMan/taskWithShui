@@ -5,6 +5,8 @@ import { useFlat } from "../../service";
 import { useEffect } from "react";
 import useLoadPage, { FetchPageType } from "../../common/hooks/useLoadPage";
 import { Course, getList } from "../../common/apis";
+import { useNavigate } from "react-router";
+import { getAbsolutePath, routes } from "../../router";
 
 const fetchPage: FetchPageType<{ search?: string }, Course> = ({
   pageSize,
@@ -26,6 +28,7 @@ const fetchPage: FetchPageType<{ search?: string }, Course> = ({
 
 export default function ReadScientific() {
   const { search, setSearch } = useFlat("readScientificStore");
+  const navigate = useNavigate();
 
   const { loadPage, reload, data, isFinish } = useLoadPage(fetchPage, {
     isFinish: ({ pageSize, current, count }) =>
@@ -57,6 +60,13 @@ export default function ReadScientific() {
           data={data}
           loadMore={loadMore}
           hasMore={!isFinish}
+          onClick={(course) => {
+            if (course.linkUrl) {
+              window.location.href = course.linkUrl;
+              return;
+            }
+            navigate(getAbsolutePath(routes.pay.pathname(course.id!)));
+          }}
         />
       </div>
     </div>

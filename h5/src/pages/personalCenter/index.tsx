@@ -22,11 +22,11 @@ export default function PersonalCenter() {
 
   const { userInfo } = useFlat("authStore");
 
-  useEffect(() => {
-    getCurrentUserInfo().then((res) => {
-      console.log(res, "wuyou");
-    });
-  }, []);
+  // useEffect(() => {
+  //   getCurrentUserInfo().then((res) => {
+  //     console.log(res, "wuyou");
+  //   });
+  // }, []);
 
   return (
     <div className={styles["personal-center"]}>

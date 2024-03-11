@@ -12,6 +12,7 @@ import { UpdateUserInfoRequestParams } from "../../common/apis";
 export default function EditProfile() {
   const { userInfo } = useFlat("authStore");
   const { updateUserInfo } = useFlat("editProfileStore");
+  const [form] = Form.useForm();
   const formValueRef = useRef<UpdateUserInfoRequestParams>();
 
   const initialValues = useMemo(() => {
@@ -46,15 +47,18 @@ export default function EditProfile() {
         layout="horizontal"
         className={styles["form"]}
         initialValues={initialValues}
-        onValuesChange={(_, v) => {
-          const { area, nickname, mobile, ...resetValue } = v;
-          const formValue = {
-            province: getNameByCode(area?.[0]),
-            city: getNameByCode(area?.[1]),
-            district: getNameByCode(area?.[2]),
-            ...resetValue,
-          };
-          formValueRef.current = formValue;
+        form={form}
+        onValuesChange={() => {
+          form.validateFields().then((res) => {
+            const { area, nickname, mobile, ...resetValue } = res;
+            const formValue = {
+              province: getNameByCode(area?.[0]),
+              city: getNameByCode(area?.[1]),
+              district: getNameByCode(area?.[2]),
+              ...resetValue,
+            };
+            formValueRef.current = formValue;
+          });
         }}
       >
         <Form.Item label="微信名" name="nickname">
@@ -72,7 +76,11 @@ export default function EditProfile() {
         <Form.Item label="科室" name="department">
           <Input placeholder="请输入科室名称" />
         </Form.Item>
-        <Form.Item label="邮箱" name="email">
+        <Form.Item
+          label="邮箱"
+          name="email"
+          rules={[{ type: "email", message: "请输入正确的邮箱" }]}
+        >
           <Input placeholder="请输入邮箱" type="email" />
         </Form.Item>
       </Form>

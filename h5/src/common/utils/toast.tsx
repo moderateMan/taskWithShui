@@ -1,4 +1,5 @@
 import { Toast } from "antd-mobile";
+import { ExclamationOutline } from "antd-mobile-icons";
 
 export function loading(text = "加载中...") {
   const loading = Toast.show({
@@ -19,6 +20,13 @@ export function error(text = "系统开小差，请稍后重试...") {
 export function success(text = "提交成功") {
   Toast.show({
     icon: "success",
+    content: text,
+  });
+}
+
+export function warning(text: string) {
+  Toast.show({
+    icon: <ExclamationOutline />,
     content: text,
   });
 }

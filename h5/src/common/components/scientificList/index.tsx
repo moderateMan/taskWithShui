@@ -18,11 +18,22 @@ interface ScientificListProps {
   data?: Course[];
   loadMore?: InfiniteScrollProps["loadMore"];
   hasMore?: boolean;
+  onClick?: (course: Course) => void;
 }
 
 export default function ScientificList(props: ScientificListProps) {
-  const { showPrice = true, data = [], loadMore, hasMore = false } = props;
+  const {
+    showPrice = true,
+    data = [],
+    loadMore,
+    hasMore = false,
+    onClick,
+  } = props;
   const navigate = useNavigate();
+
+  const defaultClickHandler = (course: Course) => {
+    navigate(getAbsolutePath(routes.pay.pathname(course.id!)));
+  };
 
   if (isEmpty(data)) return <Empty description="暂无数据" />;
   return (
@@ -34,9 +45,7 @@ export default function ScientificList(props: ScientificListProps) {
           <div
             className={styles["item"]}
             key={idx}
-            onClick={() => {
-              navigate(getAbsolutePath(routes.pay.pathname(course.id!)));
-            }}
+            onClick={() => (onClick || defaultClickHandler)(course)}
           >
             <img src={course.cover} className={styles["cover-img"]} />
             <div className={styles["content"]}>

@@ -66,6 +66,10 @@ export interface Course {
   introductionHtml?: string;
   introductionRaw?: string;
   /**
+   * 跳转地址
+   */
+  linkUrl?: string;
+  /**
    * 课程稿件地址
    */
   mediaUrl?: string;
@@ -147,7 +151,6 @@ export interface Comment {
    */
   wechatOpenId?: string;
 }
-
 
 export interface DetailData {
   /**
