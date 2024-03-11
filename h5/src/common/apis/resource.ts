@@ -22,7 +22,7 @@ export interface ListRequestParams {
     /**
      * 课程类型，VIDEO：视频课程；ARTICLE：文章
      */
-    type?: "VIDEO" | "ARTICLE";
+    type?: "VIDEO" | "ARTICLE" | "COURSE";
     /**
      * 有效状态
      */

@@ -88,8 +88,7 @@ export default function MainLayout() {
       <div className={styles.tabbar}>
         <TabBar
           activeKey={pathname}
-          onChange={(value) => setRouteActive(value)}
-        >
+          onChange={(value) => setRouteActive(value)}>
           {tabs.map((item) => (
             <TabBar.Item key={item.key} title={item.title} icon={item.icon} />
           ))}
