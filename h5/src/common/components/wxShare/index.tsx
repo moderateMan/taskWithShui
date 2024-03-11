@@ -124,8 +124,7 @@ function WxSharePopup(props: WxSharePopupProps) {
       showCloseButton
       closeOnMaskClick
       afterClose={props.afterClose}
-      onClose={() => setVisible(false)}
-    >
+      onClose={() => setVisible(false)}>
       <h2 className={styles["title"]}>分享</h2>
       <div className={styles["actions"]}>
         {actions.map((i, idx) => (

@@ -29,7 +29,7 @@ const createFetchPageFunctionByCategory: (
     getList({
       page: { pageNo: current, pageSize: pageSize },
       criteria: {
-        type: "ARTICLE",
+        type: "COURSE",
         title: search,
         category,
       },
@@ -89,15 +89,13 @@ export default function LearnScientific() {
           activeKey={type}
           className={styles["tabs"]}
           stretch={false}
-          onChange={(key) => setType(key as CourseType)}
-        >
+          onChange={(key) => setType(key as CourseType)}>
           {tabItems.map((item) => (
             <Tabs.Tab
               className={styles["tab"]}
               title={item.title}
               key={item.key}
-              destroyOnClose
-            >
+              destroyOnClose>
               <ScientificList
                 data={page?.data}
                 loadMore={loadMore}
