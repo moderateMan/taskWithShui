@@ -15,6 +15,7 @@ export const getLocalInToday = <T>(key: string) => {
       return obj.value as T;
     }
   }
+  localStorage.removeItem(key);
   return undefined;
 };
 

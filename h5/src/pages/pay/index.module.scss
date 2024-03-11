@@ -8,12 +8,13 @@
   }
   .wrapper {
     height: calc(100% - 58px);
-    overflow: hidden;
+    overflow: hidden auto;
     display: flex;
     flex-direction: column;
     .scientific {
       padding: 20px;
       .header {
+        top: 0;
         .desc {
           margin-top: 8px;
           font-size: 14px;

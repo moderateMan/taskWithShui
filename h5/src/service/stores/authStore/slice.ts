@@ -15,7 +15,7 @@ export interface SliceState {
 
 const initialState = (): SliceState => {
   return {
-    userInfo: getLocalInToday("userinfo"),
+    userInfo: undefined,
   };
 };
 
@@ -25,7 +25,7 @@ const appSlice = createSliceCustom({
   reducers: {
     setUserInfo(state, action: PayloadAction<LoginResponseData>) {
       state.userInfo = action.payload;
-      setLocalInToday("userinfo", action.payload);
+      // setLocalInToday("userinfo", action.payload);
     },
   },
 });
