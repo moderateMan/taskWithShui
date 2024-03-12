@@ -1,4 +1,4 @@
-import { Avatar, Form } from "antd-mobile";
+import { Avatar, Button, Form } from "antd-mobile";
 import styles from "./index.module.scss";
 import Input from "../../common/components/input";
 import Area, {
@@ -49,16 +49,16 @@ export default function EditProfile() {
         initialValues={initialValues}
         form={form}
         onValuesChange={() => {
-          form.validateFields().then((res) => {
-            const { area, nickname, mobile, ...resetValue } = res;
-            const formValue = {
-              province: getNameByCode(area?.[0]),
-              city: getNameByCode(area?.[1]),
-              district: getNameByCode(area?.[2]),
-              ...resetValue,
-            };
-            formValueRef.current = formValue;
-          });
+          const values = form.getFieldsValue();
+          const { area, nickname, ...resetValue } = values;
+          const formValue = {
+            province: getNameByCode(area?.[0]),
+            city: getNameByCode(area?.[1]),
+            district: getNameByCode(area?.[2]),
+            ...resetValue,
+          };
+          formValueRef.current = formValue;
+          form.validateFields();
         }}>
         <Form.Item label="微信名" name="nickname">
           <Input readOnly placeholder="请输入微信名" />
@@ -78,8 +78,10 @@ export default function EditProfile() {
         <Form.Item
           label="邮箱"
           name="email"
-          rules={[{ type: "email", message: "请输入正确的邮箱" }]}>
-          <Input placeholder="请输入邮箱" type="email" />
+          rules={[
+            { type: "email", warningOnly: true, message: "请输入正确的邮箱" },
+          ]}>
+          <Input placeholder="请输入邮箱" />
         </Form.Item>
       </Form>
     </div>
