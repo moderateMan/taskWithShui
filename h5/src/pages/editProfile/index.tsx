@@ -59,13 +59,12 @@ export default function EditProfile() {
             };
             formValueRef.current = formValue;
           });
-        }}
-      >
+        }}>
         <Form.Item label="微信名" name="nickname">
           <Input readOnly placeholder="请输入微信名" />
         </Form.Item>
         <Form.Item label="电话" name="mobile">
-          <Input readOnly placeholder="请输入电话" />
+          <Input placeholder="请输入电话" />
         </Form.Item>
         <Form.Item label="省市区" name="area">
           <Area placeholder="请选择省市区" />
@@ -79,8 +78,7 @@ export default function EditProfile() {
         <Form.Item
           label="邮箱"
           name="email"
-          rules={[{ type: "email", message: "请输入正确的邮箱" }]}
-        >
+          rules={[{ type: "email", message: "请输入正确的邮箱" }]}>
           <Input placeholder="请输入邮箱" type="email" />
         </Form.Item>
       </Form>

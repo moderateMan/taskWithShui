@@ -119,18 +119,6 @@ export default function Pay() {
               </span>
             </div>
           </div>
-          <div
-            className={styles["introduction"]}
-            dangerouslySetInnerHTML={{
-              __html: initDetail?.course.introductionHtml!,
-            }}
-          ></div>
-          <div
-            className={styles["detail"]}
-            dangerouslySetInnerHTML={{
-              __html: initDetail?.course.detailHtml!,
-            }}
-          ></div>
           <div className={styles["content"]}>
             <img src={initDetail?.course.cover} className={styles["img"]} />
             <div className={styles["mask"]}>
@@ -139,8 +127,7 @@ export default function Pay() {
                   className={styles["lock-btn"]}
                   onClick={buy}
                   loading={"auto"}
-                  loadingText="正在支付"
-                >
+                  loadingText="正在支付">
                   <LockOutline />
                   购买后查看全部文献
                 </Button>
@@ -151,6 +138,17 @@ export default function Pay() {
               )}
             </div>
           </div>
+          <div
+            className={styles["introduction"]}
+            dangerouslySetInnerHTML={{
+              __html: initDetail?.course.introductionHtml!,
+            }}></div>
+          <h3 className={styles["title"]}>详情</h3>
+          <div
+            className={styles["detail"]}
+            dangerouslySetInnerHTML={{
+              __html: initDetail?.course.detailHtml!,
+            }}></div>
         </div>
         <CommentList data={initDetail?.commentList} />
       </div>
@@ -159,8 +157,7 @@ export default function Pay() {
           <div
             key={i.title}
             className={styles["action"]}
-            onClick={() => i.onClick()}
-          >
+            onClick={() => i.onClick()}>
             {i.icon}
             {i.title}
           </div>
@@ -170,8 +167,7 @@ export default function Pay() {
             className={styles["pay-btn"]}
             onClick={buy}
             loading={"auto"}
-            loadingText="正在支付"
-          >
+            loadingText="正在支付">
             立即购买
           </Button>
         )}
