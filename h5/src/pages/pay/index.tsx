@@ -101,8 +101,14 @@ export default function Pay() {
 
   const view = () => {
     if (!verify()) return;
-    if (initDetail?.course.mediaUrl) {
+    if (initDetail?.course.mediaUrl?.endsWith("pdf")) {
+      navigate({
+        pathname: routes.pdfPreview.pathname(initDetail?.course.mediaUrl),
+      });
+    } else if (initDetail?.course.mediaUrl) {
       window.location.href = initDetail?.course.mediaUrl;
+    } else if (initDetail?.course.linkUrl) {
+      window.location.href = initDetail?.course.linkUrl;
     }
   };
 

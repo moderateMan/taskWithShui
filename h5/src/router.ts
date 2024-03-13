@@ -21,6 +21,7 @@ import PageError from "./pages/error";
 import { dp, reduxStore } from "./service";
 import { getWechatLoginCode, gotoCodeUrl } from "./common/utils/wechat-login";
 import { error } from "./common/utils/toast";
+import Preview from "./pages/preview";
 
 export type LoaderDataType = {
   isFree?: boolean;
@@ -92,6 +93,12 @@ export const routes = {
     pathname: (id: string | number) => `pay/${id}`,
     title: "付费文献",
     component: Pay,
+    auth: true,
+  },
+  pdfPreview: {
+    pathname: (id: string | number) => `preview/${id}`,
+    title: "文档",
+    component: Preview,
     auth: true,
   },
   /** 免费文献/付费文献（已购买） */
@@ -308,6 +315,11 @@ const router = createBrowserRouter([
     path: getAbsolutePath(routes.pay.pathname(":id")),
     Component: routes.pay.component,
     loader: commonLoader(routes.pay),
+  },
+  {
+    path: getAbsolutePath(routes.pdfPreview.pathname(":id")),
+    Component: routes.pdfPreview.component,
+    loader: commonLoader(routes.pdfPreview),
   },
   // {
   //   path: getAbsolutePath(routes.scientific.pathname(":id")),

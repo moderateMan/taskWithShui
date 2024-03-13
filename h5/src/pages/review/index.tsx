@@ -30,8 +30,7 @@ export default function Review() {
       className={styles["review"]}
       onValuesChange={(_, values) => {
         setDisabled(!Object.values(values).every(Boolean));
-      }}
-    >
+      }}>
       <div className={styles["block"]}>
         <div className={styles["header"]}>
           <img src={detail.course.cover} className={styles["cover-img"]} />
@@ -58,8 +57,7 @@ export default function Review() {
         <Button
           className={styles["submit"]}
           disabled={disabled}
-          onClick={submit}
-        >
+          onClick={submit}>
           提交
         </Button>
       </div>

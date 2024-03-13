@@ -79,7 +79,10 @@ export interface CreateOrderResponseData {
 }
 
 export function createOrder(data: CreateOrderRequestParams) {
-  return instance.post<{}, Response<CreateOrderResponseData>>("/order/create", data);
+  return instance.post<{}, Response<CreateOrderResponseData>>(
+    "/order/create",
+    data
+  );
 }
 
 export interface OrderListRequestParams {
@@ -178,7 +181,10 @@ export interface PrePayResponseData {
 }
 
 export function prepay(data: PrePayRequestParams) {
-  return instance.post<{}, Response<PrePayResponseData>>("/wechat/pay/prepay", data);
+  return instance.post<{}, Response<PrePayResponseData>>(
+    "/wechat/pay/prepay",
+    data
+  );
 }
 
 export interface CommentRequestParams {
@@ -245,5 +251,8 @@ export interface CommentResponseData {
 }
 
 export function comment(data: CommentRequestParams) {
-  return instance.post<{}, Response<CommentResponseData>>("/order/comment/submit", data);
+  return instance.post<{}, Response<CommentResponseData>>(
+    "/order/comment/submit",
+    data
+  );
 }
