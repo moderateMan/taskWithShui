@@ -43,6 +43,8 @@ declare module "@arco-design/color" {
   };
 }
 
+
+
 declare const WeixinJSBridge = {
   invoke: (
     type: string,
@@ -57,3 +59,5 @@ declare const WeixinJSBridge = {
 };
 
 type Nullable<T> = T | undefined | null;
+
+

@@ -1,4 +1,5 @@
 export const gotoCodeUrl = (options: { url?: string; appId?: string } = {}) => {
+  if (window.IS_DEBUG) return;
   const { url = window.location.href, appId = process.env.REACT_APP_APP_ID } =
     options;
   const redirectUrl = encodeURIComponent(url);

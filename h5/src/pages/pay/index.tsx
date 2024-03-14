@@ -27,7 +27,7 @@ import { getAbsolutePath, routes } from "../../router";
 export default function Pay() {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
-
+  const { setPdfUrl } = useFlat("payStore");
   const { userInfo } = useFlat("authStore");
 
   const [initDetail, setInitDetail] = useState<DetailData>();
@@ -74,6 +74,10 @@ export default function Pay() {
   ];
 
   const verify = () => {
+    if (window.IS_DEBUG) {
+      return true;
+    }
+
     const ret =
       userInfo &&
       Object.values(userInfo).every((i) => ![null, undefined, ""].includes(i));
@@ -85,6 +89,7 @@ export default function Pay() {
   };
 
   const buy = async () => {
+    debugger;
     if (!verify()) return;
     const order = await createOrder({ courseId: initDetail?.course.id! });
     if (order.success) {
@@ -101,12 +106,11 @@ export default function Pay() {
 
   const view = () => {
     if (!verify()) return;
-    if (initDetail?.course.mediaUrl?.endsWith("pdf")) {
+    if (initDetail?.course.mediaUrl) {
+      setPdfUrl(initDetail?.course.mediaUrl);
       navigate({
-        pathname: routes.pdfPreview.pathname(initDetail?.course.mediaUrl),
+        pathname: "/" + routes.pdfPreview.pathname,
       });
-    } else if (initDetail?.course.mediaUrl) {
-      window.location.href = initDetail?.course.mediaUrl;
     } else if (initDetail?.course.linkUrl) {
       window.location.href = initDetail?.course.linkUrl;
     }

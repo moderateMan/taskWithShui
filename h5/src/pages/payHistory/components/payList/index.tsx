@@ -82,8 +82,7 @@ export default function PayList(props: IProps) {
               navigate(
                 getAbsolutePath(options[commentStatus].pathname(order.courseId))
               );
-            }}
-          >
+            }}>
             <img src={order.courseCover} className={styles["cover-img"]} />
             <div className={styles["content"]}>
               <h3 className={styles["title"]}>{order.courseTitle}</h3>
@@ -101,8 +100,7 @@ export default function PayList(props: IProps) {
                   onClick={(e) => {
                     e.stopPropagation();
                     options[commentStatus]?.onClick?.(order.id, order.courseId);
-                  }}
-                >
+                  }}>
                   {options[commentStatus].content}
                 </Tag>
               </div>

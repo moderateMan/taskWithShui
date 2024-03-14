@@ -1,18 +1,15 @@
-import { useCallback, useState } from "react";
 import { useResizeObserver } from "@wojtekmaj/react-hooks";
-import { pdfjs, Document, Page } from "react-pdf";
+import { useCallback, useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
-
 import "./Sample.css";
-
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { useParams } from "react-router";
+import { useFlat } from "../../service";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc =
+  "https://shejun.jefferyqjy.com/pdf.worker.js";
 
 const options = {
   cMapUrl: "/cmaps/",
@@ -26,12 +23,12 @@ const maxWidth = 800;
 type PDFFile = string | File | null;
 
 export default function Sample() {
+  const { pdfUrl } = useFlat("payStore");
   const params = useParams<{ id: string }>();
   const [file, setFile] = useState<PDFFile>("./sample.pdf");
   const [numPages, setNumPages] = useState<number>();
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>();
-
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
 
@@ -47,16 +44,12 @@ export default function Sample() {
   }: PDFDocumentProxy): void {
     setNumPages(nextNumPages);
   }
-
   return (
     <div className="Example">
-      <header>
-        <h1>react-pdf sample page</h1>
-      </header>
       <div className="Example__container">
         <div className="Example__container__document" ref={setContainerRef}>
           <Document
-            file={params.id}
+            file={pdfUrl}
             onLoadSuccess={onDocumentLoadSuccess}
             options={options}>
             {Array.from(new Array(numPages), (el, index) => (
@@ -69,6 +62,11 @@ export default function Sample() {
               />
             ))}
           </Document>
+          {/* <iframe
+            src={
+              "/pdfOld/web/viewer.html?file=" +
+              "http://shejun-images.jefferyqjy.com/media/1709710655769_1 科研入门_20240306153555.pdf"
+            }></iframe> */}
         </div>
       </div>
     </div>

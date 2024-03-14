@@ -4,9 +4,12 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import VConsole from "vconsole";
 import "./index.scss";
+import "./global";
+new VConsole();
 
 if (process.env.NODE_ENV === "development") {
-  new VConsole();
+  // new VConsole();
+  window.IS_DEBUG = true;
 }
 
 const root = ReactDOM.createRoot(

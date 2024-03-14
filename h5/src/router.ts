@@ -96,7 +96,7 @@ export const routes = {
     auth: true,
   },
   pdfPreview: {
-    pathname: (id: string | number) => `preview/${id}`,
+    pathname: "preview",
     title: "文档",
     component: Preview,
     auth: true,
@@ -149,7 +149,7 @@ const createAuthLoader = (
   auth?: boolean
 ): Callback<LoaderFunction> | undefined => {
   return async () => {
-    if (auth) {
+    if (!window.IS_DEBUG && auth) {
       const { authStore } = reduxStore.getState();
       const { userInfo } = authStore;
       if (!userInfo?.token) {
@@ -317,7 +317,7 @@ const router = createBrowserRouter([
     loader: commonLoader(routes.pay),
   },
   {
-    path: getAbsolutePath(routes.pdfPreview.pathname(":id")),
+    path: getAbsolutePath(routes.pdfPreview.pathname),
     Component: routes.pdfPreview.component,
     loader: commonLoader(routes.pdfPreview),
   },
