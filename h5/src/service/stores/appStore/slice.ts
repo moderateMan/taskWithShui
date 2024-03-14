@@ -5,12 +5,12 @@ import names from "../names";
 
 /* Types */
 export interface SliceState {
-	appInfo: string;
+	initUrl: string;
 }
 
 const initialState = (): SliceState => {
 	return {
-		appInfo: "test",
+		initUrl: window.location.href,
 	};
 };
 
@@ -19,7 +19,6 @@ const appSlice = createSliceCustom({
 	stateInit: initialState,
 	reducers: {
 		setAppInfo(state, action: PayloadAction<string>) {
-			state.appInfo = action.payload;
 		},
 	},
 

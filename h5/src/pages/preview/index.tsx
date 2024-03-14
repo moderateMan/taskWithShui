@@ -7,9 +7,13 @@ import "./Sample.css";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { useParams } from "react-router";
 import { useFlat } from "../../service";
+import { Button, Toast } from "antd-mobile";
+import { AddOutline, MinusOutline } from "antd-mobile-icons";
 
-pdfjs.GlobalWorkerOptions.workerSrc =
-  "https://shejun.jefferyqjy.com/pdf.worker.js";
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.js",
+  import.meta.url
+).toString();
 
 const options = {
   cMapUrl: "/cmaps/",
@@ -44,6 +48,30 @@ export default function Sample() {
   }: PDFDocumentProxy): void {
     setNumPages(nextNumPages);
   }
+
+  const zoomIn = () => {
+    setContainerWidth((w) => {
+      if (!w) return w;
+      const nw = w * 1.2;
+      if (nw >= 800) {
+        Toast.show({ content: "这已经是最大啦！" });
+        return 800;
+      }
+      return nw;
+    });
+  };
+  const zoomOut = () => {
+    setContainerWidth((w) => {
+      if (!w) return w;
+      const nw = w * 0.8;
+      const minw = containerRef?.offsetWidth || window.innerWidth;
+      if (nw <= minw) {
+        Toast.show({ content: "这已经是最小啦！" });
+        return minw;
+      }
+      return nw;
+    });
+  };
   return (
     <div className="Example">
       <div className="Example__container">
@@ -51,7 +79,8 @@ export default function Sample() {
           <Document
             file={pdfUrl}
             onLoadSuccess={onDocumentLoadSuccess}
-            options={options}>
+            options={options}
+          >
             {Array.from(new Array(numPages), (el, index) => (
               <Page
                 key={`page_${index + 1}`}
@@ -67,6 +96,26 @@ export default function Sample() {
               "/pdfOld/web/viewer.html?file=" +
               "http://shejun-images.jefferyqjy.com/media/1709710655769_1 科研入门_20240306153555.pdf"
             }></iframe> */}
+        </div>
+        <div className="Example__container__actions">
+          <Button
+            color="primary"
+            fill="none"
+            shape="rounded"
+            size="large"
+            onClick={zoomOut}
+          >
+            <MinusOutline />
+          </Button>
+          <Button
+            color="primary"
+            fill="none"
+            shape="rounded"
+            size="large"
+            onClick={zoomIn}
+          >
+            <AddOutline />
+          </Button>
         </div>
       </div>
     </div>

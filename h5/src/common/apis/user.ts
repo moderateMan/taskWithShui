@@ -248,8 +248,8 @@ export interface WechatCfg {
   timestamp: number;
 }
 
-export function getWechatCfg() {
+export function getWechatCfg(url = window.location.href) {
   return instance.get<{}, Response<WechatCfg>>("/wechat/config", {
-    params: { url: window.location.href },
+    params: { url },
   });
 }

@@ -162,7 +162,6 @@ const createAuthLoader = (
         }
       }
     }
-    return {};
   };
 };
 

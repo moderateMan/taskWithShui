@@ -7,7 +7,6 @@ import {
   SendOutline,
 } from "antd-mobile-icons";
 import { Button } from "antd-mobile";
-import { share } from "../../common/components/wxShare";
 import { useEffect, useMemo, useState } from "react";
 import {
   CourseType,
@@ -23,12 +22,16 @@ import { success, warning } from "../../common/utils/toast";
 import CommentList from "../../common/components/commentList";
 import { useFlat } from "../../service";
 import { getAbsolutePath, routes } from "../../router";
+import WxMaskShare from "../../common/components/wxMaskShare";
+import { getTextByHtml } from "../../common/utils/html";
 
 export default function Pay() {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { setPdfUrl } = useFlat("payStore");
   const { userInfo } = useFlat("authStore");
+
+  const [visible, setVisible] = useState(false);
 
   const [initDetail, setInitDetail] = useState<DetailData>();
 
@@ -53,7 +56,7 @@ export default function Pay() {
     {
       title: "分享",
       icon: <SendOutline className={styles["icon"]} color="#000000" />,
-      onClick: share,
+      onClick: () => setVisible(true),
     },
     {
       title: "收藏",
@@ -137,7 +140,8 @@ export default function Pay() {
                   className={styles["lock-btn"]}
                   onClick={buy}
                   loading={"auto"}
-                  loadingText="正在支付">
+                  loadingText="正在支付"
+                >
                   <LockOutline />
                   购买后查看全部文献
                 </Button>
@@ -152,13 +156,15 @@ export default function Pay() {
             className={styles["introduction"]}
             dangerouslySetInnerHTML={{
               __html: initDetail?.course.introductionHtml!,
-            }}></div>
+            }}
+          ></div>
           <h3 className={styles["title"]}>详情</h3>
           <div
             className={styles["detail"]}
             dangerouslySetInnerHTML={{
               __html: initDetail?.course.detailHtml!,
-            }}></div>
+            }}
+          ></div>
         </div>
         <CommentList data={initDetail?.commentList} />
       </div>
@@ -167,7 +173,8 @@ export default function Pay() {
           <div
             key={i.title}
             className={styles["action"]}
-            onClick={() => i.onClick()}>
+            onClick={() => i.onClick()}
+          >
             {i.icon}
             {i.title}
           </div>
@@ -177,11 +184,19 @@ export default function Pay() {
             className={styles["pay-btn"]}
             onClick={buy}
             loading={"auto"}
-            loadingText="正在支付">
+            loadingText="正在支付"
+          >
             立即购买
           </Button>
         )}
       </div>
+      <WxMaskShare
+        img={initDetail?.course.cover}
+        title={initDetail?.course.title}
+        desc={getTextByHtml(initDetail?.course.introductionHtml)}
+        visible={visible}
+        onClose={() => setVisible(false)}
+      />
     </div>
   );
 }
