@@ -157,9 +157,8 @@ const createAuthLoader = (
 ): Callback<LoaderFunction> | undefined => {
   return async () => {
     if (!window.IS_DEBUG && auth) {
-      // const { authStore } = reduxStore.getState();
-      // const { userInfo } = authStore;
-      const userInfo = getLocalInToday<UserInfoResponseData>("userinfo");
+      const { authStore } = reduxStore.getState();
+      const { userInfo } = authStore;
       if (!userInfo?.token) {
         const code = getWechatLoginCode();
         if (!code) {
@@ -167,7 +166,6 @@ const createAuthLoader = (
         } else {
           const { data } = await login({ code });
           dp("authStore", "setUserInfo", data);
-          setLocalInToday("userinfo", data);
         }
       }
     }
