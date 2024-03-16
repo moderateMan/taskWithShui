@@ -10,10 +10,8 @@ import { useFlat } from "../../service";
 import { Button, Toast } from "antd-mobile";
 import { AddOutline, MinusOutline } from "antd-mobile-icons";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc =
+  "https://shejun.jefferyqjy.com/pdf.worker.js";
 
 const options = {
   cMapUrl: "/cmaps/",
@@ -79,8 +77,7 @@ export default function Sample() {
           <Document
             file={pdfUrl}
             onLoadSuccess={onDocumentLoadSuccess}
-            options={options}
-          >
+            options={options}>
             {Array.from(new Array(numPages), (el, index) => (
               <Page
                 key={`page_${index + 1}`}
@@ -103,8 +100,7 @@ export default function Sample() {
             fill="none"
             shape="rounded"
             size="large"
-            onClick={zoomOut}
-          >
+            onClick={zoomOut}>
             <MinusOutline />
           </Button>
           <Button
@@ -112,8 +108,7 @@ export default function Sample() {
             fill="none"
             shape="rounded"
             size="large"
-            onClick={zoomIn}
-          >
+            onClick={zoomIn}>
             <AddOutline />
           </Button>
         </div>

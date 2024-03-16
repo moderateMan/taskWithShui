@@ -14,7 +14,13 @@ import PayHistory from "./pages/payHistory";
 import Review from "./pages/review";
 import Scientific from "./pages/scientific";
 import Pay from "./pages/pay";
-import { DetailData, CourseType, getDetail, login, UserInfoResponseData } from "./common/apis";
+import {
+  DetailData,
+  CourseType,
+  getDetail,
+  login,
+  UserInfoResponseData,
+} from "./common/apis";
 import createAgent, { Callback } from "./common/utils/agent";
 import Page404 from "./pages/404";
 import PageError from "./pages/error";
