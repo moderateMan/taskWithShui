@@ -12,7 +12,8 @@ export interface SliceState {
 
 const initialState = (): SliceState => {
   return {
-    userInfo: getSession("userinfo"),
+    // userInfo: getSession("userinfo"),
+    userInfo: undefined,
   };
 };
 
@@ -22,7 +23,7 @@ const appSlice = createSliceCustom({
   reducers: {
     setUserInfo(state, action: PayloadAction<LoginResponseData>) {
       state.userInfo = action.payload;
-      setSession("userinfo", action.payload);
+      // setSession("userinfo", action.payload);
     },
   },
 });

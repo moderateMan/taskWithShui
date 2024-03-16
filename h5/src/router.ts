@@ -14,7 +14,7 @@ import PayHistory from "./pages/payHistory";
 import Review from "./pages/review";
 import Scientific from "./pages/scientific";
 import Pay from "./pages/pay";
-import { DetailData, CourseType, getDetail, login } from "./common/apis";
+import { DetailData, CourseType, getDetail, login, UserInfoResponseData } from "./common/apis";
 import createAgent, { Callback } from "./common/utils/agent";
 import Page404 from "./pages/404";
 import PageError from "./pages/error";
@@ -22,6 +22,7 @@ import { dp, reduxStore } from "./service";
 import { getWechatLoginCode, gotoCodeUrl } from "./common/utils/wechat-login";
 import { error } from "./common/utils/toast";
 import Preview from "./pages/preview";
+import { getSession, setSession } from "./common/utils/storage";
 
 export type LoaderDataType = {
   isFree?: boolean;
@@ -150,8 +151,9 @@ const createAuthLoader = (
 ): Callback<LoaderFunction> | undefined => {
   return async () => {
     if (!window.IS_DEBUG && auth) {
-      const { authStore } = reduxStore.getState();
-      const { userInfo } = authStore;
+      // const { authStore } = reduxStore.getState();
+      // const { userInfo } = authStore;
+      const userInfo = getSession<UserInfoResponseData>("userinfo");
       if (!userInfo?.token) {
         const code = getWechatLoginCode();
         if (!code) {
@@ -159,6 +161,7 @@ const createAuthLoader = (
         } else {
           const { data } = await login({ code });
           dp("authStore", "setUserInfo", data);
+          setSession("userinfo", data);
         }
       }
     }
