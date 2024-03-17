@@ -21,9 +21,10 @@ import { pay } from "../../common/utils/wechat-pay";
 import { success, warning } from "../../common/utils/toast";
 import CommentList from "../../common/components/commentList";
 import { useFlat } from "../../service";
-import { getAbsolutePath, routes } from "../../router";
+import { getAbsolutePath, rootPrefix, routes } from "../../router";
 import WxMaskShare from "../../common/components/wxMaskShare";
 import { getTextByHtml } from "../../common/utils/html";
+import { Icon } from "@iconify/react";
 
 export default function Pay() {
   const params = useParams<{ id: string }>();
@@ -53,6 +54,17 @@ export default function Pay() {
   }, []);
 
   const actions = [
+    {
+      title: "首页",
+      icon: (
+        <Icon
+          icon="solar:home-2-broken"
+          className={styles["icon"]}
+          color="#000000"
+        />
+      ),
+      onClick: () => navigate(rootPrefix),
+    },
     {
       title: "分享",
       icon: <SendOutline className={styles["icon"]} color="#000000" />,
