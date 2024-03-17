@@ -11,7 +11,7 @@ import { Button, Toast } from "antd-mobile";
 import { AddOutline, MinusOutline } from "antd-mobile-icons";
 import useWxShare from "../../common/hooks/useWxShare";
 import { getTextByHtml } from "../../common/utils/html";
-import { LoaderDataType } from "../../router";
+import { LoaderDataType, getAbsolutePath, routes } from "../../router";
 
 pdfjs.GlobalWorkerOptions.workerSrc =
   "https://shejun.jefferyqjy.com/pdf.worker.js";
@@ -28,7 +28,7 @@ const maxWidth = 800;
 // type PDFFile = string | File | null;
 
 export default function Sample() {
-  // const params = useParams<{ id: string }>();
+  const params = useParams<{ id: string }>();
   // const [file, setFile] = useState<PDFFile>("./sample.pdf");
   const { detail } = useLoaderData() as LoaderDataType;
   const [numPages, setNumPages] = useState<number>();
@@ -44,11 +44,12 @@ export default function Sample() {
 
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
 
-  
   useWxShare({
     img: detail?.course.cover,
     title: detail?.course.title,
     desc: getTextByHtml(detail?.course.introductionHtml),
+    link:
+      window.location.origin + getAbsolutePath(routes.pay.pathname(params.id!)),
   });
 
   function onDocumentLoadSuccess({

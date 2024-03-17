@@ -14,12 +14,7 @@ import PayHistory from "./pages/payHistory";
 import Review from "./pages/review";
 import Scientific from "./pages/scientific";
 import Pay from "./pages/pay";
-import {
-  DetailData,
-  CourseType,
-  getDetail,
-  login,
-} from "./common/apis";
+import { DetailData, CourseType, getDetail, login } from "./common/apis";
 import createAgent, { Callback } from "./common/utils/agent";
 import Page404 from "./pages/404";
 import PageError from "./pages/error";
@@ -242,6 +237,11 @@ const redirectPreviewLoader: Callback<LoaderFunction> = async (
   const { id } = args.params;
   if (id) {
     const { data } = await getDetail({ id });
+    if (data.course.category === CourseType.PAID_COURSE) {
+      if (!data.bought) {
+        return finish(redirect(getAbsolutePath(routes.pay.pathname(id))));
+      }
+    }
     if (!!data?.course?.mediaUrl) {
       return setData("detail", data);
     }
