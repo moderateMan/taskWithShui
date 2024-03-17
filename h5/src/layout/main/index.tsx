@@ -5,11 +5,13 @@ import { useEffect } from "react";
 import cls from "classnames";
 import { getAbsolutePath, routes, rootPrefix } from "../../router";
 import { Icon } from "@iconify/react";
+import useWxShare from "../../common/hooks/useWxShare";
 
 export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { pathname } = location;
+  useWxShare();
 
   const setRouteActive = (value: string) => {
     navigate(value, { replace: true });
@@ -88,7 +90,8 @@ export default function MainLayout() {
       <div className={styles.tabbar}>
         <TabBar
           activeKey={pathname}
-          onChange={(value) => setRouteActive(value)}>
+          onChange={(value) => setRouteActive(value)}
+        >
           {tabs.map((item) => (
             <TabBar.Item key={item.key} title={item.title} icon={item.icon} />
           ))}

@@ -8,12 +8,14 @@ import Area, {
 import { useFlat } from "../../service";
 import { useEffect, useMemo, useRef } from "react";
 import { UpdateUserInfoRequestParams } from "../../common/apis";
+import useWxShare from "../../common/hooks/useWxShare";
 
 export default function EditProfile() {
   const { userInfo } = useFlat("authStore");
   const { updateUserInfo } = useFlat("editProfileStore");
   const [form] = Form.useForm();
   const formValueRef = useRef<UpdateUserInfoRequestParams>();
+  useWxShare({ title: "做科研", link: window.location.origin });
 
   const initialValues = useMemo(() => {
     const { province, city, district } = userInfo || {};
@@ -59,7 +61,8 @@ export default function EditProfile() {
           };
           formValueRef.current = formValue;
           form.validateFields();
-        }}>
+        }}
+      >
         <Form.Item label="微信名" name="nickname">
           <Input readOnly placeholder="请输入微信名" />
         </Form.Item>
@@ -80,7 +83,8 @@ export default function EditProfile() {
           name="email"
           rules={[
             { type: "email", warningOnly: true, message: "请输入正确的邮箱" },
-          ]}>
+          ]}
+        >
           <Input placeholder="请输入邮箱" />
         </Form.Item>
       </Form>

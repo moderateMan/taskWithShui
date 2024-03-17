@@ -5,10 +5,13 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "./Sample.css";
 import type { PDFDocumentProxy } from "pdfjs-dist";
-import { useParams } from "react-router";
+import { useLoaderData, useParams } from "react-router";
 import { useFlat } from "../../service";
 import { Button, Toast } from "antd-mobile";
 import { AddOutline, MinusOutline } from "antd-mobile-icons";
+import useWxShare from "../../common/hooks/useWxShare";
+import { getTextByHtml } from "../../common/utils/html";
+import { LoaderDataType } from "../../router";
 
 pdfjs.GlobalWorkerOptions.workerSrc =
   "https://shejun.jefferyqjy.com/pdf.worker.js";
@@ -22,12 +25,12 @@ const resizeObserverOptions = {};
 
 const maxWidth = 800;
 
-type PDFFile = string | File | null;
+// type PDFFile = string | File | null;
 
 export default function Sample() {
-  const { pdfUrl } = useFlat("payStore");
-  const params = useParams<{ id: string }>();
-  const [file, setFile] = useState<PDFFile>("./sample.pdf");
+  // const params = useParams<{ id: string }>();
+  // const [file, setFile] = useState<PDFFile>("./sample.pdf");
+  const { detail } = useLoaderData() as LoaderDataType;
   const [numPages, setNumPages] = useState<number>();
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>();
@@ -40,6 +43,13 @@ export default function Sample() {
   }, []);
 
   useResizeObserver(containerRef, resizeObserverOptions, onResize);
+
+  
+  useWxShare({
+    img: detail?.course.cover,
+    title: detail?.course.title,
+    desc: getTextByHtml(detail?.course.introductionHtml),
+  });
 
   function onDocumentLoadSuccess({
     numPages: nextNumPages,
@@ -75,9 +85,10 @@ export default function Sample() {
       <div className="Example__container">
         <div className="Example__container__document" ref={setContainerRef}>
           <Document
-            file={pdfUrl}
+            file={detail?.course?.mediaUrl}
             onLoadSuccess={onDocumentLoadSuccess}
-            options={options}>
+            options={options}
+          >
             {Array.from(new Array(numPages), (el, index) => (
               <Page
                 key={`page_${index + 1}`}
@@ -100,7 +111,8 @@ export default function Sample() {
             fill="none"
             shape="rounded"
             size="large"
-            onClick={zoomOut}>
+            onClick={zoomOut}
+          >
             <MinusOutline />
           </Button>
           <Button
@@ -108,7 +120,8 @@ export default function Sample() {
             fill="none"
             shape="rounded"
             size="large"
-            onClick={zoomIn}>
+            onClick={zoomIn}
+          >
             <AddOutline />
           </Button>
         </div>

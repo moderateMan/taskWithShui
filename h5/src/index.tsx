@@ -3,6 +3,7 @@ import SuperProvider from "./service/providers";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import VConsole from "vconsole";
+import { WxConfigProvider } from "./common/hooks/useWxShare";
 import "./index.scss";
 import "./global";
 new VConsole();
@@ -18,7 +19,9 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
   <SuperProvider>
-    <App />
+    <WxConfigProvider>
+      <App />
+    </WxConfigProvider>
   </SuperProvider>
   // </React.StrictMode>
 );

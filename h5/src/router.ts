@@ -19,7 +19,6 @@ import {
   CourseType,
   getDetail,
   login,
-  UserInfoResponseData,
 } from "./common/apis";
 import createAgent, { Callback } from "./common/utils/agent";
 import Page404 from "./pages/404";
@@ -28,7 +27,6 @@ import { dp, reduxStore } from "./service";
 import { getWechatLoginCode, gotoCodeUrl } from "./common/utils/wechat-login";
 import { error } from "./common/utils/toast";
 import Preview from "./pages/preview";
-import { getLocalInToday, getSession, setLocalInToday, setSession } from "./common/utils/storage";
 
 export type LoaderDataType = {
   isFree?: boolean;
@@ -103,7 +101,7 @@ export const routes = {
     auth: true,
   },
   pdfPreview: {
-    pathname: "preview",
+    pathname: (id: string | number) => `preview/${id}`,
     title: "文档",
     component: Preview,
     auth: true,
@@ -236,6 +234,22 @@ const redirectReviewLoader: Callback<LoaderFunction> = async (
   return finish(redirect(getAbsolutePath(routes.error.pathname)));
 };
 
+const redirectPreviewLoader: Callback<LoaderFunction> = async (
+  args,
+  _data,
+  { finish, setData }
+) => {
+  const { id } = args.params;
+  if (id) {
+    const { data } = await getDetail({ id });
+    if (!!data?.course?.mediaUrl) {
+      return setData("detail", data);
+    }
+  }
+  error("文献不存在！");
+  return finish(redirect(getAbsolutePath(routes.error.pathname)));
+};
+
 const loaderErrorHandler = () =>
   redirect(getAbsolutePath(routes.error.pathname));
 
@@ -265,6 +279,14 @@ const commonLoader = (route: (typeof routes)[keyof typeof routes]) =>
       createAuthLoader(routes.review.auth),
       redirectReviewLoader,
       createTitleLoader(routes.review.title),
+    ],
+    { onError: loaderErrorHandler }
+  ),
+  previewLoader = createAgent(
+    [
+      createAuthLoader(routes.pdfPreview.auth),
+      redirectPreviewLoader,
+      createTitleLoader(routes.pdfPreview.title),
     ],
     { onError: loaderErrorHandler }
   );
@@ -323,9 +345,9 @@ const router = createBrowserRouter([
     loader: commonLoader(routes.pay),
   },
   {
-    path: getAbsolutePath(routes.pdfPreview.pathname),
+    path: getAbsolutePath(routes.pdfPreview.pathname(":id")),
     Component: routes.pdfPreview.component,
-    loader: commonLoader(routes.pdfPreview),
+    loader: previewLoader,
   },
   // {
   //   path: getAbsolutePath(routes.scientific.pathname(":id")),

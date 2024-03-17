@@ -25,16 +25,22 @@ import { getAbsolutePath, rootPrefix, routes } from "../../router";
 import WxMaskShare from "../../common/components/wxMaskShare";
 import { getTextByHtml } from "../../common/utils/html";
 import { Icon } from "@iconify/react";
+import useWxShare from "../../common/hooks/useWxShare";
 
 export default function Pay() {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { setPdfUrl } = useFlat("payStore");
   const { userInfo } = useFlat("authStore");
 
   const [visible, setVisible] = useState(false);
 
   const [initDetail, setInitDetail] = useState<DetailData>();
+
+  useWxShare({
+    img: initDetail?.course.cover,
+    title: initDetail?.course.title,
+    desc: getTextByHtml(initDetail?.course.introductionHtml),
+  });
 
   const fetchDetail = () => {
     getDetail({ id: params.id }).then(({ data }) => {
@@ -122,10 +128,7 @@ export default function Pay() {
   const view = () => {
     if (!verify()) return;
     if (initDetail?.course.mediaUrl) {
-      setPdfUrl(initDetail?.course.mediaUrl);
-      navigate({
-        pathname: "/" + routes.pdfPreview.pathname,
-      });
+      navigate(getAbsolutePath(routes.pdfPreview.pathname(params.id!)));
     } else if (initDetail?.course.linkUrl) {
       window.location.href = initDetail?.course.linkUrl;
     }
@@ -202,13 +205,7 @@ export default function Pay() {
           </Button>
         )}
       </div>
-      <WxMaskShare
-        img={initDetail?.course.cover}
-        title={initDetail?.course.title}
-        desc={getTextByHtml(initDetail?.course.introductionHtml)}
-        visible={visible}
-        onClose={() => setVisible(false)}
-      />
+      <WxMaskShare visible={visible} onClose={() => setVisible(false)} />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import PayList from "./components/payList";
 import { useEffect } from "react";
 import { OrderListResponseData, getOrderList } from "../../common/apis";
 import useLoadPage, { FetchPageType } from "../../common/hooks/useLoadPage";
+import useWxShare from "../../common/hooks/useWxShare";
 
 const fetchPage: FetchPageType<{}, OrderListResponseData> = ({
   pageSize,
@@ -21,6 +22,7 @@ const fetchPage: FetchPageType<{}, OrderListResponseData> = ({
   );
 
 export default function PayHistory() {
+  useWxShare();
   const { loadPage, reload, data, isFinish } = useLoadPage(fetchPage, {
     isFinish: ({ pageSize, current, count }) =>
       pageSize * (current + 1) >= count,
