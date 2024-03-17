@@ -45,7 +45,7 @@ export default function Review() {
             </span>
           </div>
         </div>
-        <Form.Item name="comment">
+        <Form.Item name="content">
           <TextArea
             className={styles["textarea"]}
             placeholder="请您填写对视频的评价吧"
