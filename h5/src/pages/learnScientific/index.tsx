@@ -13,11 +13,11 @@ import useLoadPage, {
 const tabItems = [
   {
     key: CourseType.PAID_COURSE,
-    title: "付费文献",
+    title: "付费科研",
   },
   {
     key: CourseType.FREE_COURSE,
-    title: "免费文献",
+    title: "免费科研",
   },
 ];
 

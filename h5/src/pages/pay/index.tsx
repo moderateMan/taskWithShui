@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { useLoaderData, useNavigate, useParams } from "react-router";
 import styles from "./index.module.scss";
 import {
   HeartFill,
@@ -21,7 +21,12 @@ import { pay } from "../../common/utils/wechat-pay";
 import { success, warning } from "../../common/utils/toast";
 import CommentList from "../../common/components/commentList";
 import { useFlat } from "../../service";
-import { getAbsolutePath, rootPrefix, routes } from "../../router";
+import {
+  LoaderDataType,
+  getAbsolutePath,
+  rootPrefix,
+  routes,
+} from "../../router";
 import WxMaskShare from "../../common/components/wxMaskShare";
 import { getTextByHtml } from "../../common/utils/html";
 import { Icon } from "@iconify/react";
@@ -31,10 +36,11 @@ export default function Pay() {
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { userInfo } = useFlat("authStore");
+  const { detail, isRead } = useLoaderData() as LoaderDataType;
 
   const [visible, setVisible] = useState(false);
 
-  const [initDetail, setInitDetail] = useState<DetailData>();
+  const [initDetail, setInitDetail] = useState<DetailData>(detail);
 
   useWxShare({
     img: initDetail?.course.cover,
@@ -55,9 +61,9 @@ export default function Pay() {
     );
   }, [initDetail?.bought, initDetail?.course?.category]);
 
-  useEffect(() => {
-    fetchDetail();
-  }, []);
+  // useEffect(() => {
+  //   fetchDetail();
+  // }, []);
 
   const actions = [
     {
@@ -69,7 +75,10 @@ export default function Pay() {
           color="#000000"
         />
       ),
-      onClick: () => navigate(rootPrefix),
+      onClick: () =>
+        navigate(
+          isRead ? getAbsolutePath(routes.readScientific.pathname) : rootPrefix
+        ),
     },
     {
       title: "分享",

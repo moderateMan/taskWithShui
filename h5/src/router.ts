@@ -24,6 +24,7 @@ import { error } from "./common/utils/toast";
 import Preview from "./pages/preview";
 
 export type LoaderDataType = {
+  isRead?: boolean;
   isFree?: boolean;
   detail: DetailData;
 };
@@ -88,10 +89,11 @@ export const routes = {
     component: Review,
     auth: true,
   },
-  /** 付费文献（未购买） */
+  /** 付费科研（未购买） */
   pay: {
     pathname: (id: string | number) => `pay/${id}`,
-    title: "付费文献",
+    title: (data: any) =>
+      data.isRead ? "读文献" : data.isFree ? "免费科研" : "付费科研",
     component: Pay,
     auth: true,
   },
@@ -101,10 +103,10 @@ export const routes = {
     component: Preview,
     auth: true,
   },
-  /** 免费文献/付费文献（已购买） */
+  /** 免费科研/付费科研（已购买） */
   // scientific: {
   //   pathname: (id: string | number) => `scientific/${id}`,
-  //   title: (data: any) => (data.isFree ? "免费文献" : "付费文献"),
+  //   title: (data: any) => (data.isFree ? "免费科研" : "付费科研"),
   //   component: Scientific,
   //   auth: true,
   // },
@@ -185,25 +187,21 @@ const createAuthLoader = (
 //   return finish(redirect(getAbsolutePath(routes.error.pathname)));
 // };
 
-// const redirectPayLoader: Callback<LoaderFunction> = async (
-//   args,
-//   _data,
-//   { finish, setData }
-// ) => {
-//   const { id } = args.params;
-//   if (id) {
-//     const { data } = await getDetail({ id });
-//     setData("detail", data);
-//     if (data.course.category === CourseType.PAID_COURSE) {
-//       if (!data.bought) {
-//         return finish(redirect(getAbsolutePath(routes.pay.pathname(id))));
-//       }
-//     }
-//     return setData("isFree", true);
-//   }
+const redirectPayLoader: Callback<LoaderFunction> = async (
+  args,
+  _data,
+  { finish, setData }
+) => {
+  const { id } = args.params;
+  if (id) {
+    const { data } = await getDetail({ id });
+    setData("detail", data);
+    setData("isRead", data.course?.type === "ARTICLE");
+    return setData("isFree", data.course?.category === CourseType.FREE_COURSE);
+  }
 
-//   return finish(redirect(getAbsolutePath(routes.error.pathname)));
-// };
+  return finish(redirect(getAbsolutePath(routes.error.pathname)));
+};
 
 const redirectReviewLoader: Callback<LoaderFunction> = async (
   args,
@@ -258,14 +256,14 @@ const commonLoader = (route: (typeof routes)[keyof typeof routes]) =>
       [createAuthLoader(route.auth), createTitleLoader(route.title)],
       { onError: loaderErrorHandler }
     ),
-  // payLoader = createAgent(
-  //   [
-  //     createAuthLoader(routes.pay.auth),
-  //     redirectScientificLoader,
-  //     createTitleLoader(routes.pay.title),
-  //   ],
-  //   { onError: loaderErrorHandler }
-  // ),
+  payLoader = createAgent(
+    [
+      createAuthLoader(routes.pay.auth),
+      redirectPayLoader,
+      createTitleLoader(routes.pay.title),
+    ],
+    { onError: loaderErrorHandler }
+  ),
   // scientificLoader = createAgent(
   //   [
   //     createAuthLoader(routes.scientific.auth),
@@ -342,7 +340,7 @@ const router = createBrowserRouter([
   {
     path: getAbsolutePath(routes.pay.pathname(":id")),
     Component: routes.pay.component,
-    loader: commonLoader(routes.pay),
+    loader: payLoader,
   },
   {
     path: getAbsolutePath(routes.pdfPreview.pathname(":id")),

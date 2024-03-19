@@ -20,7 +20,6 @@ specifiers:
   axios: ^1.6.2
   classnames: ^2.3.2
   dayjs: ^1.11.10
-  html2text: ^6.0.0
   http-proxy-middleware: ^2.0.6
   lodash.isempty: ^4.4.0
   pdfjs-dist: 3.11.174
@@ -57,7 +56,6 @@ dependencies:
   axios: 1.6.7
   classnames: 2.5.1
   dayjs: 1.11.10
-  html2text: 6.0.0
   http-proxy-middleware: 2.0.6
   lodash.isempty: 4.4.0
   pdfjs-dist: 3.11.174
@@ -4777,13 +4775,6 @@ packages:
       webidl-conversions: 5.0.0
     dev: false
 
-  /domhandler/3.3.0:
-    resolution: {integrity: sha512-J1C5rIANUbuYK+FuFL98650rihynUOEzRLxW+90bKZRWB6A1X1Tf82GxR1qAWLyfNPRvjqfip3Q5tdYlmAa9lA==}
-    engines: {node: '>= 4'}
-    dependencies:
-      domelementtype: 2.3.0
-    dev: false
-
   /domhandler/4.3.1:
     resolution: {integrity: sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==}
     engines: {node: '>= 4'}
@@ -6078,26 +6069,6 @@ packages:
       pretty-error: 4.0.0
       tapable: 2.2.1
       webpack: 5.90.1
-    dev: false
-
-  /html2text/6.0.0:
-    resolution: {integrity: sha512-WFC62mpRJAl2c1+20WsqEOUg9yuZ1umv8AuqbmYymKpDDaNwMTMx6qUf2Fz/chI5UXaDp1P6d7dw+DZOLBo8IA==}
-    engines: {node: '>=8.10.0'}
-    hasBin: true
-    dependencies:
-      he: 1.2.0
-      htmlparser2: 4.1.0
-      lodash: 4.17.21
-      minimist: 1.2.8
-    dev: false
-
-  /htmlparser2/4.1.0:
-    resolution: {integrity: sha512-4zDq1a1zhE4gQso/c5LP1OtrhYTncXNSpvJYtWJBtXAETPlMfi3IFNjGuQbYLuVY4ZR0QMqRVvo4Pdy9KLyP8Q==}
-    dependencies:
-      domelementtype: 2.3.0
-      domhandler: 3.3.0
-      domutils: 2.8.0
-      entities: 2.2.0
     dev: false
 
   /htmlparser2/6.1.0:
