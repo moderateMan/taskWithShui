@@ -1,17 +1,18 @@
 import { useResizeObserver } from "@wojtekmaj/react-hooks";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "./Sample.css";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { useLoaderData, useParams } from "react-router";
-import { useFlat } from "../../service";
+import { Dialog, DotLoading } from "antd-mobile";
 import { Button, Toast } from "antd-mobile";
 import { AddOutline, MinusOutline } from "antd-mobile-icons";
 import useWxShare from "../../common/hooks/useWxShare";
 import { getTextByHtml } from "../../common/utils/html";
 import { LoaderDataType, getAbsolutePath, routes } from "../../router";
+import { loading } from "../../common/utils/toast";
 
 pdfjs.GlobalWorkerOptions.workerSrc =
   "https://shejun.jefferyqjy.com/pdf.worker.js";
@@ -55,9 +56,13 @@ export default function Sample() {
   function onDocumentLoadSuccess({
     numPages: nextNumPages,
   }: PDFDocumentProxy): void {
+    ref.current?.();
     setNumPages(nextNumPages);
   }
-
+  const ref = useRef<any>();
+  useEffect(() => {
+    ref.current = loading();
+  }, []);
   const zoomIn = () => {
     setContainerWidth((w) => {
       if (!w) return w;
@@ -87,9 +92,11 @@ export default function Sample() {
         <div className="Example__container__document" ref={setContainerRef}>
           <Document
             file={detail?.course?.mediaUrl}
+            onLoadError={() => {
+              ref.current?.();
+            }}
             onLoadSuccess={onDocumentLoadSuccess}
-            options={options}
-          >
+            options={options}>
             {Array.from(new Array(numPages), (el, index) => (
               <Page
                 key={`page_${index + 1}`}
@@ -112,8 +119,7 @@ export default function Sample() {
             fill="none"
             shape="rounded"
             size="large"
-            onClick={zoomOut}
-          >
+            onClick={zoomOut}>
             <MinusOutline />
           </Button>
           <Button
@@ -121,8 +127,7 @@ export default function Sample() {
             fill="none"
             shape="rounded"
             size="large"
-            onClick={zoomIn}
-          >
+            onClick={zoomIn}>
             <AddOutline />
           </Button>
         </div>
