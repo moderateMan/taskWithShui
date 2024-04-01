@@ -5,7 +5,7 @@ export type PickerWithChildrenProps = Omit<
   PickerProps,
   "onClose" | "onConfirm" | "visible" | "children"
 > & {
-  children?: ReactNode;
+  children?: ReactNode | ((value: PickerProps["value"]) => ReactNode);
   onChange?: (v: PickerProps["value"]) => void;
   renderColumnItem?: PickerProps["children"];
 };
@@ -33,7 +33,7 @@ export default function PickerWithTriggerElement({
           setVisible(true);
         }}
       >
-        {children}
+        {typeof children === "function" ? children(value) : children}
       </div>
     );
   };

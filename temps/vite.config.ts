@@ -31,7 +31,11 @@ const getEntries = () => {
 // https://vitejs.dev/config/
 export default defineConfig({
   root: "./pages",
+  envDir: resolve(__dirname, "."),
   plugins: [react()],
+  server: {
+    proxy: { "/api": "http://house.jefferyqjy.com" },
+  },
   build: {
     outDir: resolve(__dirname, `dist`),
     emptyOutDir: true,
@@ -40,7 +44,6 @@ export default defineConfig({
       output: {
         entryFileNames: "[name]/[name].[hash].js",
         chunkFileNames: "[name]/[name].[hash].js",
-        assetFileNames: "[ext]/[name].[hash].[ext]",
       },
     },
   },
