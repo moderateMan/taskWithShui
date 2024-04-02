@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  max-width: 100%;
 }
 
 :root {
@@ -18,6 +19,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  scroll-behavior: smooth;
 }
 
 @media all and (orientation: portrait) {

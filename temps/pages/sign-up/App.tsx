@@ -1,7 +1,7 @@
 import { Button, Ellipsis, Form, FormProps, Selector } from "antd-mobile";
 import PickerWithTriggerElement from "./components/picker-with-trigger-element";
 import Input from "./components/input";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Frame1 from "./assets/Frame 1.png";
 import Frame1_2x from "./assets/Frame 1@2x.png";
 import Frame10 from "./assets/Frame 10.png";
@@ -41,6 +41,9 @@ function App() {
   const [questionList, setQuestionList] = useState<QuestionListData["list"]>(
     []
   );
+
+  const [banner, setBanner] = useState<ReactNode>();
+  const [content, setContent] = useState<ReactNode>();
 
   const validateFields = (fields?: string[]) => {
     form.validateFields().catch((error) => {
@@ -84,8 +87,29 @@ function App() {
   };
 
   useEffect(() => {
-    getConfigByCode().then((res) => {
-      console.log(res);
+    getConfigByCode("BANNER").then((res) => {
+      if (res.type === "IMAGE" && res.imgUrl) {
+        setBanner(<ImgWithoutEvent src={res.imgUrl} alt="banner" />);
+      } else if (res.type === "RICHTEXT" && res.contentHtml) {
+        setBanner(
+          <div
+            className="w-full bg-[#F5E8E6]"
+            dangerouslySetInnerHTML={{ __html: res.contentHtml }}
+          />
+        );
+      }
+    });
+    getConfigByCode("CONTENT").then((res) => {
+      if (res.type === "IMAGE" && res.imgUrl) {
+        setContent(<ImgWithoutEvent src={res.imgUrl} alt="content" />);
+      } else if (res.type === "RICHTEXT" && res.contentHtml) {
+        setContent(
+          <div
+            className="w-full bg-[#F5E8E6]"
+            dangerouslySetInnerHTML={{ __html: res.contentHtml }}
+          />
+        );
+      }
     });
     getQuestionList().then((res) => {
       setQuestionList(res.list);
@@ -93,12 +117,14 @@ function App() {
   }, []);
   return (
     <div className="size-full">
-      <div className="w-full h-[calc(100%-20vw)] overflow-y-auto overflow-x-hidden text-[0]">
-        <ImgWithoutEvent
-          srcSet={`${Frame1_2x} 2x, ${Frame1} 1x`}
-          className={ImageClassName}
-        />
-        <div className="w-full bg-[#F5E8E6] pt-[24px] pb-[40px]">
+      <div className="w-full h-[calc(100%-20vw)] overflow-y-auto overflow-x-hidden text-[0] scroll-smooth">
+        {banner || (
+          <ImgWithoutEvent
+            srcSet={`${Frame1_2x} 2x, ${Frame1} 1x`}
+            className={ImageClassName}
+          />
+        )}
+        <div className="w-full bg-[#F5E8E6] pt-[24px] pb-[40px]" id="form">
           <h3 className="text-xl text-center ">仅限上海装修业主</h3>
           <Form
             form={form}
@@ -231,22 +257,26 @@ function App() {
             </Button>
           </div>
         </div>
-        <ImgWithoutEvent
-          srcSet={`${Frame11_2x} 2x, ${Frame11} 1x`}
-          className={ImageClassName}
-        />
-        <ImgWithoutEvent
-          srcSet={`${Frame39_2x} 2x, ${Frame39} 1x`}
-          className={ImageClassName}
-        />
-        <ImgWithoutEvent
-          srcSet={`${Frame40_2x} 2x, ${Frame40} 1x`}
-          className={ImageClassName}
-        />
-        <ImgWithoutEvent
-          srcSet={`${Frame41_2x} 2x, ${Frame41} 1x`}
-          className={ImageClassName}
-        />
+        {content || (
+          <>
+            <ImgWithoutEvent
+              srcSet={`${Frame11_2x} 2x, ${Frame11} 1x`}
+              className={ImageClassName}
+            />
+            <ImgWithoutEvent
+              srcSet={`${Frame39_2x} 2x, ${Frame39} 1x`}
+              className={ImageClassName}
+            />
+            <ImgWithoutEvent
+              srcSet={`${Frame40_2x} 2x, ${Frame40} 1x`}
+              className={ImageClassName}
+            />
+            <ImgWithoutEvent
+              srcSet={`${Frame41_2x} 2x, ${Frame41} 1x`}
+              className={ImageClassName}
+            />
+          </>
+        )}
         {questionList.length > 0 && (
           <div className="w-full bg-[#F5E8E6] py-[40px] px-[16px]">
             <div className="bg-white rounded-[20px] px-[24px] pb-[20px] text-base overflow-hidden">
@@ -295,7 +325,10 @@ function App() {
           role="button"
           srcSet={`${Frame10_1_2x} 2x, ${Frame10_1} 1x`}
           className={ImageClassName}
-          onClick={() => {}}
+          onClick={() => {
+            location.hash = "";
+            location.hash = "#form";
+          }}
         />
       </div>
     </div>

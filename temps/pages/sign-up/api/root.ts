@@ -4,14 +4,7 @@ export interface ConfigRequest {
   code?: string;
 }
 
-export interface ConfigResponse {
-  code: string;
-  data: Data;
-  msg: string;
-  success: boolean;
-}
-
-export interface Data {
+export interface ConfigData {
   /**
    * 编码
    */
@@ -45,14 +38,11 @@ export interface Data {
 }
 
 export const getConfigByCode = (code?: string) => {
-  return instance.get<ConfigRequest, ConfigResponse>(
-    "/config/getByCode",
-    {
-      params: {
-        code,
-      },
-    }
-  );
+  return instance.get<ConfigRequest, ConfigData>("/config/getByCode", {
+    params: {
+      code,
+    },
+  });
 };
 
 export interface AppointmentRequest {
@@ -106,7 +96,7 @@ export interface QuestionListData {
 export const getQuestionList = () => {
   return instance.post<ConfigRequest, QuestionListData>("/question/list", {
     criteria: {
-      valid: 0,
+      valid: 1,
     },
   });
 };
