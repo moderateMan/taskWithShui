@@ -30,7 +30,6 @@ import {
   getQuestionList,
 } from "./api";
 import { success } from "./utils/toast";
-import React from "react";
 
 const ImageClassName =
   "w-full select-none touch-none event-none relative before:content-[''] before:inline-block before:absolute before:size-full before:left-0 before:top-0";
