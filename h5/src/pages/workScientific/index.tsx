@@ -40,11 +40,11 @@ export default function WorkScientific() {
           key={idx}
           onClick={() => {
             if (userInfo) {
-              window.location.href = `https://chatbot.weixin.qq.com/webapp/y0TSb7KPrEucp6kGo4nmYSvCqWXb3N?openid=${
+              window.location.href = `https://chatbot.weixin.qq.com/webapp/eJPxVdexMCMP8JBspaJbsnZNAecIGg?openid=${
                 userInfo.wechatOpenId
               }&nickname=${userInfo.nickname}&avatar=${
                 userInfo.avatar
-              }&robotName=${encodeURIComponent(i.name || "咨询会话")}`;
+              }&robotName=${encodeURIComponent(i.name || "亿粼")}`;
             }
           }}
         />

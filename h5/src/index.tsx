@@ -2,11 +2,11 @@ import ReactDOM from "react-dom/client";
 import SuperProvider from "./service/providers";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import VConsole from "vconsole";
+// import VConsole from "vconsole";
 import { WxConfigProvider } from "./common/hooks/useWxShare";
 import "./index.scss";
 import "./global";
-new VConsole();
+// new VConsole();
 
 if (process.env.NODE_ENV === "development") {
   // new VConsole();

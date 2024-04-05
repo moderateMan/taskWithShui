@@ -44,13 +44,18 @@ const useLoadPage = <
       if (finish) return;
       const res = await fetch({
         ...configRef.current,
+        current: args!.isLoadMore
+          ? configRef.current.current + 1
+          : configRef.current.current,
         count: data.length,
         ...args,
       });
       if (!res) return;
+      debugger;
       const { data: _data } = res;
-      setData(_data);
+      setData(args!.isLoadMore ? [...data, ..._data] : _data);
       setFinish(isFinish ? isFinish(res) : false);
+      configRef.current.current++;
     },
     [finish, isFinish, data, fetch]
   );

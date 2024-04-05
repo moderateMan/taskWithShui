@@ -1,13 +1,8 @@
 /* Core */
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSliceCustom } from "redux-eazy";
+import { CourseType } from "../../../common/apis";
 import names from "../../../service/stores/names";
-import {
-  Course,
-  CourseType,
-  ListRequestParams,
-  getList,
-} from "../../../common/apis";
 
 /* Types */
 export interface SliceState {
@@ -17,7 +12,7 @@ export interface SliceState {
 
 const initialState = (): SliceState => {
   return {
-    type: CourseType.PAID_COURSE,
+    type: CourseType.FREE_COURSE,
     search: "",
   };
 };

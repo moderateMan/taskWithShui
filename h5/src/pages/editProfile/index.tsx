@@ -9,6 +9,7 @@ import { useFlat } from "../../service";
 import { useEffect, useMemo, useRef } from "react";
 import { UpdateUserInfoRequestParams } from "../../common/apis";
 import useWxShare from "../../common/hooks/useWxShare";
+import { success } from "../../common/utils/toast";
 
 export default function EditProfile() {
   const { userInfo } = useFlat("authStore");
@@ -34,12 +35,6 @@ export default function EditProfile() {
     };
   }, [userInfo]);
 
-  useEffect(() => {
-    return () => {
-      if (formValueRef.current) updateUserInfo(formValueRef.current);
-    };
-  }, []);
-
   return (
     <div className={styles["edit-profile"]}>
       <div className={styles["header"]}>
@@ -61,8 +56,7 @@ export default function EditProfile() {
           };
           formValueRef.current = formValue;
           form.validateFields();
-        }}
-      >
+        }}>
         <Form.Item label="微信名" name="nickname">
           <Input readOnly placeholder="请输入微信名" />
         </Form.Item>
@@ -83,10 +77,29 @@ export default function EditProfile() {
           name="email"
           rules={[
             { type: "email", warningOnly: true, message: "请输入正确的邮箱" },
-          ]}
-        >
+          ]}>
           <Input placeholder="请输入邮箱" />
         </Form.Item>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}>
+          <Button
+            style={{
+              width: "200px",
+            }}
+            onClick={() => {
+              if (formValueRef.current) {
+                success("yes");
+                updateUserInfo(formValueRef.current);
+              }
+            }}
+            color="primary">
+            保存
+          </Button>
+        </div>
       </Form>
     </div>
   );

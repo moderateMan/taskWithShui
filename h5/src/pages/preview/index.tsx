@@ -14,8 +14,7 @@ import { getTextByHtml } from "../../common/utils/html";
 import { LoaderDataType, getAbsolutePath, routes } from "../../router";
 import { loading } from "../../common/utils/toast";
 
-pdfjs.GlobalWorkerOptions.workerSrc =
-  "https://shejun.jefferyqjy.com/pdf.worker.js";
+pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.js";
 
 const options = {
   cMapUrl: "/cmaps/",
@@ -62,6 +61,9 @@ export default function Sample() {
   const ref = useRef<any>();
   useEffect(() => {
     ref.current = loading();
+    return () => {
+      ref.current?.();
+    };
   }, []);
   const zoomIn = () => {
     setContainerWidth((w) => {

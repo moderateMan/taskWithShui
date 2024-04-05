@@ -12,18 +12,18 @@ import useLoadPage, {
 
 const tabItems = [
   {
-    key: CourseType.PAID_COURSE,
-    title: "付费科研",
-  },
-  {
     key: CourseType.FREE_COURSE,
     title: "免费科研",
+  },
+  {
+    key: CourseType.PAID_COURSE,
+    title: "付费科研",
   },
 ];
 
 const createFetchPageFunctionByCategory: (
   category: CourseType
-) => FetchPageType<{ search?: string }, Course> =
+) => FetchPageType<{ search?: string; isLoadMore?: boolean }, Course> =
   (category) =>
   ({ pageSize, current, search }) =>
     getList({
@@ -44,7 +44,7 @@ const createFetchPageFunctionByCategory: (
     );
 
 const isFinish: isFinishFunctionType<Course> = ({ pageSize, current, count }) =>
-  pageSize * (current + 1) >= count;
+  pageSize * current >= count;
 
 export default function LearnScientific() {
   const { search, setSearch, type, setType } = useFlat("learnScientificStore");
@@ -71,7 +71,8 @@ export default function LearnScientific() {
     page?.reload({ search });
   }, [type]);
 
-  const loadMore = page?.loadPage && (() => page.loadPage({ search }));
+  const loadMore =
+    page?.loadPage && (() => page.loadPage({ search, isLoadMore: true }));
 
   return (
     <div className={styles["learn-scientific"]}>
