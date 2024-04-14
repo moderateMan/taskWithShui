@@ -12,7 +12,6 @@ export default function Home() {
 
   useEffect(() => {
     getConfigList().then((res) => {
-      console.log(res);
       setConfig(res.list);
     });
   }, []);
