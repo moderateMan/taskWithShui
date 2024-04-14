@@ -1,0 +1,32 @@
+import { Toast } from "antd-mobile";
+import { CircleAlert } from "lucide-react";
+
+export function loading(text = "加载中...") {
+  const loading = Toast.show({
+    icon: "loading",
+    content: text,
+    duration: 0,
+  });
+  return loading.close;
+}
+
+export function error(text = "系统开小差，请稍后重试...") {
+  Toast.show({
+    icon: "fail",
+    content: text,
+  });
+}
+
+export function success(text = "提交成功") {
+  Toast.show({
+    icon: "success",
+    content: text,
+  });
+}
+
+export function warning(text: string) {
+  Toast.show({
+    icon: <CircleAlert />,
+    content: text,
+  });
+}
