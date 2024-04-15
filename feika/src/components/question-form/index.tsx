@@ -18,7 +18,7 @@ const renderControl = (
     optionList?.map((item) => ({
       label: item.answer!,
       value: item.answer!,
-      extra: item.extraType && (
+      extra: item.extraType && item.extraType !== "NONE" && (
         <Form.Item
           name={[item.questionId!, item.id!]}
           rules={[{ required: true, message: "必填项" }]}

@@ -98,7 +98,7 @@ export interface QuestListResponseData {
     /**
      * 附加类型，选中后的附加内容，NONE：无附加内容；INPUT：附加输入框；TEXTAREA：附加文本框；UPLOAD：附加上传
      */
-    extraType?: "INPUT" | "TEXTAREA" | "UPLOAD";
+    extraType?: "INPUT" | "TEXTAREA" | "UPLOAD" | "NONE";
     id?: number;
     modifyTime?: string;
     modifyUser?: string;
