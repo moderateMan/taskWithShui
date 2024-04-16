@@ -6,6 +6,8 @@ import { useNavigate } from "react-router";
 import Spin from "../components/spin";
 import { ErrorBlock } from "antd-mobile";
 
+import BackgroundImg from "../assets/background-2.svg";
+
 export default function Questionnaire() {
   const formRef = useRef<QuestionFormRef>(null);
   const [data, setData] = useState<QuestListResponseData[]>([]);
@@ -23,7 +25,7 @@ export default function Questionnaire() {
   }, []);
   return (
     <>
-      <CardHeader title="专属服务登记" />
+      <CardHeader bg={BackgroundImg} />
       {data.length === 0 && !loading ? (
         <ErrorBlock status="empty" className="my-6" />
       ) : (

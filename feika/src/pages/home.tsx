@@ -6,6 +6,7 @@ import BookIcon from "../assets/book.svg";
 import RedPacketImg from "../assets/red-packet.png";
 import { useEffect, useState } from "react";
 import { ParamListResponseData, getConfigList } from "../api";
+import BackgroundImg from "../assets/background-3.svg";
 
 export default function Home() {
   const [config, setConfig] = useState<ParamListResponseData[]>([]);
@@ -28,57 +29,59 @@ export default function Home() {
   return (
     <div className="size-full flex flex-col">
       <div className="flex-1">
-        <CardHeader title="会员专属权益" />
-        <div className="w-full px-4 mt-2">
-          <button
-            className="w-full bg-[#FFC726] rounded align-center text-base shadow-lg shadow-[rgba(229,177,26,0.32)] text-white flex justify-center items-center"
-            onClick={() => {
-              if (couponLink) {
-                window.location.href = couponLink;
-              }
-            }}
-          >
-            <ImgWithoutEvent
-              src={RedPacketImg}
-              alt="icon"
-              className="w-8 h-10"
-            />
-            确认领取电子优惠券
-          </button>
-        </div>
-        <div className="w-full border border-solid border-[#ECE9EB] rounded-lg flex justify-around py-4 text-sm mt-10">
-          <div
-            className="flex flex-col items-center"
-            role="button"
-            onClick={() => {
-              if (productInfo) {
-                window.location.href = productInfo;
-              }
-            }}
-          >
-            <div className="bg-[linear-gradient(140deg,rgba(58,149,232,0.8),#0063BE)] rounded-xl w-11 h-11 flex justify-center items-center">
-              <ImgWithoutEvent src={NewsIcon} alt="icon" />
-            </div>
-            <span className="mt-2">产品资讯</span>
+        <CardHeader bg={BackgroundImg} />
+        <div className="px-3">
+          <div className="w-full px-4">
+            <button
+              className="w-full bg-[#FFC726] rounded align-center text-base shadow-lg shadow-[rgba(229,177,26,0.32)] text-white flex justify-center items-center"
+              onClick={() => {
+                if (couponLink) {
+                  window.location.href = couponLink;
+                }
+              }}
+            >
+              <ImgWithoutEvent
+                src={RedPacketImg}
+                alt="icon"
+                className="w-8 h-10"
+              />
+              确认领取电子优惠券
+            </button>
           </div>
-          <div
-            className="flex flex-col items-center"
-            role="button"
-            onClick={() => {
-              if (untritionKnowledge) {
-                window.location.href = untritionKnowledge;
-              }
-            }}
-          >
-            <div className="bg-[linear-gradient(140deg,rgba(58,149,232,0.8),#0063BE)] rounded-xl w-11 h-11 flex justify-center items-center">
-              <ImgWithoutEvent src={BookIcon} alt="icon" />
+          <div className="w-full border border-solid border-[#ECE9EB] rounded-lg flex justify-around py-4 text-sm mt-8">
+            <div
+              className="flex flex-col items-center"
+              role="button"
+              onClick={() => {
+                if (productInfo) {
+                  window.location.href = productInfo;
+                }
+              }}
+            >
+              <div className="bg-[linear-gradient(140deg,rgba(58,149,232,0.8),#0063BE)] rounded-xl w-11 h-11 flex justify-center items-center">
+                <ImgWithoutEvent src={NewsIcon} alt="icon" />
+              </div>
+              <span className="mt-2">产品资讯</span>
             </div>
-            <span className="mt-2">营养科普</span>
+            <div
+              className="flex flex-col items-center"
+              role="button"
+              onClick={() => {
+                if (untritionKnowledge) {
+                  window.location.href = untritionKnowledge;
+                }
+              }}
+            >
+              <div className="bg-[linear-gradient(140deg,rgba(58,149,232,0.8),#0063BE)] rounded-xl w-11 h-11 flex justify-center items-center">
+                <ImgWithoutEvent src={BookIcon} alt="icon" />
+              </div>
+              <span className="mt-2">营养科普</span>
+            </div>
           </div>
         </div>
       </div>
       {adVedioUrl && (
-        <footer className="w-full flex flex-col items-center text-[#737493] px-4">
+        <footer className="w-full flex flex-col items-center text-[#737493] p-6">
           <video
             src={adVedioUrl}
             className="w-full rounded"

@@ -1,21 +1,28 @@
-import LogoSvg from "../assets/logo.svg";
 import ImgWithoutEvent from "./img-without-event";
 
+import LogoImg from "../assets/logo.png";
+import FigureSvg from "../assets/figure.png";
+
 export interface CardHeaderProps {
-  title: string;
+  bg: string;
 }
 
 export default function CardHeader(props: CardHeaderProps) {
   return (
-    <header className="h-[10.5rem] relative">
-      <div className="h-36 w-full shadow-lg shadow-[rgba(128,180,224,0.6)] rounded-xl text-white bg-[rgb(0,185,240)] px-4 py-8">
-        <h2 className="text-[1.375rem] font-bold mb-2">会员权益卡</h2>
-        <span className="text-sm">{props.title}</span>
+    <header className="w-full relative overflow-hidden">
+      <div className="w-full h-fit text-[0]">
+        <ImgWithoutEvent src={props.bg} alt="logo" className="w-full" />
       </div>
       <ImgWithoutEvent
-        src={LogoSvg}
+        src={LogoImg}
         alt="logo"
-        className="w-[42%] right-0 bottom-0"
+        className="w-[45%] -right-[5%] -top-[5%]"
+        style={{ position: "absolute" }}
+      />
+      <ImgWithoutEvent
+        src={FigureSvg}
+        alt="logo"
+        className="w-[44%] right-[3%] bottom-[1.6%]"
         style={{ position: "absolute" }}
       />
     </header>

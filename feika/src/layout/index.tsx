@@ -16,6 +16,7 @@ export default function Layout() {
       } else {
         login({ code }).then((res) => {
           setUserInfo(res);
+          navigate("/register", { replace: true });
         });
       }
     } else {
@@ -23,7 +24,7 @@ export default function Layout() {
     }
   }, []);
   return (
-    <div className="px-3 py-6 size-full overflow-auto">
+    <div className="size-full overflow-auto">
       <Outlet />
     </div>
   );
