@@ -5,9 +5,9 @@ import VConsole from "vconsole";
 
 import "./index.scss";
 
-if (import.meta.env.DEV) {
+// if (import.meta.env.DEV) {
   new VConsole();
-}
+// }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <RouterProvider router={router} />
