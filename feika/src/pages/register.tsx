@@ -15,6 +15,7 @@ import NameIcon from "../assets/name.svg";
 import AgeIcon from "../assets/age.svg";
 import BackgroundImg from "../assets/background-1.svg";
 import { useRegisterCacheStore } from "../store/register";
+import { useUserStore } from "../store/user";
 
 const createIconLabel = (icon: string, label: ReactNode) => (
   <span className="flex items-center text-[#737493]">
@@ -33,6 +34,7 @@ const columns = [
 export default function Register() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { userInfo } = useUserStore();
   const { registerCache, setRegisterCache } = useRegisterCacheStore();
 
   return (
@@ -43,11 +45,18 @@ export default function Register() {
           <Form
             layout="horizontal"
             style={{
+              "--border-top": "none",
               "--prefix-width": "5rem",
             }}
             form={form}
             requiredMarkStyle="none"
-            initialValues={registerCache}
+            initialValues={{
+              name: userInfo?.name,
+              gender: userInfo?.gender,
+              age: userInfo?.age,
+              mobile: userInfo?.mobile,
+              ...registerCache,
+            }}
           >
             <Form.Item
               label={createIconLabel(NameIcon, "姓名")}

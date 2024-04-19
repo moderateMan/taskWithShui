@@ -20,8 +20,8 @@ export default function Upload(props: UploadProps) {
   const [visible, setVisible] = useState(false);
 
   const uploadRequest = (file: File) => {
-    if (file.size > 10 * 1024 * 1024) {
-      return error("文件大小不能超过10M");
+    if (file.size > 2 * 1024 * 1024) {
+      return error("文件大小不能超过2M");
     }
     const formData = new FormData();
     formData.append("file", file);
