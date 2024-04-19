@@ -1,7 +1,7 @@
 import { Checkbox, Form } from "antd-mobile";
 import CardHeader from "../components/card-header";
 import { ChevronRight, Square, SquareCheckBig } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import Input from "../components/input";
 import PickerWithTriggerElement from "../components/picker-with-trigger-element";
 import { updateUserInfo } from "../api";
@@ -14,6 +14,7 @@ import GenderIcon from "../assets/gender.svg";
 import NameIcon from "../assets/name.svg";
 import AgeIcon from "../assets/age.svg";
 import BackgroundImg from "../assets/background-1.svg";
+import { useRegisterCacheStore } from "../store/register";
 
 const createIconLabel = (icon: string, label: ReactNode) => (
   <span className="flex items-center text-[#737493]">
@@ -30,9 +31,9 @@ const columns = [
 ];
 
 export default function Register() {
-  const [checked, setChecked] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { registerCache, setRegisterCache } = useRegisterCacheStore();
 
   return (
     <>
@@ -43,10 +44,10 @@ export default function Register() {
             layout="horizontal"
             style={{
               "--prefix-width": "5rem",
-              "--border-top": "none",
             }}
             form={form}
             requiredMarkStyle="none"
+            initialValues={registerCache}
           >
             <Form.Item
               label={createIconLabel(NameIcon, "姓名")}
@@ -113,6 +114,10 @@ export default function Register() {
           </Form>
           <div className="my-[1.375rem] leading-[normal] text-[#939292]">
             <Checkbox
+              checked={registerCache?.agreement}
+              onChange={(val) =>
+                setRegisterCache({ ...registerCache, agreement: val })
+              }
               icon={(checked) =>
                 checked ? (
                   <SquareCheckBig width={18} height={18} />
@@ -120,24 +125,34 @@ export default function Register() {
                   <Square width={18} height={18} />
                 )
               }
-              checked={checked}
-              onChange={setChecked}
             >
               我已阅读并同意
-              <a href="javascript;void(0)" className="mx-2">
+              <a
+                href="javascript;void(0)"
+                className="mx-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setRegisterCache({
+                    ...registerCache,
+                    ...form.getFieldsValue(),
+                  });
+                  navigate("/declare");
+                }}
+              >
                 会员注册信息使用声明
               </a>
             </Checkbox>
           </div>
           <button
             className="w-full font-bold bg-[#FFC726] rounded py-2 align-center text-base shadow-lg shadow-[rgba(229,177,26,0.32)] disabled:opacity-40 disabled:cursor-not-allowed"
-            disabled={!checked}
+            disabled={!registerCache?.agreement}
             onClick={() => {
               form.validateFields().then((values) => {
                 const { gender, ...rest } = values;
                 updateUserInfo({ ...rest, gender: gender?.[0] }).then(() => {
                   success("注册成功");
                   navigate("/questionnaire");
+                  setRegisterCache(undefined);
                 });
               });
             }}

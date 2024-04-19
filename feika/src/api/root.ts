@@ -204,3 +204,40 @@ export function upload(data: UploadRequestParams) {
     headers: { "Content-Type": "multipart/form-data" },
   });
 }
+
+export interface DeclareInfoResponseData {
+  /**
+   * 编码
+   */
+  code: string;
+  /**
+   * 富文本html内容
+   */
+  contentHtml: string;
+  /**
+   * 富文本raw内容
+   */
+  contentRaw: string;
+  createTime: string;
+  createUser: string;
+  /**
+   * 描述
+   */
+  description: string;
+  /**
+   * id
+   */
+  id: number;
+  modifyTime: string;
+  modifyUser: string;
+  valid: number;
+}
+
+/** 获取会员注册信息使用声明 */
+export function getDeclareInfo() {
+  return instance.get<never, DeclareInfoResponseData>("/agreement/getByCode", {
+    params: {
+      code: "AGREEMENT_REGISTER",
+    },
+  });
+}

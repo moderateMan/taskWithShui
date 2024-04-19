@@ -1,12 +1,21 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import { useUserStore } from "../store/user";
 import { getWechatLoginCode, gotoCodeUrl } from "../utils/wechat-login";
-import { login } from "../api";
+import { LoginResponseData, login } from "../api";
 
 export default function Layout() {
   const navigate = useNavigate();
   const { userInfo, setUserInfo } = useUserStore();
+  const location = useLocation();
+
+  const redirect = (userInfo?: LoginResponseData) => {
+    const isRegistered = userInfo?.enroll === 1;
+    const pathname = isRegistered ? "/home" : "/register";
+    if (location.pathname !== pathname) {
+      navigate(pathname, { replace: true });
+    }
+  };
 
   useEffect(() => {
     if (!userInfo?.token) {
@@ -16,11 +25,11 @@ export default function Layout() {
       } else {
         login({ code }).then((res) => {
           setUserInfo(res);
-          navigate("/register", { replace: true });
+          redirect(res);
         });
       }
     } else {
-      navigate("/register", { replace: true });
+      redirect(userInfo);
     }
   }, []);
   return (
