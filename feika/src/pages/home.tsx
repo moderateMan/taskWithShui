@@ -43,7 +43,7 @@ export default function Home() {
               <ImgWithoutEvent
                 src={RedPacketImg}
                 alt="icon"
-                className="w-8 h-10"
+                className="w-14 h-10 object-cover translate-x-2"
               />
               确认领取电子优惠券
             </button>

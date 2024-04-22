@@ -47,14 +47,14 @@ const renderLabel = (
   const idx = index.toString().padStart(2, "0");
   const tag = multiple === undefined ? null : multiple ? "多选" : "单选";
   return (
-    <div className="text-sm text-[#181818] flex items-center">
+    <div className="text-sm text-[#181818] flex items-start">
       <span className="mr-2 font-bold">{idx}</span>
       <span>{label}</span>
       {required && <span className="text-[rgb(255,69,69)]">*</span>}
       {tag && (
-        <div className="rounded bg-[#F7F7F7] py-1 px-2 text-xs text-[#737493] ml-2">
+        <span className="inline-block rounded bg-[#F7F7F7] py-1 px-2 text-xs text-[#737493] ml-2 break-keep">
           {tag}
-        </div>
+        </span>
       )}
     </div>
   );
