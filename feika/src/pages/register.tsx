@@ -52,7 +52,7 @@ export default function Register() {
             requiredMarkStyle="none"
             initialValues={{
               name: userInfo?.name,
-              gender: userInfo?.gender,
+              gender: userInfo?.gender ? [userInfo.gender] : [],
               age: userInfo?.age,
               mobile: userInfo?.mobile,
               ...registerCache,
