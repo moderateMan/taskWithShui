@@ -61,7 +61,7 @@ export default function Home() {
               <div className="bg-[linear-gradient(140deg,rgba(58,149,232,0.8),#0063BE)] rounded-xl w-11 h-11 flex justify-center items-center">
                 <ImgWithoutEvent src={NewsIcon} alt="icon" />
               </div>
-              <span className="mt-2">产品资讯</span>
+              <span className="mt-2">特医资讯</span>
             </div>
             <div
               className="flex flex-col items-center"

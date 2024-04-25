@@ -81,7 +81,7 @@ export default function Upload(props: UploadProps) {
       ) : (
         <>
           <Plus />
-          <span className="text-xs mt-1">不超过10M</span>
+          <span className="text-xs mt-1">不超过2M</span>
           <input
             ref={inputRef}
             type="file"

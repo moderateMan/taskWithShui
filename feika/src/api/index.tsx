@@ -16,9 +16,7 @@ const config: CreateAxiosDefaults = {
   },
 };
 
-if (import.meta.env.DEV) {
-  config.baseURL = "/api";
-}
+config.baseURL = "/api";
 
 const instance = axios.create(config);
 
