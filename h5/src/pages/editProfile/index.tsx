@@ -6,8 +6,7 @@ import Area, {
   getNameByCode,
 } from "../../common/components/area";
 import { useFlat } from "../../service";
-import { useEffect, useMemo, useRef } from "react";
-import { UpdateUserInfoRequestParams } from "../../common/apis";
+import { useMemo } from "react";
 import useWxShare from "../../common/hooks/useWxShare";
 import { success } from "../../common/utils/toast";
 
@@ -15,7 +14,6 @@ export default function EditProfile() {
   const { userInfo } = useFlat("authStore");
   const { updateUserInfo } = useFlat("editProfileStore");
   const [form] = Form.useForm();
-  const formValueRef = useRef<UpdateUserInfoRequestParams>();
   useWxShare({ title: "做科研", link: window.location.origin });
 
   const initialValues = useMemo(() => {
@@ -45,18 +43,7 @@ export default function EditProfile() {
         className={styles["form"]}
         initialValues={initialValues}
         form={form}
-        onValuesChange={() => {
-          const values = form.getFieldsValue();
-          const { area, nickname, ...resetValue } = values;
-          const formValue = {
-            province: getNameByCode(area?.[0]),
-            city: getNameByCode(area?.[1]),
-            district: getNameByCode(area?.[2]),
-            ...resetValue,
-          };
-          formValueRef.current = formValue;
-          form.validateFields();
-        }}>
+      >
         <Form.Item label="微信名" name="nickname">
           <Input readOnly placeholder="请输入微信名" />
         </Form.Item>
@@ -77,7 +64,8 @@ export default function EditProfile() {
           name="email"
           rules={[
             { type: "email", warningOnly: true, message: "请输入正确的邮箱" },
-          ]}>
+          ]}
+        >
           <Input placeholder="请输入邮箱" />
         </Form.Item>
         <div
@@ -85,18 +73,28 @@ export default function EditProfile() {
             display: "flex",
             justifyContent: "center",
             marginTop: "20px",
-          }}>
+          }}
+        >
           <Button
             style={{
               width: "200px",
             }}
             onClick={() => {
-              if (formValueRef.current) {
-                success("yes");
-                updateUserInfo(formValueRef.current);
-              }
+              form.validateFields().then((values) => {
+                const { area, nickname, ...resetValue } = values;
+                const formValue = {
+                  province: getNameByCode(area?.[0]),
+                  city: getNameByCode(area?.[1]),
+                  district: getNameByCode(area?.[2]),
+                  ...resetValue,
+                };
+                updateUserInfo(formValue).then(() => {
+                  success("保存成功");
+                });
+              });
             }}
-            color="primary">
+            color="primary"
+          >
             保存
           </Button>
         </div>
