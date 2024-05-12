@@ -18,6 +18,7 @@ export default function Bar(props: IBarProps) {
       useDirtyRect: false,
     });
     chart.setOption({
+      tooltip: {},
       legend: {
         itemWidth: 40,
         itemHeight: 20,

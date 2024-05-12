@@ -1,7 +1,7 @@
 import instance from ".";
 
 export interface ListRequestParams {
-  criteria: Criteria;
+  criteria: Partial<Criteria>;
   page: Page;
 }
 
@@ -32,11 +32,11 @@ export interface Page {
 
 export interface ListResponseData {
   count: number;
-  list: List[];
+  list: Glove[];
   pageable: Pageable;
 }
 
-export interface List {
+export interface Glove {
   chemical?: number;
   /**
    * 封面背景图片地址
@@ -99,7 +99,7 @@ export const fetchDictList = () =>
     },
   });
 
-export interface DetailList {
+export interface DictDetailList {
   /**
    * 数据字典明细编码
    */
@@ -125,8 +125,8 @@ export interface DetailList {
   value: string;
 }
 
-export const fetchDetail = (dictCode: string) =>
-  instance.post<never, { list: DictList[] }>("/dict/detail/list", {
+export const fetchDictDetail = (dictCode: string) =>
+  instance.post<never, { list: DictDetailList[] }>("/dict/detail/list", {
     criteria: {
       valid: 1,
       dictCode,

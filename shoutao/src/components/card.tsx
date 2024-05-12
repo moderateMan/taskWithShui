@@ -6,10 +6,13 @@ export interface ICardProps {
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
+  cover?: string;
+  name?: string;
+  glove?: string;
 }
 
 export const Card = (props: ICardProps) => {
-  const { isNew, children, className,style } = props;
+  const { isNew, children, className, style, cover, name, glove } = props;
   return (
     <div
       className={cn(
@@ -23,12 +26,13 @@ export const Card = (props: ICardProps) => {
           NEW
         </i>
       )}
-      <div className="w-24 h-40 absolute -right-10 top-[calc(50%-5rem)] bg-slate-50"></div>
+      <img
+        className="w-24 h-40 absolute -right-10 top-[calc(50%-5rem)] bg-slate-50 hover:scale-110 transition-transform"
+        src={glove}
+      ></img>
       <div className="flex-1 py-4 px-8">
-        <div className="h-32 w-full"></div>
-        <span className="font-arialblack text-lg">
-          Powder-Free Nitrile Examination Gloves
-        </span>
+        <img className="h-32 w-full" src={cover}></img>
+        <span className="font-arialblack text-lg">{name}</span>
       </div>
       {children}
     </div>

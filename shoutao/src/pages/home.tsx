@@ -1,77 +1,168 @@
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { useCompareSotre } from "../store/layout";
-import { useEffect } from "react";
-import { fetchDictList, fetchList } from "@/api";
+import { useCompareSotre, usePageStore } from "../store/layout";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Card } from "@/components/card";
+import clsx from "clsx";
+import { fetchDictDetail, fetchDictList, fetchList } from "@/api";
+import Pagination from "@/components/pagination";
 
 export default function Home() {
+  const {
+    dict,
+    setDict,
+    name,
+    setName,
+    code,
+    setCode,
+    expanse,
+    setExpanse,
+    list,
+    setList,
+  } = usePageStore();
   const { compareData, setCompareData } = useCompareSotre();
+  const [current, setCurrent] = useState(1);
+  const [total, setTotal] = useState(0);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchList({ page: { pageNo: 1, pageSize: 10 }, criteria: {} }).then(
-      (res) => {
-        console.log(res.list);
-      }
+  const getDictConfig = async () => {
+    const res = await fetchDictList();
+    const config = await Promise.all(
+      res.list.map(async (i) => {
+        const detail = await fetchDictDetail(i.code);
+        const children = detail.list.map((j) => ({
+          label: j.value,
+          value: j.code,
+        }));
+        return {
+          label: i.value,
+          value: i.code,
+          children,
+        };
+      })
     );
-    fetchDictList().then((res) => console.log(res.list));
+    setDict(config);
+  };
+
+  const getList = (current = 1) => {
+    const [key, value] = code || [];
+    const extra = key && value ? { [key]: value } : {};
+    fetchList({
+      page: { pageNo: current, pageSize: 10 },
+      criteria: {
+        valid: 1,
+        name,
+        ...extra,
+      },
+    }).then((res) => {
+      setList(res.list);
+      setTotal(res.count);
+    });
+  };
+
+  useEffect(() => {
+    getList();
+    getDictConfig();
   }, []);
 
   return (
     <>
       <div className="py-[1.5rem] px-[1.875rem] rounded-[1.25rem] bg-white mb-5">
-        <div className=" flex justify-between items-center mb-3">
+        <div
+          className={clsx(
+            "flex justify-between items-center",
+            dict.length > 0 && "mb-3"
+          )}
+        >
           <div className="rounded border-2 border-solid border-[#549231] text-[#549231] w-[30rem] py-[0.375rem] flex pl-3">
             <input
               type="text"
               className="flex-1 outline-none placeholder-[#666666]"
               placeholder="Search"
+              onChange={(e) => setName(e.target.value)}
             />
-            <button className="w-[3rem] border-l border-solid border-l-[#54923166]">
+            <button
+              className="w-[3rem] border-l border-solid border-l-[#54923166]"
+              onClick={() => getList(current)}
+            >
               Go
             </button>
           </div>
-          <button className="rounded bg-[#F2F2F2] text-[#666666] not-italic px-2 py-1 text-sm">
-            展开筛选
-            <ChevronDown size={14} />
+          <button
+            className="rounded bg-[#F2F2F2] text-[#666666] not-italic px-2 py-1 text-sm"
+            onClick={() => setExpanse(!expanse)}
+          >
+            {expanse ? "收起筛选" : "展开筛选"}
+            <ChevronDown
+              size={14}
+              className={clsx(expanse && "rotate-180", "transition-transform")}
+            />
           </button>
         </div>
-        <ul className="text-[#666666] text-sm flex py-5 border-b border-solid border-[#F0F0F0] ">
-          <li className="text-[#222222] font-bold">Industry：</li>
-          <li className="ml-6">Chemical</li>
-          <li className="ml-10">Construction</li>
-          <li className="ml-10">Food</li>
-          <li className="ml-10">Health Care</li>
-          <li className="ml-10">Life Science</li>
-          <li className="ml-10">Manufacturing</li>
-          <li className="ml-10">Oil&Gas</li>
-          <li className="ml-10">Service</li>
-        </ul>
+        {dict.map(
+          (i, idx) =>
+            (expanse || idx === 0) && (
+              <ul
+                className="text-[#666666] text-sm flex py-5 border-b border-solid border-[#F0F0F0]"
+                key={i.value}
+              >
+                <li className="text-[#222222] font-bold">{i.label}：</li>
+                {i.children.map((j, idx) => (
+                  <li
+                    className={clsx(
+                      "cursor-pointer",
+                      idx === 0 ? "ml-6" : "ml-10"
+                    )}
+                    key={j.value}
+                    onClick={() => setCode([i.value, j.value])}
+                  >
+                    {j.label}
+                  </li>
+                ))}
+              </ul>
+            )
+        )}
       </div>
       <div className="p-[1.875rem] rounded-[1.25rem] bg-white grid grid-cols-3 gap-x-10">
-        <Card isNew>
-          <div className="bg-[#E2E2E2] flex py-3 items-center justify-center rounded-b-[1.25rem]">
-            <label className="cursor-pointer inline-flex items-center">
-              <input
-                type="checkbox"
-                className="mr-2"
-                onChange={(e) => {
-                  console.log(e);
-                  setCompareData([...compareData, e.target.value]);
-                }}
-              />
-              Compare
-            </label>
-          </div>
-        </Card>
+        {list.map((i) => (
+          <Card key={i.id} cover={i.coverUrl} glove={i.gloveUrl} name={i.name}>
+            <div className="bg-[#E2E2E2] flex py-3 items-center justify-center rounded-b-[1.25rem]">
+              <label className="cursor-pointer inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  onChange={() => {
+                    const isExist = !!compareData.find((c) => c.id === i.id);
+                    const newData = isExist
+                      ? compareData.filter((c) => c.id !== i.id)
+                      : [...compareData, i];
+                    setCompareData(newData);
+                  }}
+                />
+                Compare
+              </label>
+            </div>
+          </Card>
+        ))}
       </div>
+      <Pagination
+        className="mt-5"
+        total={total}
+        current={current}
+        onChange={(page) => {
+          setCurrent(page);
+          getList(page);
+        }}
+      />
       {compareData.length > 0 && (
         <div className="fixed flex justify-center items-center bottom-0 right-0 w-full py-3 bg-white border-t-2 border-solid border-[#F2F2F2]">
-          <div className="border border-solid border-[#F2F2F2] w-9 h-14 rounded-xl mr-2"></div>
-          <div className="border border-solid border-[#F2F2F2] w-9 h-14 rounded-xl mr-3"></div>
-          <span className="mr-6 text-[#2C2A26]">
+          {compareData.map((c) => (
+            <div className="border border-solid border-[#F2F2F2] w-9 h-14 rounded-xl mr-2">
+              <img src={c.gloveUrl} alt="" className="size-full object-cover" />
+            </div>
+          ))}
+          <span className="mr-6 pl-1 text-[#2C2A26]">
             Compare your selected products
           </span>
           <button
