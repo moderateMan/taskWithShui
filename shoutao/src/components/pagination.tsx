@@ -29,9 +29,12 @@ export default function Pagination({
   }
   return (
     <div
-      className={clsx("flex justify-center items-center gap-x-1", className)}
+      className={clsx("flex items-center gap-x-1 text-sm", className)}
       style={style}
     >
+      <button className="border border-solid border-[#BFBFBF] px-[0.3125rem] py-[0.1875rem] cursor-text">
+        Page {current} of {size}
+      </button>
       {current > 1 && (
         <button
           onClick={() => onChange && onChange(current - 1)}
@@ -43,7 +46,7 @@ export default function Pagination({
       {Array.from({ length: size }, (_, i) => i + 1).map((page) => (
         <button
           key={page}
-          onClick={() => onChange && onChange(page)}
+          onClick={() => onChange && current !== page && onChange(page)}
           className={clsx(
             btnClassName,
             page === current

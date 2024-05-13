@@ -16,7 +16,7 @@ export const Card = (props: ICardProps) => {
   return (
     <div
       className={cn(
-        "bg-[#F2F2F2] flex flex-col rounded-[1.25rem] relative",
+        "bg-[#F2F2F2] flex flex-col rounded-[1.25rem] relative group",
         className
       )}
       style={style}
@@ -27,12 +27,12 @@ export const Card = (props: ICardProps) => {
         </i>
       )}
       <img
-        className="w-24 h-40 absolute -right-10 top-[calc(50%-5rem)] bg-slate-50 hover:scale-110 transition-transform"
+        className="w-24 h-40 absolute -right-10 top-[calc(50%-6rem)] group-hover:scale-110 transition-transform duration-300"
         src={glove}
       ></img>
-      <div className="flex-1 py-4 px-8">
-        <img className="h-32 w-full" src={cover}></img>
-        <span className="font-arialblack text-lg">{name}</span>
+      <div className="flex-1 py-[0.9375rem] px-[10%]">
+        <img className="h-32 w-full mb-[0.9375rem]" src={cover}></img>
+        <span className="font-arialblack text-lg text-[#2D2A27]">{name}</span>
       </div>
       {children}
     </div>

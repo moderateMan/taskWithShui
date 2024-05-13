@@ -51,8 +51,8 @@ export default function Detail() {
     () =>
       compareData.map((i) => ({
         name: i.name,
-        Chemical: Math.round(i.chemical!),
-        Mechanical: Math.round(i.mechanical!),
+        chemical: Math.round(i.chemical!),
+        mechanical: Math.round(i.mechanical!),
       })),
     [JSON.stringify(compareData)]
   );
@@ -77,8 +77,8 @@ export default function Detail() {
           </div>
           <div className="bg-white rounded-[1.25rem] p-6 mb-5">
             <Bar
-              className="w-full min-h-[21.25rem]"
-              names={["PF-95IN", "TF-14BK", "PF-12WG"]}
+              className="w-full min-h-[15rem]"
+              names={compareData.map((i) => i.name!)}
               series={barData}
             />
           </div>
@@ -86,10 +86,14 @@ export default function Detail() {
             <Table
               columns={[
                 { dataIndex: "name" },
-                { title: "Chemical", dataIndex: "Chemical" },
+                {
+                  title: "Chemical",
+                  dataIndex: "chemical",
+                  render: (text: number) => <Signal value={text} />,
+                },
                 {
                   title: "Mechanical",
-                  dataIndex: "Mechanical",
+                  dataIndex: "mechanical",
                   render: (text: number) => <Signal value={text} />,
                 },
               ]}

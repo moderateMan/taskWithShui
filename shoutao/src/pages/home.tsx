@@ -13,8 +13,8 @@ export default function Home() {
     setDict,
     name,
     setName,
-    code,
-    setCode,
+    params,
+    setParams,
     expanse,
     setExpanse,
     list,
@@ -23,6 +23,7 @@ export default function Home() {
   const { compareData, setCompareData } = useCompareSotre();
   const [current, setCurrent] = useState(1);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -45,24 +46,28 @@ export default function Home() {
     setDict(config);
   };
 
-  const getList = (current = 1) => {
-    const [key, value] = code || [];
-    const extra = key && value ? { [key]: value } : {};
+  const getList = (current = 1, params = {}) => {
+    setLoading(true);
+    setCurrent(current);
     fetchList({
       page: { pageNo: current, pageSize: 10 },
       criteria: {
         valid: 1,
         name,
-        ...extra,
+        ...params,
       },
-    }).then((res) => {
-      setList(res.list);
-      setTotal(res.count);
-    });
+    })
+      .then((res) => {
+        setList(res.list);
+        setTotal(res.count);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
-    getList();
+    getList(1, params);
     getDictConfig();
   }, []);
 
@@ -112,10 +117,18 @@ export default function Home() {
                   <li
                     className={clsx(
                       "cursor-pointer",
-                      idx === 0 ? "ml-6" : "ml-10"
+                      idx === 0 ? "ml-6" : "ml-10",
+                      params[i.value] === j.value && "text-[#549231] font-bold"
                     )}
                     key={j.value}
-                    onClick={() => setCode([i.value, j.value])}
+                    onClick={() => {
+                      const newParams =
+                        params[i.value] === j.value
+                          ? { ...params, [i.value]: undefined }
+                          : { ...params, [i.value]: j.value };
+                      setParams(newParams);
+                      getList(current, newParams);
+                    }}
                   >
                     {j.label}
                   </li>
@@ -124,38 +137,55 @@ export default function Home() {
             )
         )}
       </div>
-      <div className="p-[1.875rem] rounded-[1.25rem] bg-white grid grid-cols-3 gap-x-10">
-        {list.map((i) => (
-          <Card key={i.id} cover={i.coverUrl} glove={i.gloveUrl} name={i.name}>
-            <div className="bg-[#E2E2E2] flex py-3 items-center justify-center rounded-b-[1.25rem]">
-              <label className="cursor-pointer inline-flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  onChange={() => {
-                    const isExist = !!compareData.find((c) => c.id === i.id);
-                    const newData = isExist
-                      ? compareData.filter((c) => c.id !== i.id)
-                      : [...compareData, i];
-                    setCompareData(newData);
-                  }}
-                />
-                Compare
-              </label>
-            </div>
-          </Card>
-        ))}
-      </div>
+      {list.length === 0 ? (
+        <p className="text-[#2d2a26] mt-[8.125rem] my-[5.625rem] text-xl text-center">
+          We can't seem to find the page you're looking for.
+        </p>
+      ) : (
+        <div
+          className={clsx(
+            "p-[1.875rem] bg-white rounded-[1.25rem] grid grid-cols-3 gap-x-10",
+            loading && "opacity-50 pointer-events-none"
+          )}
+        >
+          {list.map((i) => (
+            <Card
+              key={i.id}
+              cover={i.coverUrl}
+              glove={i.gloveUrl}
+              name={i.name}
+              className="h-[18.75rem]"
+            >
+              <div className="bg-[#E2E2E2] flex py-2 items-center justify-center rounded-b-[1.25rem]">
+                <label className="cursor-pointer inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={!!compareData.find((c) => c.id === i.id)}
+                    onChange={() => {
+                      const isExist = !!compareData.find((c) => c.id === i.id);
+                      const newData = isExist
+                        ? compareData.filter((c) => c.id !== i.id)
+                        : [...compareData, i];
+                      setCompareData(newData);
+                    }}
+                  />
+                  Compare
+                </label>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
       <Pagination
-        className="mt-5"
+        className={clsx(loading && "opacity-50 pointer-events-none", "mt-5")}
         total={total}
         current={current}
         onChange={(page) => {
-          setCurrent(page);
           getList(page);
         }}
       />
-      {compareData.length > 0 && (
+      {compareData.length > 2 && (
         <div className="fixed flex justify-center items-center bottom-0 right-0 w-full py-3 bg-white border-t-2 border-solid border-[#F2F2F2]">
           {compareData.map((c) => (
             <div className="border border-solid border-[#F2F2F2] w-9 h-14 rounded-xl mr-2">
