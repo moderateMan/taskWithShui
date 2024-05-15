@@ -18,45 +18,59 @@ export default function Bar(props: IBarProps) {
       useDirtyRect: false,
     });
     chart.setOption({
-      tooltip: {},
       legend: {
-        itemWidth: 40,
-        itemHeight: 20,
-        itemGap: 40,
-        icon: "rect",
+        data: series.map((item) => item.name),
       },
-      xAxis: {
-        type: "value",
-        show: false,
-      },
-      yAxis: {
-        type: "category",
-        data: names,
-        axisLine: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow",
         },
       },
       grid: {
         bottom: 0,
         top: 40,
+        left: 20,
+        containLabel: true,
+      },
+      yAxis: {
+        data: names,
+        inverse: true,
+        axisLine: { show: false },
+        axisTick: { show: false },
+        axisLabel: {
+          margin: 30,
+          fontSize: 14,
+        },
+        axisPointer: {
+          label: {
+            show: true,
+            margin: 30,
+          },
+        },
+      },
+      xAxis: {
+        splitLine: { show: false },
+        axisLabel: { show: false },
+        axisTick: { show: false },
+        axisLine: { show: false },
       },
       series: series.map((item) => ({
         ...item,
-        type: "bar",
+        data: item.data.map((value) => ({
+          value,
+          symbol:
+            "path://M8 42h27.833v-8S41 20.582 42 18c1-2.582-.5-5.335-4-5c-3.5.335-6.889 8.33-6.889 8.33S30.5 13 30 10.5S29 4 19.306 4C9.61 4 8 11.12 8 15z",
+        })),
+        barGap: "10%",
+        type: "pictorialBar",
+        symbolRepeat: true,
+        symbolSize: ["60%", "60%"],
         label: {
           show: true,
           position: "right",
-          textStyle: {
-            fontSize: "12px",
-            color: "#333333",
-          },
-          formatter: "{c}",
+          offset: [10, 0],
+          fontSize: 16,
         },
       })),
     });

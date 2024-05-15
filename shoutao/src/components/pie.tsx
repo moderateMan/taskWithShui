@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import * as echarts from "echarts";
 import { CSSProperties, useEffect, useRef, useState } from "react";
+import ChemicalImg from '../assets/chemical.png'
+import MechanicalImg from "../assets/mechanical.png";
 
 export interface IPieProps {
   series?: {
@@ -27,7 +29,7 @@ export default function Pie(props: IPieProps) {
       useDirtyRect: false,
     });
     instance.current.setOption({
-      height: "108%",
+      height: "90%",
       legend: {
         show: false,
       },
@@ -46,7 +48,7 @@ export default function Pie(props: IPieProps) {
           color: item.color,
           type: "pie",
           radius: `${radius}%`,
-          center: ["50%", pieRef.current!.offsetHeight - 72],
+          center: ["50%", pieRef.current!.offsetHeight - 94],
           startAngle: left,
           endAngle: right,
           data: [{ value: 1, name: item.name }],
@@ -62,7 +64,19 @@ export default function Pie(props: IPieProps) {
   }, [series]);
 
   return (
-    <div className="size-full pb-6">
+    <div className="size-full pb-6 relative px-12 -mt-12">
+      <div className="absolute left-4 bottom-32 flex flex-col items-center justify-center">
+        <img src={ChemicalImg} alt="" className="w-9 mb-2" />
+        <span className="inline-blick border-4 border-solid rounded-[0.125rem] px-2 border-[#e63737] text-[#e25542]">
+          Chemical
+        </span>
+      </div>
+      <div className="absolute right-4 bottom-32 flex flex-col items-center justify-center">
+        <img src={MechanicalImg} alt="" className="w-9 mb-2" />
+        <span className="inline-blick border-4 border-solid rounded-[0.125rem] px-2 border-[#145ace] text-[#0458e3]">
+          Mechanical
+        </span>
+      </div>
       <div
         ref={pieRef}
         className={clsx(
