@@ -1,8 +1,8 @@
 import Bar from "@/components/bar";
 import { Card } from "@/components/card";
 import Pie from "@/components/pie";
-import Signal from "@/components/signal";
-import { Table } from "@/components/table";
+// import Signal from "@/components/signal";
+// import { Table } from "@/components/table";
 import { createRadomColorFactory } from "@/lib/utils";
 import { useCompareSotre } from "@/store/layout";
 import { useEffect, useMemo } from "react";
@@ -47,21 +47,21 @@ export default function Detail() {
     return [map.Chemical, map.Mechanical];
   }, [JSON.stringify(compareData)]);
 
-  const tableData = useMemo(
-    () =>
-      compareData.map((i) => ({
-        name: i.name,
-        chemical: Math.round(i.chemical!),
-        mechanical: Math.round(i.mechanical!),
-      })),
-    [JSON.stringify(compareData)]
-  );
+  // const tableData = useMemo(
+  //   () =>
+  //     compareData.map((i) => ({
+  //       name: i.name,
+  //       chemical: Math.round(i.chemical!),
+  //       mechanical: Math.round(i.mechanical!),
+  //     })),
+  //   [JSON.stringify(compareData)]
+  // );
 
   return (
     <>
       <Link to="/">Home page</Link> / <span>Contrast</span>
       <div className="flex mt-5">
-        <div className="w-[25rem] bg-white rounded-[1.25rem] p-[1.875rem] flex flex-col gap-y-12">
+        <div className="w-[25rem] bg-white rounded-[1.25rem] p-[1.875rem] flex flex-col gap-y-12 h-fit">
           {compareData.map((i) => (
             <Card
               key={i.id}
@@ -82,7 +82,7 @@ export default function Detail() {
               series={barData}
             />
           </div>
-          <div className="bg-white rounded-[1.25rem] px-2 py-6">
+          {/* <div className="bg-white rounded-[1.25rem] px-2 py-6">
             <Table
               columns={[
                 { dataIndex: "name" },
@@ -99,7 +99,7 @@ export default function Detail() {
               ]}
               dataSource={tableData}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </>

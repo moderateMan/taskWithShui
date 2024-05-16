@@ -54,6 +54,7 @@ export default function Bar(props: IBarProps) {
         axisLabel: { show: false },
         axisTick: { show: false },
         axisLine: { show: false },
+        max: 4,
       },
       series: series.map((item) => ({
         ...item,
@@ -65,7 +66,8 @@ export default function Bar(props: IBarProps) {
         barGap: "10%",
         type: "pictorialBar",
         symbolRepeat: true,
-        symbolSize: ["60%", "60%"],
+        symbolClip: true,
+        symbolSize: 20,
         label: {
           show: true,
           position: "right",

@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import * as echarts from "echarts";
 import { CSSProperties, useEffect, useRef, useState } from "react";
-import ChemicalImg from '../assets/chemical.png'
+import ChemicalImg from "../assets/chemical.png";
 import MechanicalImg from "../assets/mechanical.png";
+import BackgroundImg from "../assets/background.png";
 
 export interface IPieProps {
   series?: {
@@ -79,11 +80,8 @@ export default function Pie(props: IPieProps) {
       </div>
       <div
         ref={pieRef}
-        className={clsx(
-          "bg-[url(./background.png)] bg-contain bg-center bg-no-repeat ",
-          className
-        )}
-        style={style}
+        className={clsx("bg-contain bg-center bg-no-repeat ", className)}
+        style={{ backgroundImage: `url(${BackgroundImg})`, ...style }}
       />
       <div className="w-4/5 -mt-12 ml-[10%] flex flex-wrap justify-center gap-x-8 gap-y-2">
         {series.map((item) => (
