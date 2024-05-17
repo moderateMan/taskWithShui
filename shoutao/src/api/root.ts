@@ -60,6 +60,7 @@ export interface Glove {
   modifyTime?: string;
   modifyUser?: string;
   name?: string;
+  description?: string;
   valid?: number;
 }
 
@@ -69,7 +70,7 @@ export interface Pageable {
 }
 
 export const fetchList = (params: ListRequestParams) =>
-  instance.post<never,ListResponseData>("/product/selectPage", params);
+  instance.post<never, ListResponseData>("/product/selectPage", params);
 
 export interface DictList {
   /**

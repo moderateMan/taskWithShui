@@ -153,7 +153,7 @@ export default function Home() {
               key={i.id}
               cover={i.coverUrl}
               glove={i.gloveUrl}
-              name={i.name}
+              name={i.description}
               className="h-[18.75rem]"
             >
               <div className="bg-[#E2E2E2] flex py-2 items-center justify-center rounded-b-[1.25rem]">
@@ -188,7 +188,10 @@ export default function Home() {
       {compareData.length >= 2 && (
         <div className="fixed flex justify-center items-center bottom-0 right-0 w-full py-3 bg-white border-t-2 border-solid border-[#F2F2F2]">
           {compareData.map((c) => (
-            <div className="border border-solid border-[#F2F2F2] w-9 h-14 rounded-xl mr-2" key={c.id}>
+            <div
+              className="border border-solid border-[#F2F2F2] w-9 h-14 rounded-xl mr-2"
+              key={c.id}
+            >
               <img src={c.gloveUrl} alt="" className="size-full object-cover" />
             </div>
           ))}

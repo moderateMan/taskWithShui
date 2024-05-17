@@ -67,7 +67,7 @@ export default function Detail() {
               key={i.id}
               cover={i.coverUrl}
               glove={i.gloveUrl}
-              name={i.name}
+              name={i.description}
             />
           ))}
         </div>
