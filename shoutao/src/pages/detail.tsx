@@ -73,11 +73,12 @@ export default function Detail() {
         </div>
         <div className="flex-1 ml-6">
           <div className="bg-white rounded-[1.25rem] px-2 py-4 mb-5">
-            <Pie className="w-full min-h-[28.75rem]" series={pieData} />
+            <Pie className="w-full h-[28.75rem]" series={pieData} />
           </div>
           <div className="bg-white rounded-[1.25rem] p-6 mb-5">
             <Bar
-              className="w-full min-h-[15rem]"
+              className="w-full"
+              style={{ height: `${3.75 + 4 * compareData.length}rem` }}
               names={compareData.map((i) => i.name!)}
               series={barData}
             />
