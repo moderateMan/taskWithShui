@@ -3,26 +3,27 @@ import { Card } from "@/components/card";
 import Pie from "@/components/pie";
 // import Signal from "@/components/signal";
 // import { Table } from "@/components/table";
-import { createRadomColorFactory } from "@/lib/utils";
+// import { createRadomColorFactory } from "@/lib/utils";
 import { useCompareSotre } from "@/store/layout";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
-const colorFactory = createRadomColorFactory();
+// const colorFactory = createRadomColorFactory();
+const colors = ["#4978b9", "#7cb253", "#ece0be", "#3a3a3b"];
 
 export default function Detail() {
   const { compareData } = useCompareSotre();
 
-  useEffect(() => {
-    colorFactory.reset();
-  }, []);
+  // useEffect(() => {
+  //   colorFactory.reset();
+  // }, []);
 
   const pieData = useMemo(
     () =>
-      compareData.map((i) => ({
+      compareData.map((i, idx) => ({
         name: i.name!,
         data: { chemical: i.chemical!, mechanical: i.mechanical! },
-        color: colorFactory.createRadomColor(),
+        color: colors[idx % colors.length],
       })),
     [JSON.stringify(compareData)]
   );
