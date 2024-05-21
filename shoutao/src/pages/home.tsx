@@ -98,7 +98,7 @@ export default function Home() {
             className="rounded bg-[#F2F2F2] text-[#666666] not-italic px-2 py-1 text-sm"
             onClick={() => setExpanse(!expanse)}
           >
-            {expanse ? "Collapse" : "Expend"}
+            {expanse ? "Collapse Filter" : "Expand Filter"}
             <ChevronDown
               size={14}
               className={clsx(expanse && "rotate-180", "transition-transform")}
