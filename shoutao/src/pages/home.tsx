@@ -164,6 +164,7 @@ export default function Home() {
                     checked={!!compareData.find((c) => c.id === i.id)}
                     onChange={() => {
                       const isExist = !!compareData.find((c) => c.id === i.id);
+                      if (!isExist && compareData.length >= 4) return;
                       const newData = isExist
                         ? compareData.filter((c) => c.id !== i.id)
                         : [...compareData, i];

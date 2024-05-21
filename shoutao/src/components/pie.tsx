@@ -40,7 +40,7 @@ export default function Pie(props: IPieProps) {
           return `<span style="color:${color};font-size:16px;font-weight:bold">${name}</span><br/>Chemical&nbsp&nbsp&nbsp&nbsp<b>${data?.chemical}</b><br/>Mechanical&nbsp&nbsp&nbsp&nbsp<b>${data?.mechanical}</b>`;
         },
       },
-      series: series.map((item, idx) => {
+      series: series.slice().reverse().map((item, idx) => {
         const radius = 100 - idx * 10;
         const left = (item.data.chemical / 4) * 90 + 90;
         const right = 90 - (item.data.mechanical / 4) * 90;

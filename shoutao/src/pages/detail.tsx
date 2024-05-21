@@ -3,26 +3,27 @@ import { Card } from "@/components/card";
 import Pie from "@/components/pie";
 // import Signal from "@/components/signal";
 // import { Table } from "@/components/table";
-import { createRadomColorFactory } from "@/lib/utils";
+// import { createRadomColorFactory } from "@/lib/utils";
 import { useCompareSotre } from "@/store/layout";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 
-const colorFactory = createRadomColorFactory();
+// const colorFactory = createRadomColorFactory();
+const colors = ["#4978b9", "#7cb253", "#ece0be", "#3a3a3b"];
 
 export default function Detail() {
   const { compareData } = useCompareSotre();
 
-  useEffect(() => {
-    colorFactory.reset();
-  }, []);
+  // useEffect(() => {
+  //   colorFactory.reset();
+  // }, []);
 
   const pieData = useMemo(
     () =>
-      compareData.map((i) => ({
+      compareData.map((i, idx) => ({
         name: i.name!,
         data: { chemical: i.chemical!, mechanical: i.mechanical! },
-        color: colorFactory.createRadomColor(),
+        color: colors[idx % colors.length],
       })),
     [JSON.stringify(compareData)]
   );
@@ -73,11 +74,12 @@ export default function Detail() {
         </div>
         <div className="flex-1 ml-6">
           <div className="bg-white rounded-[1.25rem] px-2 py-4 mb-5">
-            <Pie className="w-full min-h-[28.75rem]" series={pieData} />
+            <Pie className="w-full h-[28.75rem]" series={pieData} />
           </div>
           <div className="bg-white rounded-[1.25rem] p-6 mb-5">
             <Bar
-              className="w-full min-h-[15rem]"
+              className="w-full"
+              style={{ height: `${3.75 + 4 * compareData.length}rem` }}
               names={compareData.map((i) => i.name!)}
               series={barData}
             />
