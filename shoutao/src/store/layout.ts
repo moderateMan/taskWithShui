@@ -1,28 +1,28 @@
 import { Glove } from "@/api";
 import { create } from "zustand";
 
-const getLocalCompareData = () => {
-  const data = localStorage.getItem("compareData");
-  if (!data) return [];
+const getLocal = <T>(key: string): T | null => {
+  const data = localStorage.getItem(key);
+  if (!data) return null;
   try {
-    return JSON.parse(data) as Glove[];
+    return JSON.parse(data) as T;
   } catch {
-    return [];
+    return data as T;
   }
 };
 
-const setLocalCompareData = (data: Glove[]) => {
-  localStorage.setItem("compareData", JSON.stringify(data));
+const setLocal = (key: string, data: any) => {
+  localStorage.setItem(key, JSON.stringify(data));
 };
 
 export const useCompareSotre = create<{
   compareData: Glove[];
   setCompareData: (data: Glove[]) => void;
 }>((set) => ({
-  compareData: getLocalCompareData(),
+  compareData: getLocal<Glove[]>("compareData") || [],
   setCompareData: (data) => {
     set(() => ({ compareData: data }));
-    setLocalCompareData(data);
+    setLocal("compareData", data);
   },
 }));
 
@@ -54,4 +54,15 @@ export const usePageStore = create<{
   setParams: (data) => set(() => ({ params: data })),
   setList: (data) => set(() => ({ list: data })),
   setExpanse: (data) => set(() => ({ expanse: data })),
+}));
+
+export const useShowDisclaimerStore = create<{
+  showDisclaimer: boolean;
+  setShowDisclaimer: (data: boolean) => void;
+}>((set) => ({
+  showDisclaimer: getLocal<boolean>("showDisclaimer") || false,
+  setShowDisclaimer: (data) => {
+    set(() => ({ showDisclaimer: data }));
+    setLocal("showDisclaimer", data);
+  },
 }));
