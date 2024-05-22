@@ -60,9 +60,8 @@ export const useShowDisclaimerStore = create<{
   showDisclaimer: boolean;
   setShowDisclaimer: (data: boolean) => void;
 }>((set) => ({
-  showDisclaimer: getLocal<boolean>("showDisclaimer") || false,
+  showDisclaimer: false,
   setShowDisclaimer: (data) => {
     set(() => ({ showDisclaimer: data }));
-    setLocal("showDisclaimer", data);
   },
 }));

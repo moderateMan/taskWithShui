@@ -55,6 +55,7 @@ export interface Glove {
   industry?: string;
   length?: string;
   linerMaterial?: string;
+  linkUrl?: string;
   material?: string;
   mechanical?: number;
   modifyTime?: string;

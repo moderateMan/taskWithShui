@@ -144,7 +144,7 @@ export default function Home() {
       ) : (
         <div
           className={clsx(
-            "p-[1.875rem] bg-white rounded-[1.25rem] grid grid-cols-3 gap-x-10",
+            "p-[1.875rem] bg-white rounded-[1.25rem] grid grid-cols-3 gap-x-10 gap-y-5",
             loading && "opacity-50 pointer-events-none"
           )}
         >
@@ -154,6 +154,7 @@ export default function Home() {
               cover={i.coverUrl}
               glove={i.gloveUrl}
               name={i.description}
+              url={i.linkUrl}
               className="h-[18.75rem]"
             >
               <div className="bg-[#E2E2E2] flex py-2 items-center justify-center rounded-b-[1.25rem]">

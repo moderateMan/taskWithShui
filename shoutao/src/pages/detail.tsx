@@ -6,7 +6,7 @@ import Pie from "@/components/pie";
 // import { createRadomColorFactory } from "@/lib/utils";
 import { useCompareSotre } from "@/store/layout";
 import { useMemo } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // const colorFactory = createRadomColorFactory();
 const colors = ["#4978b9", "#7cb253", "#ece0be", "#3a3a3b"];
@@ -32,12 +32,12 @@ export default function Detail() {
     const map = {
       Chemical: {
         name: "Chemical",
-        color: "#2E75B5",
+        color: "#ff1b1b",
         data: [] as number[],
       },
       Mechanical: {
         name: "Mechanical",
-        color: "#538234",
+        color: "#5781ca",
         data: [] as number[],
       },
     };
@@ -59,32 +59,32 @@ export default function Detail() {
   // );
 
   return (
-    <>
-      <Link to="/">Home page</Link> / <span>Contrast</span>
-      <div className="flex mt-5">
-        <div className="w-[25rem] bg-white rounded-[1.25rem] p-[1.875rem] flex flex-col gap-y-12 h-fit">
-          {compareData.map((i) => (
-            <Card
-              key={i.id}
-              cover={i.coverUrl}
-              glove={i.gloveUrl}
-              name={i.description}
-            />
-          ))}
+    // <Link to="/">Home page</Link> / <span>Contrast</span>
+    <div className="flex">
+      <div className="w-[25rem] bg-white rounded-[1.25rem] p-[1.875rem] flex flex-col gap-y-12 h-fit">
+        {compareData.map((i) => (
+          <Card
+            key={i.id}
+            cover={i.coverUrl}
+            glove={i.gloveUrl}
+            name={i.description}
+            url={i.linkUrl}
+          />
+        ))}
+      </div>
+      <div className="flex-1 ml-6">
+        <div className="bg-white rounded-[1.25rem] px-2 py-4 mb-5">
+          <Pie className="w-full h-[28.75rem]" series={pieData} />
         </div>
-        <div className="flex-1 ml-6">
-          <div className="bg-white rounded-[1.25rem] px-2 py-4 mb-5">
-            <Pie className="w-full h-[28.75rem]" series={pieData} />
-          </div>
-          <div className="bg-white rounded-[1.25rem] p-6 mb-5">
-            <Bar
-              className="w-full"
-              style={{ height: `${3.75 + 4 * compareData.length}rem` }}
-              names={compareData.map((i) => i.name!)}
-              series={barData}
-            />
-          </div>
-          {/* <div className="bg-white rounded-[1.25rem] px-2 py-6">
+        <div className="bg-white rounded-[1.25rem] p-6 mb-5">
+          <Bar
+            className="w-full"
+            style={{ height: `${3.75 + 4 * compareData.length}rem` }}
+            names={compareData.map((i) => i.name!)}
+            series={barData}
+          />
+        </div>
+        {/* <div className="bg-white rounded-[1.25rem] px-2 py-6">
             <Table
               columns={[
                 { dataIndex: "name" },
@@ -102,8 +102,7 @@ export default function Detail() {
               dataSource={tableData}
             />
           </div> */}
-        </div>
       </div>
-    </>
+    </div>
   );
 }

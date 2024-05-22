@@ -9,10 +9,13 @@ export interface ICardProps {
   cover?: string;
   name?: string;
   glove?: string;
+  url?: string;
 }
 
 export const Card = (props: ICardProps) => {
-  const { isNew, children, className, style, cover, name, glove } = props;
+  const { isNew, children, className, style, cover, name, glove, url } = props;
+  const NameWrapper = url ? "a" : "span";
+  const NameWrapperProps = url ? { href: url, target: "__blank" } : {};
   return (
     <div
       className={cn(
@@ -32,7 +35,12 @@ export const Card = (props: ICardProps) => {
       ></img>
       <div className="flex-1 py-[0.9375rem] px-[10%]">
         <img className="h-32 w-full mb-[0.9375rem]" src={cover}></img>
-        <span className="font-arialblack text-lg text-[#2D2A27]">{name}</span>
+        <NameWrapper
+          className="font-arialblack text-lg text-[#2D2A27]"
+          {...NameWrapperProps}
+        >
+          {name}
+        </NameWrapper>
       </div>
       {children}
     </div>
