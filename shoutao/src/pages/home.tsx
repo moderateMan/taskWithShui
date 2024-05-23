@@ -7,6 +7,8 @@ import clsx from "clsx";
 import { fetchDictDetail, fetchDictList, fetchList } from "@/api";
 import Pagination from "@/components/pagination";
 
+const PAGESIZE = 12;
+
 export default function Home() {
   const {
     dict,
@@ -50,7 +52,7 @@ export default function Home() {
     setLoading(true);
     setCurrent(current);
     fetchList({
-      page: { pageNo: current, pageSize: 10 },
+      page: { pageNo: current, pageSize: PAGESIZE },
       criteria: {
         valid: 1,
         name,
@@ -183,6 +185,7 @@ export default function Home() {
         className={clsx(loading && "opacity-50 pointer-events-none", "mt-5")}
         total={total}
         current={current}
+        pageSize={PAGESIZE}
         onChange={(page) => {
           getList(page);
         }}
