@@ -91,7 +91,7 @@ export default function Home() {
             />
             <button
               className="w-[3rem] border-l border-solid border-l-[#54923166]"
-              onClick={() => getList(current)}
+              onClick={() => getList()}
             >
               Go
             </button>
@@ -129,7 +129,7 @@ export default function Home() {
                           ? { ...params, [i.value]: undefined }
                           : { ...params, [i.value]: j.value };
                       setParams(newParams);
-                      getList(current, newParams);
+                      getList(1, newParams);
                     }}
                   >
                     {j.label}
