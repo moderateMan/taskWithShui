@@ -74,6 +74,9 @@ export default function Detail() {
       </div>
       <div className="flex-1 ml-6">
         <div className="bg-white rounded-[1.25rem] px-2 py-4 mb-5">
+          <h2 className="text-xl font-bold text-center mt-2">
+            Physicochemical Performance Spectrum
+          </h2>
           <Pie className="w-full h-[28.75rem]" series={pieData} />
         </div>
         <div className="bg-white rounded-[1.25rem] p-6 mb-5">
